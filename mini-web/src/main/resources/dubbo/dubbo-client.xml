@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://code.alibabatech.com/schema/dubbo
+           http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <dubbo:application name="gatherplatform-dubbo-client" owner="${gatherplatform.dubbo.application.owner}"/>
+
+    <dubbo:registry address="${gatherplatform.dubbo.registry.address}"/>
+
+    <dubbo:monitor protocol="registry" address="${gatherplatform.dubbo.monitor.address}"/>
+
+    <dubbo:consumer check="false" timeout="2000" loadbalance="roundrobin" retries="2" validation="true"
+                    group="${gatherplatform.dubbo.consumer.group}" version="${gatherplatform.dubbo.consumer.version}"/>
+
+    <!--dubbo服务消费者声明-->
+    <!--<dubbo:reference id="itemDubboServiceSpi" interface="com.gongsi.dubbo.spi.item.ItemDubboServiceSpi"/>-->
+
+</beans>

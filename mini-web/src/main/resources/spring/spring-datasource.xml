@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+    <description>spring-datasource-configuration</description>
+
+    <!-- =====================================Business datasource start=====================================-->
+    <bean id="xBusinessDatasource" class="com.alibaba.druid.pool.DruidDataSource"
+          destroy-method="close">
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="url"
+                  value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.user}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <!-- Connection Pooling Info -->
+        <property name="filters" value="wall,stat,log4j"/>
+        <property name="maxActive" value="${jdbc.pool.maxActive}"/>
+        <property name="initialSize" value="${jdbc.pool.initialSize}"/>
+        <property name="maxWait" value="${jdbc.pool.maxWait}"/>
+        <property name="minIdle" value="${jdbc.pool.minIdle}"/>
+        <property name="timeBetweenEvictionRunsMillis" value="${jdbc.pool.timeBetweenEvictionRunsMillis}"/>
+        <property name="minEvictableIdleTimeMillis" value="${jdbc.pool.minEvictableIdleTimeMillis}"/>
+        <property name="validationQuery" value="SELECT 'x'"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="testOnBorrow" value="false"/>
+        <property name="testOnReturn" value="false"/>
+        <property name="maxPoolPreparedStatementPerConnectionSize"
+                  value="${jdbc.pool.maxPoolPreparedStatementPerConnectionSize}"/>
+        <!--监控信息输出到日志的时间-->
+        <property name="timeBetweenLogStatsMillis" value="300000"/>
+        <!-- 超过时间限制是否回收 -->
+        <property name="removeAbandoned" value="true" />
+        <!-- 超时时间；单位为秒。180秒=3分钟 -->
+        <property name="removeAbandonedTimeout" value="180" />
+    </bean>
+
+    <!-- sqlSessionFactory -->
+    <bean id="xBusinessSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="xBusinessDatasource"/>
+        <property name="typeAliasesPackage" value="com.gongsi.mini.entities"/>
+        <property name="configLocation" value="classpath:mybatis/mybatis-config.xml"/>
+        <property name="mapperLocations" value="classpath:com/gongsi/mini/dao/*DAO.xml"/>
+        <!--<property name="plugins">-->
+            <!--<array>-->
+                <!--&lt;!&ndash;page interceptor&ndash;&gt;-->
+                <!--<bean class="com.gongsi.core.orm.db.QueryInterceptor"/>-->
+            <!--</array>-->
+        <!--</property>-->
+    </bean>
+
+    <!--  MyBatis MapperScannerConfigurer -->
+    <bean id="xBusinessMapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.gongsi.mini.dao"/>
+        <property name="sqlSessionFactoryBeanName" value="xBusinessSqlSessionFactory"/>
+    </bean>
+    <!-- =====================================Business datasource end=====================================-->
+
+</beans>

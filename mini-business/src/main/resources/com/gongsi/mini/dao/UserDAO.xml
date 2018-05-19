@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gongsi.mini.dao.UserDAO">
+
+    <!--
+        1.属性名,表名等用小写,select / from之类关键字用大写。
+        2.<select>返回值尽量使用resultType，当实体属性名称与表中列名无法匹配时候，使用resultMap进行映射。
+        3.不要用parameterType属性(多余)。
+        4.一般情况下用#{},不要用${}。
+        5.对做了分表分库后的数据集做查询操作时，不支持Join, 嵌套查询，order by, group by等操作。
+        6.对SQL进行排版。
+        7.建立索引，在数据量大的数据表中做查询的时候，对关键字段建立索引。（具体是否要加索引，请与数据组同事讨论）
+    -->
+    <select id="findResult" resultType="com.gongsi.mini.entities.QueryUserResult">
+        SELECT
+            t.id
+        FROM
+            user t
+        WHERE
+            t.id = #{result.id}
+    </select>
+
+    <select id="queryResult" resultType="com.gongsi.mini.dtos.QueryUserResultDto">
+        SELECT
+            t.id
+        FROM
+            user t
+        WHERE
+            t.id = #{result.id}
+    </select>
+
+    <!--
+        <insert>语句如果需要返回插入行的id时，可以在<insert>标签中加入useGeneratedKeys="true" keyProperty="xxx.id"属性。
+    -->
+    <insert id="saveUser" parameterType="com.gongsi.mini.entities.User" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user(name,age) VALUES(#{name}, #{age})
+    </insert>
+
+</mapper>

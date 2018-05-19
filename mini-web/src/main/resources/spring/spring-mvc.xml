@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.2.xsd
+           http://www.springframework.org/schema/mvc
+           http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
+
+    <bean id="mvcPropertyConfigurer" class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
+        <property name="locations" >
+            <list>
+                <!--context和mvc属于两个不同的容器,配置不共享，这里如果需要替换占位符，需要把相关的文件加载一次-->
+                <value>classpath*:props/datasource.properties</value>
+            </list>
+        </property>
+    </bean>
+
+
+    <!--<mvc:annotation-driven>
+        <mvc:message-converters register-defaults="true">
+            <ref bean="xMessageConverter"/>
+        </mvc:message-converters>
+    </mvc:annotation-driven>-->
+
+    <context:component-scan base-package="com.gongsi.mini.controllers,com.gongsi.mini.services"/>
+
+    <mvc:default-servlet-handler/>
+
+    <!--<mvc:interceptors>-->
+        <!--<mvc:interceptor>-->
+            <!--<mvc:mapping path="/**"/>-->
+            <!--<bean class="com.gongsi.webkits.interceptors.XInterceptor">-->
+                <!--<property name="XInterceptorList">-->
+                    <!--<list>-->
+                        <!--<bean class="com.gongsi.webkits.interceptors.RequestInterceptor"/>-->
+                        <!--&lt;!&ndash;<bean class="com.gongsi.webkits.interceptors.SignatureInterceptor"/>&ndash;&gt;-->
+                    <!--</list>-->
+                <!--</property>-->
+            <!--</bean>-->
+        <!--</mvc:interceptor>-->
+    <!--</mvc:interceptors>-->
+
+    <!--<bean id="xMessageConverter" class="com.gongsi.webkits.converters.XMessageConverter">-->
+        <!--<property name="supportedMediaTypes">-->
+            <!--<list>-->
+                <!--<value>application/json;charset=UTF-8</value>-->
+                <!--<value>text/json;charset=UTF-8</value>-->
+                <!--<value>text/plain;charset=UTF-8</value>-->
+            <!--</list>-->
+        <!--</property>-->
+        <!--<property name="features">-->
+            <!--<list>-->
+                <!--<value>QuoteFieldNames</value>-->
+                <!--<value>WriteNullListAsEmpty</value>-->
+                <!--<value>WriteNullStringAsEmpty</value>-->
+                <!--<value>WriteNullNumberAsZero</value>-->
+                <!--<value>WriteNullBooleanAsFalse</value>-->
+                <!--<value>WriteDateUseDateFormat</value>-->
+            <!--</list>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+    <bean id="druid-stat-pointcut" class="org.springframework.aop.support.JdkRegexpMethodPointcut"
+          scope="prototype">
+        <property name="patterns">
+            <list>
+                <value>com.gongsi.controller.*</value>
+            </list>
+        </property>
+    </bean>
+
+    <!--<bean class="com.gongsi.webkits.resolver.XExceptionResolver">-->
+        <!--&lt;!&ndash; 定义默认的异常处理页面，当该异常类型的注册时使用 &ndash;&gt;-->
+        <!--<property name="defaultErrorView" value="error"/>-->
+        <!--&lt;!&ndash; 定义需要特殊处理的异常，用类名或完全路径名作为key，异常也页名作为值 &ndash;&gt;-->
+        <!--<property name="defaultPath" value="error/error"/>-->
+        <!--<property name="exceptionMappings">-->
+            <!--<props>-->
+                <!--<prop key="com.gongsi.core.exceptions.XBusinessException">/error/xbusiness_exception</prop>-->
+                <!--<prop key="java.lang.Exception"></prop>-->
+            <!--</props>-->
+        <!--</property>-->
+        <!--<property name="order" value="1"/>-->
+    <!--</bean>-->
+
+</beans>
