@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+    <appender name="console" class="org.apache.log4j.ConsoleAppender">
+        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+        <param name="encoding" value="UTF-8"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:ss}][%-5p]%F:%L - %m%n"/>
+        </layout>
+    </appender>
+
+    <logger name="org.springframework">
+        <level value="error"/>
+    </logger>
+
+    <logger name="org.apache.ibatis">
+        <level value="info"/>
+    </logger>
+
+    <logger name="org.mybatis.spring">
+        <level value="error"/>
+    </logger>
+
+    <!--log4jdbc-->
+    <!--打印sql和耗时-->
+    <logger name="jdbc.sqltiming" additivity="false">
+        <level value="debug"/>
+        <appender-ref ref="console"/>
+    </logger>
+    <!--打印sql结果，并显示成表-->
+    <logger name="jdbc.resultsettable" additivity="false">
+        <level value="debug"/>
+        <appender-ref ref="console"/>
+    </logger>
+
+    <logger name="java.sql.Connection" additivity="false">
+        <level value="debug"/>
+        <appender-ref ref="console"/>
+    </logger>
+    <logger name="java.sql.Statement" additivity="false">
+        <level value="debug"/>
+        <appender-ref ref="console"/>
+    </logger>
+    <logger name="java.sql.PreparedStatement" additivity="false">
+        <level value="debug"/>
+        <appender-ref ref="console"/>
+    </logger>
+    <logger name="java.sql.ResultSet" additivity="false">
+        <level value="debug"/>
+        <appender-ref ref="console"/>
+    </logger>
+
+    <logger name="com.gongsi.mini.dao" additivity="false">
+        <level value="debug"/>
+        <appender-ref ref="console"/>
+    </logger>
+
+    <root>
+        <level value="debug"/>
+        <appender-ref ref="console"/>
+    </root>
+
+</log4j:configuration>
