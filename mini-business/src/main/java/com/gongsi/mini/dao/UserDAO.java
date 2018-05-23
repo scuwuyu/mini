@@ -1,8 +1,8 @@
 package com.gongsi.mini.dao;
 
 import com.gongsi.mini.entities.QueryUserResult;
-import com.gongsi.mini.entities.User;
 import com.gongsi.mini.dtos.QueryUserDto;
+import com.gongsi.mini.entities.User;
 import org.apache.ibatis.annotations.Param;
 
 /**

@@ -6,7 +6,6 @@ import com.gongsi.mini.apis.UserDubboService;
 import com.gongsi.mini.entities.User;
 import com.gongsi.mini.services.TestService;
 import com.gongsi.mini.utils.BeanMapper;
-import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
