@@ -5,10 +5,10 @@ server:
 # ===================================================================
 spring:
     datasource:
-        name: test
-        url: jdbc:mysql://127.0.0.1:3306/depot
-        username: root
-        password: root
+        name: mini
+        url: jdbc:mysql://192.168.1.136:3306/mini
+        username: wuyu
+        password: 123456a
         # 使用druid数据源
         type: com.alibaba.druid.pool.DruidDataSource
         driver-class-name: com.mysql.jdbc.Driver

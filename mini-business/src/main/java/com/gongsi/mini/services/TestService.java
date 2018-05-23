@@ -1,8 +1,8 @@
 package com.gongsi.mini.services;
 
 import com.gongsi.mini.entities.QueryUserResult;
-import com.gongsi.mini.entities.User;
 import com.gongsi.mini.dtos.QueryUserDto;
+import com.gongsi.mini.entities.User;
 
 /**
  * local服务，入参和返回值可以使用po对象，也可以只用dto对象，但是禁止出现vo对象

@@ -12,8 +12,7 @@ public class TestRequest {
     @NotNull(message = "test_1003")
     private Integer age;
 
-    @NotEmpty(message = "test_1002")
-    private String name;
+   private Long id;
 
     /**
      * 嵌入对象以inner方式作为入参
@@ -29,12 +28,12 @@ public class TestRequest {
         this.age = age;
     }
 
-    public String getName() {
-        return name;
+    public Long getId() {
+        return id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public TestInnerRequest getTestInnerRequest() {

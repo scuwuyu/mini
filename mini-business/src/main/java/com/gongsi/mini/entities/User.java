@@ -1,24 +1,23 @@
 package com.gongsi.mini.entities;
 
-import javax.persistence.*;
+import java.util.Date;
 
-/**
- *
- * 自动生成测试类的表
- */
-@Entity
-@Table(name = "user")
 public class User {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
-    private String name;
+    private String userId;
 
-    @Column(name = "age")
-    private Integer age;
+    private String nickname;
+
+    private String openId;
+
+    private String picture;
+
+    private Boolean isSeller;
+
+    private Date createTime;
+
+    private Date modifyTime;
 
     public Long getId() {
         return id;
@@ -28,19 +27,59 @@ public class User {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserId(String userId) {
+        this.userId = userId == null ? null : userId.trim();
     }
 
-    public Integer getAge() {
-        return age;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setNickname(String nickname) {
+        this.nickname = nickname == null ? null : nickname.trim();
+    }
+
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId == null ? null : openId.trim();
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture == null ? null : picture.trim();
+    }
+
+    public Boolean getIsSeller() {
+        return isSeller;
+    }
+
+    public void setIsSeller(Boolean isSeller) {
+        this.isSeller = isSeller;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getModifyTime() {
+        return modifyTime;
+    }
+
+    public void setModifyTime(Date modifyTime) {
+        this.modifyTime = modifyTime;
     }
 }
