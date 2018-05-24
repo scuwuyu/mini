@@ -6,7 +6,7 @@ server:
 spring:
     datasource:
         name: mini
-        url: jdbc:mysql://192.168.1.136:3306/mini
+        url: jdbc:mysql://192.168.1.136:3306/mini?useUnicode=true&characterEncoding=UTF-8
         username: wuyu
         password: 123456a
         # 使用druid数据源

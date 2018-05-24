@@ -6,6 +6,9 @@ import java.util.Date;
  * Created by 吴宇 on 2018-05-23.
  */
 public class ActivityVO extends BaseVO{
+    /** 活动id */
+    private Long id;
+
     private String name;
 
     private String picture;
@@ -17,6 +20,8 @@ public class ActivityVO extends BaseVO{
     private Date activityTime;
 
     private String desc;
+
+    private Integer status;
 
     public String getName() {
         return name;
@@ -64,5 +69,21 @@ public class ActivityVO extends BaseVO{
 
     public void setDesc(String desc) {
         this.desc = desc;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }
