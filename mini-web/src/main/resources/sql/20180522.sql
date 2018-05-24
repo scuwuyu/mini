@@ -71,6 +71,7 @@ CREATE TABLE `activity` (
   `latitude` DOUBLE DEFAULT NULL COMMENT '活动纬度',
   `activity_time` datetime DEFAULT NULL COMMENT '活动时间',
   `desc` varchar(256) DEFAULT NULL COMMENT '简介',
+  `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态：1:进行中 5：结束',
 
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `modify_time` TIMESTAMP DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',

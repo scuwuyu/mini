@@ -26,13 +26,12 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.gongsi.mini.entities.Activity" >
-    insert into activity (id, user_id, name, 
-      picture, longitude, latitude, 
-      activity_time, desc, create_time
+    insert into activity (user_id, name,picture, longitude, latitude,
+      activity_time, `desc`
       )
-    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+    value (#{userId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
       #{picture,jdbcType=VARCHAR}, #{longitude,jdbcType=DOUBLE}, #{latitude,jdbcType=DOUBLE}, 
-      #{activityTime,jdbcType=TIMESTAMP}, #{desc,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      #{activityTime,jdbcType=TIMESTAMP}, #{desc,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.gongsi.mini.entities.Activity" >
