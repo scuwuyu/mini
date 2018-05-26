@@ -1,8 +1,9 @@
 package com.gongsi.mini.entities;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
-public class Activity {
+public class Goods {
     private Long id;
 
     private String userId;
@@ -11,15 +12,11 @@ public class Activity {
 
     private String picture;
 
-    private Double longitude;
-
-    private Double latitude;
-
-    private Date activityTime;
+    private BigDecimal price;
 
     private String desc;
 
-    private Byte status;
+    private Boolean status;
 
     private Date createTime;
 
@@ -55,28 +52,12 @@ public class Activity {
         this.picture = picture == null ? null : picture.trim();
     }
 
-    public Double getLongitude() {
-        return longitude;
+    public BigDecimal getPrice() {
+        return price;
     }
 
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
-    }
-
-    public Double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(Double latitude) {
-        this.latitude = latitude;
-    }
-
-    public Date getActivityTime() {
-        return activityTime;
-    }
-
-    public void setActivityTime(Date activityTime) {
-        this.activityTime = activityTime;
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
     public String getDesc() {
@@ -87,11 +68,11 @@ public class Activity {
         this.desc = desc == null ? null : desc.trim();
     }
 
-    public Byte getStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
-    public void setStatus(Byte status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gongsi.mini.dao.MemberTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.gongsi.mini.entities.MemberType" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="months" property="months" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="condition" property="condition" jdbcType="BIT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="is_active" property="isActive" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, months, price, condition, create_time, is_active
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from member_type
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from member_type
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.gongsi.mini.entities.MemberType" >
+    insert into member_type (id, name, months, 
+      price, condition, create_time, 
+      is_active)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{months,jdbcType=INTEGER}, 
+      #{price,jdbcType=DECIMAL}, #{condition,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{isActive,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gongsi.mini.entities.MemberType" >
+    insert into member_type
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="months != null" >
+        months,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="condition != null" >
+        condition,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="isActive != null" >
+        is_active,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="months != null" >
+        #{months,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="condition != null" >
+        #{condition,jdbcType=BIT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isActive != null" >
+        #{isActive,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gongsi.mini.entities.MemberType" >
+    update member_type
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="months != null" >
+        months = #{months,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="condition != null" >
+        condition = #{condition,jdbcType=BIT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isActive != null" >
+        is_active = #{isActive,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gongsi.mini.entities.MemberType" >
+    update member_type
+    set name = #{name,jdbcType=VARCHAR},
+      months = #{months,jdbcType=INTEGER},
+      price = #{price,jdbcType=DECIMAL},
+      condition = #{condition,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      is_active = #{isActive,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -10,7 +10,8 @@ CREATE TABLE `user` (
 
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `modify_time` TIMESTAMP DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `idx_user_id` (`user_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户表(包括C端和B端)';
 
 --  会员资费类型表
@@ -39,7 +40,8 @@ CREATE TABLE `member_transaction` (
 
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `modify_time` TIMESTAMP DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `idx_order_number` (`order_number`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='套餐资费表';
 
 --  流水表主表
@@ -57,7 +59,8 @@ CREATE TABLE `transaction` (
 
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `modify_time` TIMESTAMP DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `idx_order_number` (`order_number`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='流水表主表';
 
 --  活动表
@@ -75,7 +78,8 @@ CREATE TABLE `activity` (
 
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `modify_time` TIMESTAMP DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `idx_user_id` (`user_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='活动表';
 
 --  商品表
@@ -91,7 +95,8 @@ CREATE TABLE `goods` (
 
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `modify_time` TIMESTAMP DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `idx_user_id` (`user_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商品表';
 
 --  订单表
@@ -99,17 +104,22 @@ CREATE TABLE `order` (
   `id` BIGINT(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
   `order_number` varchar(32) NOT NULL COMMENT '订单编号',
   `user_id` varchar(32) NOT NULL COMMENT '用户id',
+  `seller_id` varchar(32) NOT NULL COMMENT '卖家用户id',
   `activity_id` BIGINT(20) unsigned NOT NULL DEFAULT '0' COMMENT '活动id',
 
+  `address_id` BIGINT(20) unsigned NOT NULL COMMENT '收货地址id',
   `express_number` varchar(32) DEFAULT NULL COMMENT '快递单号',
   `express_name` varchar(32) DEFAULT NULL COMMENT '快递名称',
 
   `comment` varchar(256) DEFAULT NULL COMMENT '备注',
-	`status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态：1:待发货 5：已发货',
+	`status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态：1:待发货 5：已发货',
+
 
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `modify_time` TIMESTAMP DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `idx_order_number` (`order_number`) USING BTREE,
+  KEY `idx_user_id` (`user_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单表';
 
 --  订单商品表
@@ -126,28 +136,31 @@ CREATE TABLE `order_item` (
 
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `modify_time` TIMESTAMP DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `idx_order_number` (`order_number`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单商品表';
 
 --  收货地址表
 CREATE TABLE `address` (
   `id` BIGINT(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
   `user_id` varchar(32) NOT NULL COMMENT '用户id',
-  `goods_id` BIGINT(20) unsigned NOT NULL COMMENT '活动id',
   `name` varchar(64) NOT NULL COMMENT '收货人名称',
   `address` varchar(256) NOT NULL COMMENT '收货人地址',
   `mobile` varchar(32) NOT NULL COMMENT '收货人电话',
 
   `comment` varchar(256) DEFAULT NULL COMMENT '备注',
   `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态：1:有效 0：无效',
+  `default_address` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否默认地址：1:是 0：否',
 
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `modify_time` TIMESTAMP DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `idx_user_id` (`user_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='收货地址表';
 
 
 --  问题：
 --  	1、开启专属代购套餐全部月为单位。
+--    2、活动列表，活动地址显示什么？
 
 
