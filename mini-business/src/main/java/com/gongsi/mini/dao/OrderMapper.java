@@ -21,5 +21,7 @@ public interface OrderMapper {
 
     int countByUserId(String userId);
 
+    Order selectByOrderNumber(String orderNumber);
+
     List<OrderVO> selectList(@Param("status") Integer status,@Param("userId") String userId);
 }

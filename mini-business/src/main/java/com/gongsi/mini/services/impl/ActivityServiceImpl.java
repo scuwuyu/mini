@@ -49,9 +49,14 @@ public class ActivityServiceImpl implements ActivityService {
         return activityMapper.selectList(status,user.getUserId());
     }
 
+    /** 只有创建人才能查看*/
     public ActivityVO detail(Long id, UserSessionVO user){
         Activity activity = activityMapper.selectByPrimaryKey(id);
         Ensure.that(user.getUserId().equals(activity.getUserId())).isTrue("活动不存在");
         return BeanMapper.map(activity,ActivityVO.class);
+    }
+
+    public Activity selectById(Long id){
+        return activityMapper.selectByPrimaryKey(id);
     }
 }
