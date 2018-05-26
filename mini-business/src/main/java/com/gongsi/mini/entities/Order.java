@@ -9,6 +9,8 @@ public class Order {
 
     private String userId;
 
+    private String sellerId;
+
     private Long activityId;
 
     private Long addressId;
@@ -45,6 +47,14 @@ public class Order {
 
     public void setUserId(String userId) {
         this.userId = userId == null ? null : userId.trim();
+    }
+
+    public String getSellerId() {
+        return sellerId;
+    }
+
+    public void setSellerId(String sellerId) {
+        this.sellerId = sellerId == null ? null : sellerId.trim();
     }
 
     public Long getActivityId() {

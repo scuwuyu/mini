@@ -8,8 +8,15 @@ import com.gongsi.mini.services.ActivityService;
 import com.gongsi.mini.services.OrderService;
 import com.gongsi.mini.services.UserService;
 import com.gongsi.mini.vo.MineVO;
+import com.gongsi.mini.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * Created by 吴宇 on 2018-05-22.
@@ -38,5 +45,15 @@ public class UserServiceImpl implements UserService {
         mineVO.setActivityNumber(activityService.countByUserId(userId));
         mineVO.setOrder(orderService.countByUserId(userId));
         return mineVO;
+    }
+
+    /** 查询用户头像*/
+    public Map<String,UserVO> selectByIds(List<String> userIds){
+        List<UserVO> list = userMapper.selectByIds(userIds);
+        if (list.isEmpty()){
+            return new HashMap<>();
+        }
+
+        return list.stream().collect(Collectors.toMap(UserVO::getUserId, Function.identity()));
     }
 }

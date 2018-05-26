@@ -8,17 +8,16 @@ import java.io.Serializable;
  */
 public class UserSessionVO implements Serializable{
 
-    private String UserId;
+    private String userId;
 
     private String openId;
 
-
     public String getUserId() {
-        return UserId;
+        return userId;
     }
 
     public void setUserId(String userId) {
-        UserId = userId;
+        this.userId = userId;
     }
 
     public String getOpenId() {

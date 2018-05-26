@@ -2,13 +2,17 @@ package com.gongsi.mini.services.impl;
 
 import com.gongsi.mini.dao.OrderMapper;
 import com.gongsi.mini.services.OrderService;
+import com.gongsi.mini.services.UserService;
 import com.gongsi.mini.vo.OrderVO;
 import com.gongsi.mini.vo.UserSessionVO;
+import com.gongsi.mini.vo.UserVO;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -19,6 +23,9 @@ import java.util.stream.Collectors;
 public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderMapper orderMapper;
+
+    @Autowired
+    private UserService userService;
 
     /** 统计订单数量*/
     public int countByUserId(String userId){
@@ -31,7 +38,12 @@ public class OrderServiceImpl implements OrderService {
         if (CollectionUtils.isEmpty(list)){
             return list;
         }
-        Set<Long> activityIds = list.stream().map(OrderVO::getActivityId).collect(Collectors.toSet());
-        return null;
+        /** 查询卖家信息*/
+        Set<String> sellerIds = list.stream().map(OrderVO::getSellerId).collect(Collectors.toSet());
+        Map<String,UserVO> map = userService.selectByIds(new ArrayList<>(sellerIds));
+
+        list.forEach(item -> item.setSellerInfo(map.get(item.getSellerId())));
+
+        return list;
     }
 }
