@@ -16,6 +16,8 @@ public class OrderVO extends BaseVO {
 
     private String userId;
 
+    private String sellerId;
+
     private Long activityId;
 
     /** 创建时间*/
@@ -26,5 +28,7 @@ public class OrderVO extends BaseVO {
 
     /** 商品详情列表 */
     private List<OrderItem> orderItemList;
+    /** 卖家信息 */
+    private UserVO sellerInfo;
 
 }
