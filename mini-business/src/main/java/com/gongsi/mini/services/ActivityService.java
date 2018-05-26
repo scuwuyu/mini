@@ -1,5 +1,6 @@
 package com.gongsi.mini.services;
 
+import com.gongsi.mini.entities.Activity;
 import com.gongsi.mini.vo.ActivityVO;
 import com.gongsi.mini.vo.UserSessionVO;
 
@@ -20,4 +21,6 @@ public interface ActivityService {
     List<ActivityVO> selectList(Integer status, UserSessionVO user);
 
     ActivityVO detail(Long id, UserSessionVO user);
+
+    Activity selectById(Long id);
 }

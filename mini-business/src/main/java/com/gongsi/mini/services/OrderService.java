@@ -13,4 +13,7 @@ public interface OrderService {
     int countByUserId(String userId);
     /** 查询订单列表 */
     List<OrderVO> selectList(OrderVO vo, UserSessionVO user);
+
+    /** 订单详情 */
+    OrderVO detail(String orderNumber, UserSessionVO user);
 }

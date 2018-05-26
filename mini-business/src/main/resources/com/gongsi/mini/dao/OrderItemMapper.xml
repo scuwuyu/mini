@@ -12,14 +12,25 @@
     <result column="status" property="status" jdbcType="BIT" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
+  <resultMap id="VOMap" type="com.gongsi.mini.vo.OrderItemVO" >
+    <result column="order_number" property="orderNumber" jdbcType="VARCHAR" />
+    <result column="goods_id" property="goodsId" jdbcType="BIGINT" />
+    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+    <result column="quantity" property="quantity" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="total_price" property="totalPrice" jdbcType="DECIMAL" />
+    <result column="picture" property="picture"/>
+  </resultMap>
   <sql id="Base_Column_List" >
     id, order_number, goods_id, goods_name, quantity, price, total_price, status, create_time
   </sql>
 
-  <select id="selectByOrderNumber" resultMap="BaseResultMap">
-    SELECT order_number,goods_name,quantity,price
-    FROM order_item
-    WHERE order_number = #{orderNumber}
+  <select id="selectByOrderNumber" resultMap="VOMap">
+    SELECT oi.order_number,oi.goods_name,oi.quantity,oi.price,
+            g.picture
+    FROM order_item oi
+    JOIN goods g ON g.id = oi.goods_id
+    WHERE oi.order_number = #{orderNumber}
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 

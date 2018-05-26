@@ -35,6 +35,12 @@
     WHERE user_id = #{userId}
   </select>
 
+  <select id="selectByOrderNumber" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/>
+    FROM `order`
+    WHERE order_number = #{orderNumber}
+  </select>
+
   <select id="selectList" resultMap="VOMap">
     SELECT order_number, user_id, activity_id,comment, status, create_time
     FROM `order`

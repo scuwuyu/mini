@@ -27,8 +27,11 @@ public class OrderVO extends BaseVO {
     private Integer status;
 
     /** 商品详情列表 */
-    private List<OrderItem> orderItemList;
+    private List<OrderItemVO> orderItemList;
     /** 卖家信息 */
     private UserVO sellerInfo;
+
+    /** 活动信息*/
+    private ActivityVO activityInfo;
 
 }

@@ -24,10 +24,19 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
+    /** 我下的订单列表 */
     @RequestMapping(value = "/list",method = RequestMethod.POST)
     @ResponseBody
     public List<OrderVO> list(@RequestBody OrderVO vo){
         Ensure.that(vo.getStatus()).isNotNull("订单状态不能为空");
         return orderService.selectList(vo, UserUtil.getUser(vo.getKey()));
+    }
+
+    /** 订单详情 */
+    @RequestMapping(value = "/detail",method = RequestMethod.POST)
+    @ResponseBody
+    public OrderVO detail(@RequestBody OrderVO vo){
+        Ensure.that(vo.getOrderNumber()).isNotNull("订单状态不能为空");
+        return orderService.detail(vo.getOrderNumber(), UserUtil.getUser(vo.getKey()));
     }
 }
