@@ -1,6 +1,10 @@
 package com.gongsi.mini.dao;
 
 import com.gongsi.mini.entities.Activity;
+import com.gongsi.mini.vo.ActivityVO;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ActivityMapper {
     int deleteByPrimaryKey(Long id);
@@ -14,4 +18,8 @@ public interface ActivityMapper {
     int updateByPrimaryKeySelective(Activity record);
 
     int updateByPrimaryKey(Activity record);
+
+    int countByUserId(String userId);
+
+    List<ActivityVO> selectList(@Param("status") Integer status,@Param("userId") String userId);
 }

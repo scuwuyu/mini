@@ -20,7 +20,7 @@ public class ActivityVO extends BaseVO{
     private Date activityTime;
 
     private String desc;
-
+    /** 状态：1:进行中 5：结束*/
     private Integer status;
 
     public String getName() {

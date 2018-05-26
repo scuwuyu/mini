@@ -9,7 +9,10 @@ import com.gongsi.mini.vo.ActivityVO;
 import com.gongsi.mini.vo.UserSessionVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.beans.BeanMap;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Created by 吴宇 on 2018-05-23.
@@ -34,5 +37,21 @@ public class ActivityServiceImpl implements ActivityService {
         Activity activity = BeanMapper.map(activityVO,Activity.class);
         int result = activityMapper.updateByPrimaryKeySelective(activity);
         Ensure.that(result).isGt(0,"更新失败");
+    }
+
+    /** 查询活动次数 */
+    public int countByUserId(String userId){
+        return activityMapper.countByUserId(userId);
+    }
+
+    /** 状态查询活动列表 */
+    public List<ActivityVO> selectList(Integer status, UserSessionVO user){
+        return activityMapper.selectList(status,user.getUserId());
+    }
+
+    public ActivityVO detail(Long id, UserSessionVO user){
+        Activity activity = activityMapper.selectByPrimaryKey(id);
+        Ensure.that(user.getUserId().equals(activity.getUserId())).isTrue("活动不存在");
+        return BeanMapper.map(activity,ActivityVO.class);
     }
 }

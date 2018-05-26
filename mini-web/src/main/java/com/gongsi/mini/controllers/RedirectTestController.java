@@ -28,7 +28,7 @@ public class RedirectTestController {
         QueryUserDto dto = new QueryUserDto();
         dto.setName("123");
 
-        return userService.selectById(request.getId());
+        return userService.selectByUserId(request.getUserId());
 
     }
 }

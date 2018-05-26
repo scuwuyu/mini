@@ -14,8 +14,14 @@
   <sql id="Base_Column_List" >
     id, user_id, nickname, open_id, picture, is_seller, create_time, modify_time
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
+    <include refid="Base_Column_List" />
+    from user
+    where user_id = #{userId}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
     <include refid="Base_Column_List" />
     from user
     where id = #{id,jdbcType=BIGINT}
