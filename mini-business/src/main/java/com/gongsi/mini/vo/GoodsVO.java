@@ -12,7 +12,6 @@ import java.util.List;
 public class GoodsVO extends BaseVO {
     private Long id;
     private String name;
-    // TODO: 2018-05-26 是否为多张
     private String picture;
 
     private String desc;
