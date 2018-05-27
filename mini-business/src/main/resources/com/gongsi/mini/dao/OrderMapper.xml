@@ -30,7 +30,7 @@
     comment, status, create_time
   </sql>
 
-  <select id="countByUserId" parameterType="java.lang.String">
+  <select id="countByUserId" parameterType="java.lang.String" resultType="java.lang.Integer">
     SELECT COUNT(*) FROM `order`
     WHERE user_id = #{userId}
   </select>
