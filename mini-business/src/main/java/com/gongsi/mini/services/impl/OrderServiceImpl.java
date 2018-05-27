@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -98,7 +99,7 @@ public class OrderServiceImpl implements OrderService {
                 .map(OrderItemVO::getGoodsId).collect(Collectors.toList())
         );
         Ensure.that(vo.getOrderItemList().size()).isEq(list.size(),"部分商品已删除，请刷新重试");
-        Map<Long,GoodsVO> map = list.stream().collect(Collectors.groupingBy(GoodsVO::getId));
+        Map<Long,GoodsVO> map = list.stream().collect(Collectors.toMap(GoodsVO::getId,Function.identity()));
 
         List<OrderItem> orderItems = vo.getOrderItemList().stream().map(item -> {
             OrderItem orderItem = BeanMapper.map(item, OrderItem.class);
