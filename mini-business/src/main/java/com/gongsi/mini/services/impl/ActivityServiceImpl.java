@@ -5,14 +5,18 @@ import com.gongsi.mini.core.utils.BeanMapper;
 import com.gongsi.mini.dao.ActivityMapper;
 import com.gongsi.mini.entities.Activity;
 import com.gongsi.mini.services.ActivityService;
+import com.gongsi.mini.services.UserService;
 import com.gongsi.mini.vo.ActivityVO;
 import com.gongsi.mini.vo.UserSessionVO;
+import com.gongsi.mini.vo.UserVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.beans.BeanMap;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 吴宇 on 2018-05-23.
@@ -21,6 +25,8 @@ import java.util.List;
 public class ActivityServiceImpl implements ActivityService {
     @Autowired
     private ActivityMapper activityMapper;
+    @Autowired
+    private UserService userService;
     /** 新增活动*/
     public Integer add(ActivityVO activityVO, UserSessionVO sessionVO){
         Activity activity = new Activity();
@@ -49,11 +55,14 @@ public class ActivityServiceImpl implements ActivityService {
         return activityMapper.selectList(status,user.getUserId());
     }
 
-    /** 只有创建人才能查看*/
+    /** c端 b端用户查看活动*/
     public ActivityVO detail(Long id, UserSessionVO user){
         Activity activity = activityMapper.selectByPrimaryKey(id);
-        Ensure.that(user.getUserId().equals(activity.getUserId())).isTrue("活动不存在");
-        return BeanMapper.map(activity,ActivityVO.class);
+        ActivityVO vo = BeanMapper.map(activity,ActivityVO.class);
+        Map<String,UserVO> map = userService.selectByIds(Collections.singletonList(user.getUserId()));
+
+        vo.setUserInfo(map.get(user.getUserId()));
+        return vo;
     }
 
     public Activity selectById(Long id){

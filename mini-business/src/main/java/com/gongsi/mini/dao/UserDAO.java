@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface UserDAO {
 
-    QueryUserResult findResult(@Param("result") QueryUserDto result);
+    QueryUserResult findResult(@Param("Result") QueryUserDto result);
 
     Long saveUser(User user);
 

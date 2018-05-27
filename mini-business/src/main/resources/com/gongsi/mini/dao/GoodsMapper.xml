@@ -11,9 +11,50 @@
     <result column="status" property="status" jdbcType="BIT" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
+  <resultMap id="VOMap" type="com.gongsi.mini.vo.GoodsVO" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="picture" property="picture" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="desc" property="desc" jdbcType="VARCHAR" />
+  </resultMap>
   <sql id="Base_Column_List" >
     id, user_id, name, picture, price, desc, status, create_time
   </sql>
+  <sql id="WHERECONDITION">
+    <where>
+      user_id = #{userId}
+      <if test="vo.name != null">
+        AND `name` LIKE CONCAT("%",#{vo.name},"%")
+      </if>
+      AND `status` = 1
+    </where>
+  </sql>
+
+  <select id="countList" resultType="java.lang.Integer">
+    SELECT COUNT(*) FROM goods
+    <include refid="WHERECONDITION"/>
+  </select>
+
+  <select id="selectList" resultMap="VOMap">
+    SELECT id, user_id, name, picture, price, desc
+    FROM goods
+    <include refid="WHERECONDITION"/>
+    ORDER BY create_time DESC
+    limit #{pagination.offSize},#{pagination.pageSize}
+  </select>
+
+  <update id="delete">
+    UPDATE goods SET `status` = 0
+    WHERE user_id = #{userId} AND id IN
+    <foreach collection="goodsIds" item="goodsId" open="(" close=")" separator=",">
+      #{goodsId}
+    </foreach>
+  </update>
+
+
+  <!-- 分界线 -->
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />

@@ -16,4 +16,7 @@ public interface OrderService {
 
     /** 订单详情 */
     OrderVO detail(String orderNumber, UserSessionVO user);
+
+    /** 下单，返回订单号 */
+    String order(OrderVO vo, UserSessionVO sessionVO);
 }

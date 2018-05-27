@@ -77,4 +77,9 @@ public class OrderServiceImpl implements OrderService {
 
         return orderVO;
     }
+
+    /** 下单，返回订单号 */
+    public String order(OrderVO vo, UserSessionVO sessionVO){
+        return null;
+    }
 }
