@@ -54,4 +54,8 @@ public class GoodsServiceImpl implements GoodsService {
         int result = goodsMapper.delete(goodsIds,user.getUserId());
         Ensure.that(result).isEq(goodsIds.size(),"删除失败，请刷新重试");
     }
+
+    public List<GoodsVO> selectByIds(List<Long> goodsIds){
+        return goodsMapper.selectByIds(goodsIds);
+    }
 }

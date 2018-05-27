@@ -27,4 +27,6 @@ public interface GoodsMapper {
                              @Param("pagination") Pagination<GoodsVO> pagination);
 
     int delete(@Param("goodsIds") List<Long> goodsIds, @Param("userId") String userId);
+
+    List<GoodsVO> selectByIds(@Param("goodsIds")List<Long> goodsIds);
 }

@@ -18,4 +18,6 @@ public interface GoodsService {
     Pagination<GoodsVO> selectList(GoodsPageVO vo, UserSessionVO user);
 
     void delete(List<Long> goodsIds, UserSessionVO user);
+
+    List<GoodsVO> selectByIds(List<Long> goodsIds);
 }

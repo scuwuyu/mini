@@ -34,4 +34,7 @@ public class OrderVO extends BaseVO {
     /** 活动信息*/
     private ActivityVO activityInfo;
 
+    /** 下单地址*/
+    private Long addressId;
+
 }

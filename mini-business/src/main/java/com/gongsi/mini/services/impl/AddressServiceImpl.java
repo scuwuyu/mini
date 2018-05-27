@@ -59,4 +59,11 @@ public class AddressServiceImpl implements AddressService {
 
         addressMapper.setDefById(id);
     }
+
+    /** 检验并返回 收货地址*/
+    public Address selectById(Long id, String userId){
+        Address address = addressMapper.selectByPrimaryKey(id);
+        Ensure.that(address.getUserId().equals(userId)).isTrue("收货地址不存在");
+        return address;
+    }
 }
