@@ -1,6 +1,7 @@
 package com.gongsi.mini.services.impl;
 
 import com.gongsi.mini.dao.OrderItemMapper;
+import com.gongsi.mini.entities.OrderItem;
 import com.gongsi.mini.services.OrderItemService;
 import com.gongsi.mini.vo.OrderItemVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,5 +19,9 @@ public class OrderItemServiceImpl implements OrderItemService {
     /** 查询订单商品列表 */
     public List<OrderItemVO> selectByOrderNumber(String orderNumber){
         return orderItemMapper.selectByOrderNumber(orderNumber);
+    }
+
+    public int batchInsert(List<OrderItem> orderItems){
+        return orderItemMapper.batchInsert(orderItems);
     }
 }

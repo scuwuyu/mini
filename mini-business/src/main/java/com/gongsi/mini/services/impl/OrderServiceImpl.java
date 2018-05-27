@@ -2,21 +2,19 @@ package com.gongsi.mini.services.impl;
 
 import com.gongsi.mini.core.ensure.Ensure;
 import com.gongsi.mini.core.utils.BeanMapper;
+import com.gongsi.mini.core.utils.IdGenerator;
 import com.gongsi.mini.dao.OrderMapper;
 import com.gongsi.mini.entities.Activity;
 import com.gongsi.mini.entities.Order;
-import com.gongsi.mini.services.ActivityService;
-import com.gongsi.mini.services.OrderItemService;
-import com.gongsi.mini.services.OrderService;
-import com.gongsi.mini.services.UserService;
-import com.gongsi.mini.vo.ActivityVO;
-import com.gongsi.mini.vo.OrderVO;
-import com.gongsi.mini.vo.UserSessionVO;
-import com.gongsi.mini.vo.UserVO;
+import com.gongsi.mini.entities.OrderItem;
+import com.gongsi.mini.services.*;
+import com.gongsi.mini.vo.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -27,15 +25,16 @@ import java.util.stream.Collectors;
 public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderMapper orderMapper;
-
     @Autowired
     private UserService userService;
-
     @Autowired
     private ActivityService activityService;
-
     @Autowired
     private OrderItemService orderItemService;
+    @Autowired
+    private AddressService addressService;
+    @Autowired
+    private GoodsService goodsService;
 
     /** 统计订单数量*/
     public int countByUserId(String userId){
@@ -79,7 +78,39 @@ public class OrderServiceImpl implements OrderService {
     }
 
     /** 下单，返回订单号 */
+    @Transactional
     public String order(OrderVO vo, UserSessionVO sessionVO){
-        return null;
+        Ensure.that(vo.getOrderItemList()).isNotEmpty("商品列表不能为空");
+        Activity activity = activityService.selectById(vo.getActivityId());
+        Ensure.that(activity).isNotNull("活动不存在");
+        addressService.selectById(vo.getAddressId(),sessionVO.getUserId());
+
+        Order order = new Order();
+        order.setOrderNumber(IdGenerator.nextId());
+        order.setUserId(sessionVO.getUserId());
+        order.setSellerId(activity.getUserId());
+        order.setActivityId(vo.getActivityId());
+        order.setAddressId(vo.getAddressId());
+        int result = orderMapper.insert(order);
+        Ensure.that(result).isEq(1,"保存订单失败");
+
+        List<GoodsVO> list = goodsService.selectByIds(vo.getOrderItemList().stream()
+                .map(OrderItemVO::getGoodsId).collect(Collectors.toList())
+        );
+        Ensure.that(vo.getOrderItemList().size()).isEq(list.size(),"部分商品已删除，请刷新重试");
+        Map<Long,GoodsVO> map = list.stream().collect(Collectors.groupingBy(GoodsVO::getId));
+
+        List<OrderItem> orderItems = vo.getOrderItemList().stream().map(item -> {
+            OrderItem orderItem = BeanMapper.map(item, OrderItem.class);
+            orderItem.setOrderNumber(order.getOrderNumber());
+            orderItem.setGoodsName(map.get(item.getGoodsId()).getName());
+            orderItem.setTotalPrice(item.getPrice().multiply(new BigDecimal(item.getQuantity())));
+
+            return orderItem;
+        }).collect(Collectors.toList());
+
+        result = orderItemService.batchInsert(orderItems);
+        Ensure.that(result==orderItems.size()).isTrue("保存商品列表失败");
+        return order.getOrderNumber();
     }
 }

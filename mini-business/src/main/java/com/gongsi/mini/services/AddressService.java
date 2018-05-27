@@ -1,5 +1,6 @@
 package com.gongsi.mini.services;
 
+import com.gongsi.mini.entities.Address;
 import com.gongsi.mini.vo.AddressVO;
 import com.gongsi.mini.vo.UserSessionVO;
 
@@ -21,4 +22,7 @@ public interface AddressService {
 
     /** 设置默认收货地址*/
     void setDef(Long id, UserSessionVO user);
+
+    /** 检验并返回 收货地址*/
+    Address selectById(Long id, String userId);
 }
