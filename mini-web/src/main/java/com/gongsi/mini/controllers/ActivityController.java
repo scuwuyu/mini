@@ -1,6 +1,8 @@
 package com.gongsi.mini.controllers;
 
 import com.gongsi.mini.core.ensure.Ensure;
+import com.gongsi.mini.core.result.Result;
+import com.gongsi.mini.core.result.ResultUtils;
 import com.gongsi.mini.services.ActivityService;
 import com.gongsi.mini.utils.UserUtil;
 import com.gongsi.mini.vo.ActivityVO;
@@ -26,10 +28,10 @@ public class ActivityController {
 
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     @ResponseBody
-    public String add(@RequestBody ActivityVO vo){
+    public Result add(@RequestBody ActivityVO vo){
         vo.setActivityTime(new Date());
         Integer result = activityService.add(vo, UserUtil.getUser(vo.getKey()));
-        return "ok";
+        return ResultUtils.getSuccessResult();
     }
     @RequestMapping(value = "/edit",method = RequestMethod.POST)
     @ResponseBody
@@ -38,12 +40,15 @@ public class ActivityController {
         return "ok";
     }
 
+    /** c端 b端用户查看活动*/
     @RequestMapping(value = "/detail",method = RequestMethod.POST)
     @ResponseBody
     public ActivityVO detail(@RequestBody ActivityVO vo){
         Ensure.that(vo.getId()).isNotNull("活动id不能为空");
         return activityService.detail(vo.getId(), UserUtil.getUser(vo.getKey()));
     }
+
+
 
     @RequestMapping(value = "/list",method = RequestMethod.POST)
     @ResponseBody
