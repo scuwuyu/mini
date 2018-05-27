@@ -3,7 +3,6 @@ package com.gongsi.mini.controllers;
 import com.alibaba.fastjson.JSON;
 import com.gongsi.mini.services.AddressService;
 import com.gongsi.mini.utils.UserUtil;
-import com.gongsi.mini.vo.ActivityVO;
 import com.gongsi.mini.vo.AddressVO;
 import com.gongsi.mini.vo.BaseVO;
 import lombok.extern.slf4j.Slf4j;
