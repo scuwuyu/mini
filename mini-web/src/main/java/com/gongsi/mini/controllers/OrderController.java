@@ -52,4 +52,7 @@ public class OrderController {
         Ensure.that(vo.getOrderNumber()).isNotNull("订单状态不能为空");
         return orderService.detail(vo.getOrderNumber(), UserUtil.getUser(vo.getKey()));
     }
+
+    /** 活动订单 列表*/
+
 }

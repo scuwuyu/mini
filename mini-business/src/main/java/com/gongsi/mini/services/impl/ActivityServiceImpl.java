@@ -1,5 +1,6 @@
 package com.gongsi.mini.services.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.gongsi.mini.core.ensure.Ensure;
 import com.gongsi.mini.core.utils.BeanMapper;
 import com.gongsi.mini.dao.ActivityMapper;
@@ -9,6 +10,7 @@ import com.gongsi.mini.services.UserService;
 import com.gongsi.mini.vo.ActivityVO;
 import com.gongsi.mini.vo.UserSessionVO;
 import com.gongsi.mini.vo.UserVO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.beans.BeanMap;
@@ -21,6 +23,7 @@ import java.util.Map;
 /**
  * Created by 吴宇 on 2018-05-23.
  */
+@Slf4j
 @Service
 public class ActivityServiceImpl implements ActivityService {
     @Autowired
@@ -57,6 +60,7 @@ public class ActivityServiceImpl implements ActivityService {
 
     /** c端 b端用户查看活动*/
     public ActivityVO detail(Long id, UserSessionVO user){
+        log.info("查看活动详情user={},id={}", JSON.toJSONString(user),id);
         Activity activity = activityMapper.selectByPrimaryKey(id);
         ActivityVO vo = BeanMapper.map(activity,ActivityVO.class);
         Map<String,UserVO> map = userService.selectByIds(Collections.singletonList(user.getUserId()));
