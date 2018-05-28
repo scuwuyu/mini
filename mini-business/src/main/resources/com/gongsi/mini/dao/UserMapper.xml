@@ -36,6 +36,10 @@
     </foreach>
   </select>
 
+  <select id="test" parameterType="java.lang.Long" resultType="java.lang.String">
+    SELECT name FROM cycle_mission_template WHERE id = #{id}
+  </select>
+
 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select

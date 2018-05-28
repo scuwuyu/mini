@@ -13,7 +13,7 @@
     <bean id="mvcPropertyConfigurer" class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
         <property name="locations" >
             <list>
-                <!--context和mvc属于两个不同的容器,配置不共享，这里如果需要替换占位符，需要把相关的文件加载一次-->
+                <value>classpath*:application.properties</value>
                 <value>classpath*:props/datasource.properties</value>
             </list>
         </property>

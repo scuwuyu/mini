@@ -1,5 +1,6 @@
 package com.gongsi.mini.controllers;
 
+import com.gongsi.mini.dao.UserMapper;
 import com.gongsi.mini.dtos.QueryUserDto;
 import com.gongsi.mini.entities.User;
 import com.gongsi.mini.requests.TestRequest;
@@ -20,15 +21,18 @@ import javax.validation.Valid;
 public class RedirectTestController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserMapper userMapper;
 
     @RequestMapping(value = "/test123", method = RequestMethod.GET)
     @ResponseBody
     public User test(TestRequest request) {
         //调用local服务，此时入参可以是po对象，也可以为dto对象，但是禁止出现vo对象
-        QueryUserDto dto = new QueryUserDto();
-        dto.setName("123");
+        User dto = new User();
+        dto.setId(123L);
+        dto.setNickname(userMapper.test(200011L));
 
-        return userService.selectByUserId(request.getUserId());
+        return dto;
 
     }
 }

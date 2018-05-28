@@ -11,12 +11,9 @@ import org.springframework.core.env.ConfigurableEnvironment;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-/**
- * @author guoqw
- * @since 2017-04-11 13:20
- */
+
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
-@MapperScan("com.gongsi.mini.dao")
+@MapperScan(value = "com.gongsi.mini.dao",sqlSessionFactoryRef = "mSqlSessionFactory")
 public class Application {
 
     private static final Logger logger = LoggerFactory.getLogger(Application.class);
