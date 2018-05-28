@@ -22,4 +22,6 @@ public interface UserMapper {
     User selectByUserId(String userId);
 
     List<UserVO> selectByIds(@Param("userIds") List<String> userIds);
+
+    String test(Long id);
 }

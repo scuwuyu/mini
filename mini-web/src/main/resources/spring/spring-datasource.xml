@@ -7,7 +7,7 @@
     <description>spring-datasource-configuration</description>
 
     <!-- =====================================Business datasource start=====================================-->
-    <bean id="xBusinessDatasource" class="com.alibaba.druid.pool.DruidDataSource"
+    <bean id="mDatasource" class="com.alibaba.druid.pool.DruidDataSource"
           destroy-method="close">
         <property name="driverClassName" value="${jdbc.driver}"/>
         <property name="url"
@@ -37,8 +37,8 @@
     </bean>
 
     <!-- sqlSessionFactory -->
-    <bean id="xBusinessSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="xBusinessDatasource"/>
+    <bean id="mSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="mDatasource"/>
         <property name="typeAliasesPackage" value="com.gongsi.mini.entities"/>
         <property name="configLocation" value="classpath:mybatis/mybatis-config.xml"/>
         <property name="mapperLocations" value="classpath:com/gongsi/mini/dao/*DAO.xml"/>
@@ -51,9 +51,9 @@
     </bean>
 
     <!--  MyBatis MapperScannerConfigurer -->
-    <bean id="xBusinessMapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    <bean id="mMapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.gongsi.mini.dao"/>
-        <property name="sqlSessionFactoryBeanName" value="xBusinessSqlSessionFactory"/>
+        <property name="sqlSessionFactoryBeanName" value="mSqlSessionFactory"/>
     </bean>
     <!-- =====================================Business datasource end=====================================-->
 
