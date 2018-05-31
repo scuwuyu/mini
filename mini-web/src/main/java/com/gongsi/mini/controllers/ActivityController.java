@@ -28,11 +28,11 @@ public class ActivityController {
 
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     @ResponseBody
-    public Result add(@RequestBody ActivityVO vo){
+    public String add(@RequestBody ActivityVO vo){
         Ensure.that(vo.getId()).isNull("id只能为空");
         vo.setActivityTime(new Date());
         Integer result = activityService.add(vo, UserUtil.getUser(vo.getKey()));
-        return ResultUtils.getSuccessResult();
+        return "ok";
     }
     @RequestMapping(value = "/edit",method = RequestMethod.POST)
     @ResponseBody

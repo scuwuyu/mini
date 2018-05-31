@@ -1,5 +1,7 @@
 package com.gongsi.mini.core.result;
 
+import com.gongsi.mini.core.exception.BusinessException;
+
 /**
  * Created by 吴宇 on 2018-05-27.
  */
@@ -15,6 +17,10 @@ public class ResultUtils {
 
     public static Result getSuccessResult(){
         return new Result(SUCCESS_CODE, MESSAGE);
+    }
+
+    public static Result getBusinessExceptionResult(BusinessException ex) {
+        return new Result(FAULT_CODE, ex.getMessage());
     }
 
     public static Result getSuccessResult(Object obj){

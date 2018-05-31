@@ -12,7 +12,7 @@
     </appender>
 
     <appender name="file-business" class="org.apache.log4j.DailyRollingFileAppender">
-        <param name="File" value="/home/www/logs/demo/local-demo-busi.log"/>
+        <param name="File" value="/home/www/logs/mini/mini-busi.log"/>
         <param name="Append" value="true"/>
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:ss}][%-5p]%F:%L - %m%n"/>
@@ -24,7 +24,7 @@
     </appender>
 
     <appender name="file-sys" class="org.apache.log4j.DailyRollingFileAppender">
-        <param name="File" value="/home/www/logs/demo/local-demo-info.log"/>
+        <param name="File" value="/home/www/logs/mini/mini-sys.log"/>
         <param name="Append" value="true"/>
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:ss}][%-5p]%F:%L - %m%n"/>
@@ -35,20 +35,30 @@
         </filter>
     </appender>
 
-    <logger name="com.gongsi" additivity="false">
+    <logger name="com.gongsi" additivity="true">
         <level value="info"/>
         <appender-ref ref="console"/>
         <appender-ref ref="file-business"/>
     </logger>
 
-    <logger name="com.xxx" additivity="false">
+    <logger name="com.xxx" additivity="true">
         <level value="info"/>
         <appender-ref ref="console"/>
         <appender-ref ref="file-business"/>
+    </logger>
+
+    <logger name="org.springframework">
+        <level value="info"/>
+    </logger>
+    <logger name="org.apache.ibatis">
+        <level value="info"/>
+    </logger>
+    <logger name="org.mybatis.spring">
+        <level value="error"/>
     </logger>
 
     <root>
-        <priority value="info"/>
+        <level value="debug"/>
         <appender-ref ref="console"/>
         <appender-ref ref="file-sys"/>
     </root>
