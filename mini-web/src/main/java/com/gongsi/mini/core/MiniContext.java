@@ -14,7 +14,8 @@ import java.io.IOException;
 @Slf4j
 public class MiniContext {
     private String postBody;
-    private MiniContext() {}
+    private boolean isInited = false;
+
     private static final ThreadLocal<MiniContext> THREAD_LOCAL = new ThreadLocal<MiniContext>() {
         @Override
         protected MiniContext initialValue() {
@@ -29,6 +30,7 @@ public class MiniContext {
 
     public void init(HttpServletRequest request) {
         Ensure.that(request).isNotNull("请求不能为空");
+        this.isInited = true;
         if (isPostRequest(request)) {
             this.postBody = parsePostBody(request);
         }
@@ -57,5 +59,9 @@ public class MiniContext {
     /** 请求完成清理掉*/
     public static void remove() {
         THREAD_LOCAL.remove();
+    }
+
+    public boolean isInited() {
+        return isInited;
     }
 }
