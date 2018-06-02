@@ -15,7 +15,9 @@ public class MiniInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
         MiniContext context = MiniContext.getContext();
-        context.init(httpServletRequest);
+        if (!context.isInited()){
+            context.init(httpServletRequest);
+        }
         return true;
     }
 

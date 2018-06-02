@@ -34,10 +34,15 @@ public class MiniMessageConverter extends AbstractHttpMessageConverter<Object> {
 
     @Override
     protected Object readInternal(Class clazz, HttpInputMessage inputMessage) throws IOException, HttpMessageNotReadableException {
-        String body = MiniContext.getContext().getPostBody();
-        if (null==body) throw new BusinessException("test");
-//        return JSON.parseObject(IOUtils.toString(inputMessage.getBody(),"UTF-8"),clazz);
-        return JSON.parseObject(body, clazz);
+//        String body = MiniContext.getContext().getPostBody();
+//        try {
+//            if (null==body) throw new BusinessException("body为空");
+//
+//        }catch (Exception e){
+//            logger.error("错误信息={}"+e.getMessage(),e);
+//        }
+        return JSON.parseObject(IOUtils.toString(inputMessage.getBody(),"UTF-8"),clazz);
+//        return JSON.parseObject(body, clazz);
     }
 
     @Override
