@@ -9,6 +9,13 @@ import java.math.BigDecimal;
  */
 @Data
 public class MemberTypeVO extends BaseVO {
+
+    public MemberTypeVO() {
+    }
+    public MemberTypeVO(Boolean needPay) {
+        this.needPay = needPay;
+    }
+
     private Long id;
 
     private String name;
@@ -18,4 +25,6 @@ public class MemberTypeVO extends BaseVO {
     private BigDecimal price;
 
     private Boolean condition;
+    /** 是否需要支付 */
+    private Boolean needPay;
 }

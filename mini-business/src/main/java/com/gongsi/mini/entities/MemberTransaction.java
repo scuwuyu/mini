@@ -6,7 +6,7 @@ import java.util.Date;
 public class MemberTransaction {
     private Long id;
 
-    private Long orderNumber;
+    private String orderNumber;
 
     private String userId;
 
@@ -28,12 +28,12 @@ public class MemberTransaction {
         this.id = id;
     }
 
-    public Long getOrderNumber() {
+    public String getOrderNumber() {
         return orderNumber;
     }
 
-    public void setOrderNumber(Long orderNumber) {
-        this.orderNumber = orderNumber;
+    public void setOrderNumber(String orderNumber) {
+        this.orderNumber = orderNumber == null ? null : orderNumber.trim();
     }
 
     public String getUserId() {

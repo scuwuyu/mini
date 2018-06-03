@@ -31,7 +31,7 @@ CREATE TABLE `member_type` (
 --  会员充值流水表
 CREATE TABLE `member_transaction` (
   `id` BIGINT(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `order_number` BIGINT(20) NOT NULL COMMENT '充值订单号',
+  `order_number` varchar(32) NOT NULL COMMENT '充值订单号',
   `user_id` varchar(32) NOT NULL COMMENT '用户id',
   `member_type_id` BIGINT(20) NOT NULL COMMENT '会员类型id',
   `amount` DECIMAL(10,2) NOT NULL COMMENT '金额，单位元',
@@ -47,7 +47,7 @@ CREATE TABLE `member_transaction` (
 --  流水表主表
 CREATE TABLE `transaction` (
   `id` BIGINT(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `order_number` BIGINT(20) NOT NULL COMMENT '充值订单号',
+  `order_number` varchar(32) NOT NULL COMMENT '充值订单号',
   `user_id` varchar(32) NOT NULL COMMENT '用户id',
   `type` tinyint(2) NOT NULL COMMENT '充值类型：1:会员充值 ',
 

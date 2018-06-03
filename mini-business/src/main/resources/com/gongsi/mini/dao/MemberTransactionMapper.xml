@@ -3,7 +3,7 @@
 <mapper namespace="com.gongsi.mini.dao.MemberTransactionMapper" >
   <resultMap id="BaseResultMap" type="com.gongsi.mini.entities.MemberTransaction" >
     <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="order_number" property="orderNumber" jdbcType="BIGINT" />
+    <result column="order_number" property="orderNumber" jdbcType="VARCHAR" />
     <result column="user_id" property="userId" jdbcType="VARCHAR" />
     <result column="member_type_id" property="memberTypeId" jdbcType="BIGINT" />
     <result column="amount" property="amount" jdbcType="DECIMAL" />
@@ -35,7 +35,7 @@
     insert into member_transaction (id, order_number, user_id, 
       member_type_id, amount, status, 
       transaction_id, create_time)
-    values (#{id,jdbcType=BIGINT}, #{orderNumber,jdbcType=BIGINT}, #{userId,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=BIGINT}, #{orderNumber,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
       #{memberTypeId,jdbcType=BIGINT}, #{amount,jdbcType=DECIMAL}, #{status,jdbcType=TINYINT}, 
       #{transactionId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
@@ -72,7 +72,7 @@
         #{id,jdbcType=BIGINT},
       </if>
       <if test="orderNumber != null" >
-        #{orderNumber,jdbcType=BIGINT},
+        #{orderNumber,jdbcType=VARCHAR},
       </if>
       <if test="userId != null" >
         #{userId,jdbcType=VARCHAR},
@@ -98,7 +98,7 @@
     update member_transaction
     <set >
       <if test="orderNumber != null" >
-        order_number = #{orderNumber,jdbcType=BIGINT},
+        order_number = #{orderNumber,jdbcType=VARCHAR},
       </if>
       <if test="userId != null" >
         user_id = #{userId,jdbcType=VARCHAR},
@@ -123,7 +123,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.gongsi.mini.entities.MemberTransaction" >
     update member_transaction
-    set order_number = #{orderNumber,jdbcType=BIGINT},
+    set order_number = #{orderNumber,jdbcType=VARCHAR},
       user_id = #{userId,jdbcType=VARCHAR},
       member_type_id = #{memberTypeId,jdbcType=BIGINT},
       amount = #{amount,jdbcType=DECIMAL},

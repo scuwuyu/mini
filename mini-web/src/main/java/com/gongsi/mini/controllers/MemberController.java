@@ -33,7 +33,15 @@ public class MemberController {
     @RequestMapping(value = "/list",method = RequestMethod.POST)
     @ResponseBody
     public List<MemberTypeVO> list(@RequestBody MemberTypeVO vo){
-        log.info("会员购买vo={}", UserUtil.getUser(vo.getKey()));
+        log.info("会员套餐列表vo={}", UserUtil.getUser(vo.getKey()));
         return memberTypeService.selectList();
+    }
+
+    /** 购买套餐 */
+    @RequestMapping(value = "/buy",method = RequestMethod.POST)
+    @ResponseBody
+    public MemberTypeVO buy(@RequestBody MemberTypeVO vo){
+        log.info("会员购买套餐vo={}", JSON.toJSONString(vo));
+        return memberTypeService.buy(vo,UserUtil.getUser(vo.getKey()));
     }
 }

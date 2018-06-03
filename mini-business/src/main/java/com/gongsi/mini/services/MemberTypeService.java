@@ -1,6 +1,7 @@
 package com.gongsi.mini.services;
 
 import com.gongsi.mini.vo.MemberTypeVO;
+import com.gongsi.mini.vo.UserSessionVO;
 
 import java.util.List;
 
@@ -14,4 +15,6 @@ public interface MemberTypeService {
      * @return
      */
     List<MemberTypeVO> selectList();
+    /** 购买套餐 */
+    MemberTypeVO buy(MemberTypeVO vo, UserSessionVO user);
 }

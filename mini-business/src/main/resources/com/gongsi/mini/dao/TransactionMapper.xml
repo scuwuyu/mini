@@ -3,7 +3,7 @@
 <mapper namespace="com.gongsi.mini.dao.TransactionMapper" >
   <resultMap id="BaseResultMap" type="com.gongsi.mini.entities.Transaction" >
     <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="order_number" property="orderNumber" jdbcType="BIGINT" />
+    <result column="order_number" property="orderNumber" jdbcType="VARCHAR" />
     <result column="user_id" property="userId" jdbcType="VARCHAR" />
     <result column="type" property="type" jdbcType="TINYINT" />
     <result column="open_id" property="openId" jdbcType="VARCHAR" />
@@ -30,7 +30,7 @@
       type, open_id, amount, 
       status, comment, create_time
       )
-    values (#{id,jdbcType=BIGINT}, #{orderNumber,jdbcType=BIGINT}, #{userId,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=BIGINT}, #{orderNumber,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
       #{type,jdbcType=TINYINT}, #{openId,jdbcType=VARCHAR}, #{amount,jdbcType=DECIMAL}, 
       #{status,jdbcType=BIT}, #{comment,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
       )
@@ -71,7 +71,7 @@
         #{id,jdbcType=BIGINT},
       </if>
       <if test="orderNumber != null" >
-        #{orderNumber,jdbcType=BIGINT},
+        #{orderNumber,jdbcType=VARCHAR},
       </if>
       <if test="userId != null" >
         #{userId,jdbcType=VARCHAR},
@@ -100,7 +100,7 @@
     update transaction
     <set >
       <if test="orderNumber != null" >
-        order_number = #{orderNumber,jdbcType=BIGINT},
+        order_number = #{orderNumber,jdbcType=VARCHAR},
       </if>
       <if test="userId != null" >
         user_id = #{userId,jdbcType=VARCHAR},
@@ -128,7 +128,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.gongsi.mini.entities.Transaction" >
     update transaction
-    set order_number = #{orderNumber,jdbcType=BIGINT},
+    set order_number = #{orderNumber,jdbcType=VARCHAR},
       user_id = #{userId,jdbcType=VARCHAR},
       type = #{type,jdbcType=TINYINT},
       open_id = #{openId,jdbcType=VARCHAR},
