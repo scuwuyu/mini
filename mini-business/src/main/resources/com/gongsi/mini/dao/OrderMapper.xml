@@ -47,6 +47,10 @@
     WHERE user_id = #{userId} AND status = #{status}
   </select>
 
+  <select id="countActivityOrderList" resultType="java.lang.Integer">
+    SELECT COUNT(*) FROM `order`
+    WHERE activity_id = #{vo.activityId}
+  </select>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 

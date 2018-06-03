@@ -53,6 +53,4 @@ public class OrderController {
         return orderService.detail(vo.getOrderNumber(), UserUtil.getUser(vo.getKey()));
     }
 
-    /** 活动订单 列表*/
-
 }

@@ -2,6 +2,7 @@ package com.gongsi.mini.dao;
 
 import com.gongsi.mini.entities.Order;
 import com.gongsi.mini.vo.OrderVO;
+import com.gongsi.mini.vo.page.OrderPageVO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -24,4 +25,8 @@ public interface OrderMapper {
     Order selectByOrderNumber(String orderNumber);
 
     List<OrderVO> selectList(@Param("status") Integer status,@Param("userId") String userId);
+
+    int countActivityOrderList(@Param("vo") OrderPageVO vo);
+
+    List<OrderVO> activityOrderList(@Param("vo")OrderPageVO vo);
 }

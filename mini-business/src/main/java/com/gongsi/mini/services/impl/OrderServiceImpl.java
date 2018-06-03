@@ -1,5 +1,6 @@
 package com.gongsi.mini.services.impl;
 
+import com.gongsi.mini.core.Pagination;
 import com.gongsi.mini.core.ensure.Ensure;
 import com.gongsi.mini.core.utils.BeanMapper;
 import com.gongsi.mini.core.utils.IdGenerator;
@@ -9,6 +10,7 @@ import com.gongsi.mini.entities.Order;
 import com.gongsi.mini.entities.OrderItem;
 import com.gongsi.mini.services.*;
 import com.gongsi.mini.vo.*;
+import com.gongsi.mini.vo.page.OrderPageVO;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -114,5 +116,22 @@ public class OrderServiceImpl implements OrderService {
         result = orderItemService.batchInsert(orderItems);
         Ensure.that(result==orderItems.size()).isTrue("保存商品列表失败");
         return order.getOrderNumber();
+    }
+
+    /** ------------------以下为b端操作------------------------*/
+
+    /** 活动订单列表*/
+    public Pagination<OrderVO> activityOrderList(OrderPageVO vo, UserSessionVO user){
+        Pagination<OrderVO> pagination = new Pagination<>(vo.getCurrentPage(),vo.getPageSize());
+        int count = orderMapper.countActivityOrderList(vo);
+        pagination.setTotalCount(count);
+        if (count==0){
+            return pagination;
+        }
+
+        List<OrderVO> list = orderMapper.activityOrderList(vo);
+        pagination.setList(list);
+
+        return pagination;
     }
 }

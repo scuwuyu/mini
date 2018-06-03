@@ -25,6 +25,8 @@ public class MiniExceptionResolver extends SimpleMappingExceptionResolver {
 
     @Override
     protected ModelAndView doResolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
+        logger.error(ex.getMessage(),ex);
+
         Result result = getResult(ex);
 
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);

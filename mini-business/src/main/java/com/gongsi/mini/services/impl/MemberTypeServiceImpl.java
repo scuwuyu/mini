@@ -6,6 +6,7 @@ import com.gongsi.mini.core.utils.BeanMapper;
 import com.gongsi.mini.dao.MemberTypeMapper;
 import com.gongsi.mini.entities.MemberTransaction;
 import com.gongsi.mini.entities.MemberType;
+import com.gongsi.mini.services.MemberDateService;
 import com.gongsi.mini.services.MemberTransactionService;
 import com.gongsi.mini.services.MemberTypeService;
 import com.gongsi.mini.vo.MemberTypeVO;
@@ -28,6 +29,9 @@ public class MemberTypeServiceImpl implements MemberTypeService {
 
     @Autowired
     private MemberTransactionService memberTransactionService;
+
+    @Autowired
+    private MemberDateService memberDateService;
     /**
      * 会员购买套餐列表
      * @return
@@ -41,8 +45,11 @@ public class MemberTypeServiceImpl implements MemberTypeService {
     public MemberTypeVO buy(MemberTypeVO vo, UserSessionVO user){
         MemberType memberType = memberTypeMapper.selectByPrimaryKey(vo.getId());
         Ensure.that(memberType).isNotNull("会员套餐不存在");
+
         if (memberType.getCondition()){
             log.info("第一次购买，不需要支付user={},vo={}", JSON.toJSONString(user),JSON.toJSONString(vo));
+            /** 校验并且插入有效期 */
+            memberDateService.insertWhenFirst(user.getUserId(),memberType.getMonths());
             return new MemberTypeVO(false);
         }
 

@@ -44,6 +44,18 @@ CREATE TABLE `member_transaction` (
   KEY `idx_order_number` (`order_number`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='套餐资费表';
 
+--  会员有效期
+CREATE TABLE `member_date` (
+  `id` BIGINT(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `user_id` varchar(32) NOT NULL COMMENT '用户id',
+  `start_time` TIMESTAMP DEFAULT NULL COMMENT '开始时间',
+  `end_time` TIMESTAMP DEFAULT NULL COMMENT '结束时间',
+
+  `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `modify_time` TIMESTAMP DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='套餐资费表';
+
 --  流水表主表
 CREATE TABLE `transaction` (
   `id` BIGINT(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',

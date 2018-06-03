@@ -1,7 +1,9 @@
 package com.gongsi.mini.services;
 
+import com.gongsi.mini.core.Pagination;
 import com.gongsi.mini.vo.OrderVO;
 import com.gongsi.mini.vo.UserSessionVO;
+import com.gongsi.mini.vo.page.OrderPageVO;
 
 import java.util.List;
 
@@ -19,4 +21,11 @@ public interface OrderService {
 
     /** 下单，返回订单号 */
     String order(OrderVO vo, UserSessionVO sessionVO);
+
+
+    /** ------------------以下为b端操作------------------------*/
+
+    /** 活动订单列表*/
+    Pagination<OrderVO> activityOrderList(OrderPageVO vo, UserSessionVO user);
+
 }
