@@ -14,6 +14,13 @@
   <sql id="Base_Column_List" >
     id, order_number, user_id, member_type_id, amount, status, transaction_id, create_time
   </sql>
+  <select id="selectByUserId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from member_transaction
+    where user_id = #{userId} AND member_type_id =#{memberTypeId} AND `status` = #{status}
+  </select>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
