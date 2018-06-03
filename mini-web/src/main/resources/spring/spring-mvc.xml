@@ -19,17 +19,9 @@
         </property>
     </bean>
 
-
-    <mvc:annotation-driven>
-        <mvc:message-converters register-defaults="true">
-            <ref bean="miniMessageConverter"/>
-        </mvc:message-converters>
-    </mvc:annotation-driven>
-
     <context:component-scan base-package="com.gongsi.mini.controllers,com.gongsi.mini.services"/>
 
     <mvc:default-servlet-handler/>
-
     <!--<mvc:interceptors>-->
         <!--<mvc:interceptor>-->
             <!--<mvc:mapping path="/**"/>-->
@@ -37,6 +29,12 @@
             <!--</bean>-->
         <!--</mvc:interceptor>-->
     <!--</mvc:interceptors>-->
+
+    <mvc:annotation-driven>
+        <mvc:message-converters register-defaults="true">
+            <ref bean="miniMessageConverter"/>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
 
     <bean id="miniMessageConverter" class="com.gongsi.mini.core.MiniMessageConverter">
         <property name="supportedMediaTypes">

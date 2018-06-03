@@ -11,8 +11,15 @@
     <result column="is_active" property="isActive" jdbcType="BIT" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name, months, price, condition, create_time, is_active
+    id, name, months, price, `condition`, create_time, is_active
   </sql>
+  <select id="selectList" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM member_type
+    WHERE is_active = 1
+  </select>
+
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />

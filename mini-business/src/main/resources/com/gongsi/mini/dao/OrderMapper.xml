@@ -42,7 +42,7 @@
   </select>
 
   <select id="selectList" resultMap="VOMap">
-    SELECT order_number, user_id, activity_id,comment, status, create_time
+    SELECT order_number, user_id,seller_id, activity_id,comment, status, create_time
     FROM `order`
     WHERE user_id = #{userId} AND status = #{status}
   </select>
@@ -55,11 +55,11 @@
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from order
+    delete from `order`
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.gongsi.mini.entities.Order">
-    insert into order (id, order_number, user_id, 
+    insert into `order` (id, order_number, user_id,
       seller_id, activity_id, address_id, 
       express_number, express_name, comment, 
       status, create_time)
@@ -69,7 +69,7 @@
       #{status,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.gongsi.mini.entities.Order">
-    insert into order
+    insert into `order`
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
@@ -142,7 +142,7 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.gongsi.mini.entities.Order">
-    update order
+    update `order`
     <set>
       <if test="orderNumber != null">
         order_number = #{orderNumber,jdbcType=VARCHAR},

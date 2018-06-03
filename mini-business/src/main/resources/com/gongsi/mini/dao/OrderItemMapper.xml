@@ -25,6 +25,16 @@
     id, order_number, goods_id, goods_name, quantity, price, total_price, status, create_time
   </sql>
 
+  <insert id="batchInsert">
+    INSERT INTO order_item (order_number, goods_id, goods_name, quantity, price, total_price)
+    VALUES (
+      <foreach collection="orderItems" item="item" separator=",">
+        #{item.orderNumber}, #{item.goodsId}, #{item.goodsName}, #{item.quantity}, #{item.price},#{item.totalPrice}
+      </foreach>
+
+    )
+  </insert>
+
   <select id="selectByOrderNumber" resultMap="VOMap">
     SELECT oi.order_number,oi.goods_name,oi.quantity,oi.price,
             g.picture

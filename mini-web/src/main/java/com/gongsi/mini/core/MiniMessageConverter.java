@@ -8,6 +8,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpInputMessage;
 import org.springframework.http.HttpOutputMessage;
+import org.springframework.http.MediaType;
 import org.springframework.http.converter.AbstractHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
@@ -16,12 +17,18 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Objects;
 
 /**
  * Created by wuyu on 2018/5/28.
  */
 public class MiniMessageConverter extends AbstractHttpMessageConverter<Object> {
+
+    public MiniMessageConverter() {
+        setSupportedMediaTypes(Arrays.asList(new MediaType("application", "json",  StandardCharsets.UTF_8),
+                new MediaType("application", "*+json",  StandardCharsets.UTF_8)));
+    }
 
     private SerializerFeature[] features;
     /** 标准字符集 */
@@ -35,12 +42,7 @@ public class MiniMessageConverter extends AbstractHttpMessageConverter<Object> {
     @Override
     protected Object readInternal(Class clazz, HttpInputMessage inputMessage) throws IOException, HttpMessageNotReadableException {
 //        String body = MiniContext.getContext().getPostBody();
-//        try {
-//            if (null==body) throw new BusinessException("body为空");
-//
-//        }catch (Exception e){
-//            logger.error("错误信息={}"+e.getMessage(),e);
-//        }
+
         return JSON.parseObject(IOUtils.toString(inputMessage.getBody(),"UTF-8"),clazz);
 //        return JSON.parseObject(body, clazz);
     }

@@ -1,6 +1,9 @@
 package com.gongsi.mini.dao;
 
 import com.gongsi.mini.entities.MemberType;
+import com.gongsi.mini.vo.MemberTypeVO;
+
+import java.util.List;
 
 public interface MemberTypeMapper {
     int deleteByPrimaryKey(Long id);
@@ -14,4 +17,6 @@ public interface MemberTypeMapper {
     int updateByPrimaryKeySelective(MemberType record);
 
     int updateByPrimaryKey(MemberType record);
+
+    List<MemberType> selectList();
 }

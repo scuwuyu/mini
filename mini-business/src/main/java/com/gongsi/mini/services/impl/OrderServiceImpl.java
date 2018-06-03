@@ -92,7 +92,7 @@ public class OrderServiceImpl implements OrderService {
         order.setSellerId(activity.getUserId());
         order.setActivityId(vo.getActivityId());
         order.setAddressId(vo.getAddressId());
-        int result = orderMapper.insert(order);
+        int result = orderMapper.insertSelective(order);
         Ensure.that(result).isEq(1,"保存订单失败");
 
         List<GoodsVO> list = goodsService.selectByIds(vo.getOrderItemList().stream()
@@ -105,7 +105,8 @@ public class OrderServiceImpl implements OrderService {
             OrderItem orderItem = BeanMapper.map(item, OrderItem.class);
             orderItem.setOrderNumber(order.getOrderNumber());
             orderItem.setGoodsName(map.get(item.getGoodsId()).getName());
-            orderItem.setTotalPrice(item.getPrice().multiply(new BigDecimal(item.getQuantity())));
+            orderItem.setPrice(map.get(item.getGoodsId()).getPrice());
+            orderItem.setTotalPrice(orderItem.getPrice().multiply(new BigDecimal(item.getQuantity())));
 
             return orderItem;
         }).collect(Collectors.toList());
