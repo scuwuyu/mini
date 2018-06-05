@@ -2,6 +2,7 @@ package com.gongsi.mini.utils;
 
 import com.gongsi.mini.core.ensure.Ensure;
 import com.gongsi.mini.core.utils.IdGenerator;
+import com.gongsi.mini.entities.Goods;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -10,6 +11,15 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class TestUtils {
     public static void main(String[] args) {
+        Goods goods = new Goods();
+        goods.setPicture("dasdas");
+        Ensure.that(goods.getPicture()).isNull("打错了");
+
+
+    }
+
+
+    public void testId(){
         final Object lock = new Object();
         final ConcurrentHashMap<String,Object> map = new ConcurrentHashMap<>();
 
@@ -27,7 +37,5 @@ public class TestUtils {
                 }
             },"Thread-"+i).start();
         }
-
-
     }
 }
