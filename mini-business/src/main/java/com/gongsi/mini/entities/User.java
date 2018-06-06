@@ -11,13 +11,11 @@ public class User {
 
     private String openId;
 
-    private String picture;
+    private String avatarUrl;
 
     private Boolean isSeller;
 
     private Date createTime;
-
-    private Date modifyTime;
 
     public Long getId() {
         return id;
@@ -51,12 +49,12 @@ public class User {
         this.openId = openId == null ? null : openId.trim();
     }
 
-    public String getPicture() {
-        return picture;
+    public String getAvatarUrl() {
+        return avatarUrl;
     }
 
-    public void setPicture(String picture) {
-        this.picture = picture == null ? null : picture.trim();
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl == null ? null : avatarUrl.trim();
     }
 
     public Boolean getIsSeller() {
@@ -73,13 +71,5 @@ public class User {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
-    }
-
-    public Date getModifyTime() {
-        return modifyTime;
-    }
-
-    public void setModifyTime(Date modifyTime) {
-        this.modifyTime = modifyTime;
     }
 }

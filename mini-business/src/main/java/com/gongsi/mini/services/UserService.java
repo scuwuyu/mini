@@ -16,4 +16,6 @@ public interface UserService {
     MineVO mine(String userId);
     /** 查询用户头像*/
     Map<String,UserVO> selectByIds(List<String> userIds);
+    /** 如果不存在则创建*/
+    User selectByOpenId(String openId);
 }

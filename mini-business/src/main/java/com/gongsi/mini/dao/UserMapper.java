@@ -23,5 +23,5 @@ public interface UserMapper {
 
     List<UserVO> selectByIds(@Param("userIds") List<String> userIds);
 
-    String test(Long id);
+    User selectByOpenId(String openId);
 }

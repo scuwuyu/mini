@@ -3,9 +3,9 @@
 CREATE TABLE `user` (
   `id` BIGINT(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
   `user_id` varchar(32) NOT NULL COMMENT '用户id',
-  `nickname` varchar(64) NOT NULL COMMENT '用户昵称',
+  `nickName` varchar(64) NOT NULL COMMENT '用户昵称',
   `open_id` varchar(32) NOT NULL COMMENT '微信openid',
-  `picture` varchar(128) DEFAULT NULL COMMENT '用户头像',
+  `avatar_url` varchar(128) DEFAULT NULL COMMENT '用户头像',
   `is_seller` TINYINT(1) NOT NULL DEFAULT '0' COMMENT '是否开通卖家:0.否，1.是',
 
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',

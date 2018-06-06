@@ -2,6 +2,7 @@ package com.gongsi.mini.services.impl;
 
 import com.gongsi.mini.core.ensure.Ensure;
 import com.gongsi.mini.core.utils.BeanMapper;
+import com.gongsi.mini.core.utils.IdGenerator;
 import com.gongsi.mini.dao.UserMapper;
 import com.gongsi.mini.entities.User;
 import com.gongsi.mini.services.ActivityService;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -55,5 +57,18 @@ public class UserServiceImpl implements UserService {
         }
 
         return list.stream().collect(Collectors.toMap(UserVO::getUserId, Function.identity()));
+    }
+
+    /** 如果不存在则创建*/
+    public synchronized User selectByOpenId(String openId){
+        User user = userMapper.selectByOpenId(openId);
+
+        if (Objects.isNull(user)){
+            user = new User();
+            user.setUserId(IdGenerator.nextId());
+            user.setOpenId(openId);
+            userMapper.insertSelective(user);
+        }
+        return user;
     }
 }

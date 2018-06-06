@@ -4,31 +4,31 @@
   <resultMap id="BaseResultMap" type="com.gongsi.mini.entities.User" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="user_id" property="userId" jdbcType="VARCHAR" />
-    <result column="nickname" property="nickname" jdbcType="VARCHAR" />
+    <result column="nickName" property="nickname" jdbcType="VARCHAR" />
     <result column="open_id" property="openId" jdbcType="VARCHAR" />
-    <result column="picture" property="picture" jdbcType="VARCHAR" />
+    <result column="avatar_url" property="avatarUrl" jdbcType="VARCHAR" />
     <result column="is_seller" property="isSeller" jdbcType="BIT" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <resultMap id="VOMap" type="com.gongsi.mini.vo.UserVO" >
     <result column="user_id" property="userId" jdbcType="VARCHAR" />
-    <result column="nickname" property="nickname" jdbcType="VARCHAR" />
+    <result column="nickName" property="nickName" jdbcType="VARCHAR" />
     <result column="open_id" property="openId" jdbcType="VARCHAR" />
-    <result column="picture" property="picture" jdbcType="VARCHAR" />
+    <result column="avatar_url" property="avatarUrl" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, user_id, nickname, open_id, picture, is_seller, create_time, modify_time
+    id, user_id, nickName, open_id, avatar_url, is_seller, create_time
   </sql>
+
   <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from user
     where user_id = #{userId}
   </select>
 
   <select id="selectByIds" resultMap="VOMap">
-    SELECT user_id,nickname,picture
+    SELECT user_id,nickName,avatar_url
     FROM `user`
     WHERE user_id IN
     <foreach collection="userIds" item="userId" open="(" close=")" separator=",">
@@ -36,13 +36,19 @@
     </foreach>
   </select>
 
-  <select id="test" parameterType="java.lang.Long" resultType="java.lang.String">
-    SELECT name FROM cycle_mission_template WHERE id = #{id}
+  <select id="selectByOpenId" resultMap="BaseResultMap" parameterType="java.lang.String">
+    SELECT <include refid="Base_Column_List"/>
+    FROM `user`
+    WHERE open_id = #{openId}
   </select>
 
 
+
+
+
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select
+    select 
     <include refid="Base_Column_List" />
     from user
     where id = #{id,jdbcType=BIGINT}
@@ -52,12 +58,12 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.gongsi.mini.entities.User" >
-    insert into user (id, user_id, nickname, 
-      open_id, picture, is_seller, 
-      create_time, modify_time)
+    insert into user (id, user_id, nickName, 
+      open_id, avatar_url, is_seller, 
+      create_time)
     values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, 
-      #{openId,jdbcType=VARCHAR}, #{picture,jdbcType=VARCHAR}, #{isSeller,jdbcType=BIT}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP})
+      #{openId,jdbcType=VARCHAR}, #{avatarUrl,jdbcType=VARCHAR}, #{isSeller,jdbcType=BIT}, 
+      #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.gongsi.mini.entities.User" >
     insert into user
@@ -69,22 +75,19 @@
         user_id,
       </if>
       <if test="nickname != null" >
-        nickname,
+        nickName,
       </if>
       <if test="openId != null" >
         open_id,
       </if>
-      <if test="picture != null" >
-        picture,
+      <if test="avatarUrl != null" >
+        avatar_url,
       </if>
       <if test="isSeller != null" >
         is_seller,
       </if>
       <if test="createTime != null" >
         create_time,
-      </if>
-      <if test="modifyTime != null" >
-        modify_time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -100,17 +103,14 @@
       <if test="openId != null" >
         #{openId,jdbcType=VARCHAR},
       </if>
-      <if test="picture != null" >
-        #{picture,jdbcType=VARCHAR},
+      <if test="avatarUrl != null" >
+        #{avatarUrl,jdbcType=VARCHAR},
       </if>
       <if test="isSeller != null" >
         #{isSeller,jdbcType=BIT},
       </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="modifyTime != null" >
-        #{modifyTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -121,13 +121,13 @@
         user_id = #{userId,jdbcType=VARCHAR},
       </if>
       <if test="nickname != null" >
-        nickname = #{nickname,jdbcType=VARCHAR},
+        nickName = #{nickname,jdbcType=VARCHAR},
       </if>
       <if test="openId != null" >
         open_id = #{openId,jdbcType=VARCHAR},
       </if>
-      <if test="picture != null" >
-        picture = #{picture,jdbcType=VARCHAR},
+      <if test="avatarUrl != null" >
+        avatar_url = #{avatarUrl,jdbcType=VARCHAR},
       </if>
       <if test="isSeller != null" >
         is_seller = #{isSeller,jdbcType=BIT},
@@ -135,21 +135,17 @@
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="modifyTime != null" >
-        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
-      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.gongsi.mini.entities.User" >
     update user
     set user_id = #{userId,jdbcType=VARCHAR},
-      nickname = #{nickname,jdbcType=VARCHAR},
+      nickName = #{nickname,jdbcType=VARCHAR},
       open_id = #{openId,jdbcType=VARCHAR},
-      picture = #{picture,jdbcType=VARCHAR},
+      avatar_url = #{avatarUrl,jdbcType=VARCHAR},
       is_seller = #{isSeller,jdbcType=BIT},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+      create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>
