@@ -2,6 +2,7 @@ package com.gongsi.mini.core;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by 吴宇 on 2018-05-27.
@@ -48,7 +49,7 @@ public class Pagination<T> implements Serializable {
     }
 
     public void setCurrentPage(Integer currentPage) {
-        if (currentPage < 1) {
+        if (Objects.isNull(currentPage)||currentPage < 1) {
             currentPage = 1;
         }
         this.currentPage = currentPage;
@@ -59,7 +60,7 @@ public class Pagination<T> implements Serializable {
     }
 
     public void setPageSize(Integer pageSize) {
-        if (pageSize < 1) {
+        if (Objects.isNull(pageSize)||pageSize < 1) {
             pageSize = 1;
         } else if (pageSize > MAX_PAGE_SIZE) {
             pageSize = MAX_PAGE_SIZE;

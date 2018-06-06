@@ -1,5 +1,6 @@
 package com.gongsi.mini.services.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.gongsi.mini.core.ensure.Ensure;
 import com.gongsi.mini.core.utils.BeanMapper;
 import com.gongsi.mini.core.utils.IdGenerator;
@@ -10,6 +11,7 @@ import com.gongsi.mini.services.OrderService;
 import com.gongsi.mini.services.UserService;
 import com.gongsi.mini.vo.MineVO;
 import com.gongsi.mini.vo.UserVO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,7 @@ import java.util.stream.Collectors;
 /**
  * Created by 吴宇 on 2018-05-22.
  */
+@Slf4j
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
@@ -70,5 +73,16 @@ public class UserServiceImpl implements UserService {
             userMapper.insertSelective(user);
         }
         return user;
+    }
+    /** 更新用户头像信息*/
+    public void updateByUserId(UserVO vo){
+        log.info("更新用户信息vo={}", JSON.toJSONString(vo));
+        User user = new User();
+        user.setUserId(vo.getUserId());
+        user.setNickName(vo.getNickName());
+        user.setAvatarUrl(vo.getAvatarUrl());
+
+        int result = userMapper.updateByUserIdSelective(user);
+        Ensure.that(result).isGt(0,"更新用户信息失败");
     }
 }

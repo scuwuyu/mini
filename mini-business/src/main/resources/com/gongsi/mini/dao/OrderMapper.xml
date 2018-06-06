@@ -51,6 +51,13 @@
     SELECT COUNT(*) FROM `order`
     WHERE activity_id = #{vo.activityId}
   </select>
+  <select id="activityOrderList" resultMap="VOMap">
+    SELECT order_number, user_id, seller_id, activity_id,comment, status, create_time
+    FROM `order`
+    WHERE activity_id = #{vo.activityId}
+    ORDER BY id DESC
+    limit #{pagination.offSize},#{pagination.pageSize}
+  </select>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 

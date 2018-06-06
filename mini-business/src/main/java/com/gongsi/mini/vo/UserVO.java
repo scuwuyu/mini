@@ -6,12 +6,12 @@ import lombok.Data;
  * Created by 吴宇 on 2018-05-26.
  */
 @Data
-public class UserVO {
+public class UserVO extends BaseVO{
     private String userId;
 
-    private String nickname;
+    private String nickName;
 
     private String openId;
 
-    private String picture;
+    private String avatarUrl;
 }

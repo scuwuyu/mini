@@ -28,6 +28,9 @@ public class OrderVO extends BaseVO {
 
     /** 商品详情列表 */
     private List<OrderItemVO> orderItemList;
+    /** 买家信息 */
+    private UserVO buyerInfo;
+
     /** 卖家信息 */
     private UserVO sellerInfo;
 

@@ -12,7 +12,11 @@ public class WechatAuthService extends BaseService {
             "appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code";
 
     public static WechatAuthResult authByJSCode(AuthVO authVO){
-        String requestUrl = AUTH_URL.replace("JSCODE",authVO.getCode());
-        return exePostJson(requestUrl,null, WechatAuthResult.class);
+//        String requestUrl = AUTH_URL.replace("JSCODE",authVO.getCode());
+//        return exePostJson(requestUrl,null, WechatAuthResult.class);
+
+        WechatAuthResult wechatAuthResult = new WechatAuthResult();
+        wechatAuthResult.setOpenid("openid");
+        return wechatAuthResult;
     }
 }

@@ -2,6 +2,7 @@ package com.gongsi.mini.utils;
 
 import com.gongsi.mini.core.ensure.Ensure;
 import com.gongsi.mini.vo.UserSessionVO;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 
 /**
@@ -14,12 +15,15 @@ public class UserUtil {
     }
 
     public static UserSessionVO getUser(String key){
-        Ensure.that(key).isNotEmpty("key不能为空");
-        UserSessionVO userSessionVO =  (UserSessionVO)SecurityUtils.getSubject().getSession().getAttribute(key);
-        return userSessionVO;
-//        UserSessionVO vo = new UserSessionVO();
-//        vo.setUserId("123456");
-//        vo.setOpenId("1111");
-//        return vo;
+        if (StringUtils.isNotEmpty(key)){
+            return  (UserSessionVO)SecurityUtils.getSubject().getSession().getAttribute(key);
+        }
+//        Ensure.that(key).isNotEmpty("key不能为空");
+//        UserSessionVO userSessionVO =  (UserSessionVO)SecurityUtils.getSubject().getSession().getAttribute(key);
+//        return userSessionVO;
+        UserSessionVO vo = new UserSessionVO();
+        vo.setUserId("123456");
+        vo.setOpenId("openid");
+        return vo;
     }
 }

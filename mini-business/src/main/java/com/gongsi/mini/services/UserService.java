@@ -18,4 +18,7 @@ public interface UserService {
     Map<String,UserVO> selectByIds(List<String> userIds);
     /** 如果不存在则创建*/
     User selectByOpenId(String openId);
+
+    /** 更新用户头像信息*/
+    void updateByUserId(UserVO vo);
 }

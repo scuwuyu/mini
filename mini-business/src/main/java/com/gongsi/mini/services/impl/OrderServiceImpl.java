@@ -128,9 +128,12 @@ public class OrderServiceImpl implements OrderService {
         if (count==0){
             return pagination;
         }
-
-        List<OrderVO> list = orderMapper.activityOrderList(vo);
+        List<OrderVO> list = orderMapper.activityOrderList(vo,pagination);
         pagination.setList(list);
+        /** 设置用户信息 */
+        Map<String,UserVO> map = userService.selectByIds(new ArrayList<>(list.stream().map(OrderVO::getUserId).collect(Collectors.toSet())));
+
+        list.forEach(item -> item.setBuyerInfo(map.get(item.getUserId())));
 
         return pagination;
     }

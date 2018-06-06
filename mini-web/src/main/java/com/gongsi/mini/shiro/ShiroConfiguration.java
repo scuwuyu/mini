@@ -1,6 +1,7 @@
 package com.gongsi.mini.shiro;
 
 import org.apache.shiro.codec.Base64;
+import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
@@ -40,7 +41,7 @@ public class ShiroConfiguration {
     public SecurityManager securityManager() {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         // 设置realm.
-        securityManager.setRealm(myShiroRealm());
+        securityManager.setRealm(myAuthorizingRealm());
         // 自定义缓存实现 使用redis
         //securityManager.setCacheManager(cacheManager());
         // 自定义session管理 使用redis
@@ -50,8 +51,16 @@ public class ShiroConfiguration {
         return securityManager;
     }
 
-    private MyAuthorizingRealm myShiroRealm(){
-        return new MyAuthorizingRealm();
+    @Bean
+    public LifecycleBeanPostProcessor lifecycleBeanPostProcessor(){
+        return new LifecycleBeanPostProcessor();
+    }
+
+    @Bean
+    public MyAuthorizingRealm myAuthorizingRealm(){
+        MyAuthorizingRealm myAuthorizingRealm = new MyAuthorizingRealm();
+        myAuthorizingRealm.setCredentialsMatcher(new MyHashedCredentialsMatcher());
+        return myAuthorizingRealm;
     }
 
     public SimpleCookie rememberMeCookie(){

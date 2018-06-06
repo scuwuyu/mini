@@ -8,9 +8,9 @@ import lombok.Data;
 @Data
 public class MineVO {
     /** 昵称*/
-    private String nickname;
+    private String nickName;
     /** 头像 */
-    private String picture;
+    private String avatarUrl;
     /** 是不是卖家 */
     private Boolean isSeller;
 

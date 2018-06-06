@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.gongsi.mini.entities.User" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="user_id" property="userId" jdbcType="VARCHAR" />
-    <result column="nickName" property="nickname" jdbcType="VARCHAR" />
+    <result column="nickName" property="nickName" jdbcType="VARCHAR" />
     <result column="open_id" property="openId" jdbcType="VARCHAR" />
     <result column="avatar_url" property="avatarUrl" jdbcType="VARCHAR" />
     <result column="is_seller" property="isSeller" jdbcType="BIT" />
@@ -61,7 +61,7 @@
     insert into user (id, user_id, nickName, 
       open_id, avatar_url, is_seller, 
       create_time)
-    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR},
       #{openId,jdbcType=VARCHAR}, #{avatarUrl,jdbcType=VARCHAR}, #{isSeller,jdbcType=BIT}, 
       #{createTime,jdbcType=TIMESTAMP})
   </insert>
@@ -74,7 +74,7 @@
       <if test="userId != null" >
         user_id,
       </if>
-      <if test="nickname != null" >
+      <if test="nickName != null" >
         nickName,
       </if>
       <if test="openId != null" >
@@ -97,8 +97,8 @@
       <if test="userId != null" >
         #{userId,jdbcType=VARCHAR},
       </if>
-      <if test="nickname != null" >
-        #{nickname,jdbcType=VARCHAR},
+      <if test="nickName != null" >
+        #{nickName,jdbcType=VARCHAR},
       </if>
       <if test="openId != null" >
         #{openId,jdbcType=VARCHAR},
@@ -120,8 +120,8 @@
       <if test="userId != null" >
         user_id = #{userId,jdbcType=VARCHAR},
       </if>
-      <if test="nickname != null" >
-        nickName = #{nickname,jdbcType=VARCHAR},
+      <if test="nickName != null" >
+        nickName = #{nickName,jdbcType=VARCHAR},
       </if>
       <if test="openId != null" >
         open_id = #{openId,jdbcType=VARCHAR},
@@ -138,10 +138,32 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <update id="updateByUserIdSelective" parameterType="com.gongsi.mini.entities.User" >
+    update user
+    <set >
+      <if test="nickName != null" >
+        nickName = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="openId != null" >
+        open_id = #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="avatarUrl != null" >
+        avatar_url = #{avatarUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="isSeller != null" >
+        is_seller = #{isSeller,jdbcType=BIT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=BIGINT}
+  </update>
   <update id="updateByPrimaryKey" parameterType="com.gongsi.mini.entities.User" >
     update user
     set user_id = #{userId,jdbcType=VARCHAR},
-      nickName = #{nickname,jdbcType=VARCHAR},
+      nickName = #{nickName,jdbcType=VARCHAR},
       open_id = #{openId,jdbcType=VARCHAR},
       avatar_url = #{avatarUrl,jdbcType=VARCHAR},
       is_seller = #{isSeller,jdbcType=BIT},
