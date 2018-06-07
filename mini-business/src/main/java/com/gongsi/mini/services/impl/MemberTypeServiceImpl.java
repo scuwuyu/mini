@@ -2,6 +2,7 @@ package com.gongsi.mini.services.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.gongsi.mini.core.ensure.Ensure;
+import com.gongsi.mini.core.exception.BusinessException;
 import com.gongsi.mini.core.utils.BeanMapper;
 import com.gongsi.mini.dao.MemberTypeMapper;
 import com.gongsi.mini.entities.MemberTransaction;
@@ -53,8 +54,8 @@ public class MemberTypeServiceImpl implements MemberTypeService {
             return new MemberTypeVO(false);
         }
 
-        MemberTransaction memberTransaction = memberTransactionService.insertOrGet(user.getUserId(),memberType.getId(),memberType.getPrice());
-        // TODO: 2018-06-03 调用微信支付
-        return null;
+        throw new BusinessException("目前版本不支持收费");
+        // TODO: 2018-06-03 调用微信支付,二期考虑收费版本
+        // MemberTransaction memberTransaction = memberTransactionService.insertOrGet(user.getUserId(),memberType.getId(),memberType.getPrice());
     }
 }

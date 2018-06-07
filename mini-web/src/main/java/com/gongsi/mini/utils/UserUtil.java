@@ -18,9 +18,7 @@ public class UserUtil {
         if (StringUtils.isNotEmpty(key)){
             return  (UserSessionVO)SecurityUtils.getSubject().getSession().getAttribute(key);
         }
-//        Ensure.that(key).isNotEmpty("key不能为空");
-//        UserSessionVO userSessionVO =  (UserSessionVO)SecurityUtils.getSubject().getSession().getAttribute(key);
-//        return userSessionVO;
+
         UserSessionVO vo = new UserSessionVO();
         vo.setUserId("123456");
         vo.setOpenId("openid");
