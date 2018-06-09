@@ -23,6 +23,8 @@ public class Activity {
 
     private Date createTime;
 
+    private String address;
+
     public Long getId() {
         return id;
     }
@@ -101,5 +103,13 @@ public class Activity {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address == null ? null : address.trim();
     }
 }

@@ -84,6 +84,7 @@ CREATE TABLE `activity` (
 
   `longitude` DOUBLE DEFAULT NULL COMMENT '活动经度',
   `latitude` DOUBLE DEFAULT NULL COMMENT '活动纬度',
+  `address` varchar(256) DEFAULT NULL COMMENT '活动详细地址',
   `activity_time` datetime DEFAULT NULL COMMENT '活动时间',
   `desc` varchar(256) DEFAULT NULL COMMENT '简介',
   `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态：1:进行中 5：结束',

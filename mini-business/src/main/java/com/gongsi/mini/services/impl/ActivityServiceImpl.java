@@ -32,8 +32,7 @@ public class ActivityServiceImpl implements ActivityService {
     private UserService userService;
     /** 新增活动*/
     public Integer add(ActivityVO activityVO, UserSessionVO sessionVO){
-        Activity activity = new Activity();
-        BeanUtils.copyProperties(activityVO,activity);
+        Activity activity = BeanMapper.map(activityVO,Activity.class);
         activity.setUserId(sessionVO.getUserId());
         return activityMapper.insert(activity);
     }

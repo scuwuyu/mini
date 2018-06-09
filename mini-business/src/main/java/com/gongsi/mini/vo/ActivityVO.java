@@ -1,8 +1,10 @@
 package com.gongsi.mini.vo;
 
+import com.gongsi.mini.core.ensure.Ensure;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * Created by 吴宇 on 2018-05-23.
@@ -23,8 +25,19 @@ public class ActivityVO extends BaseVO{
     private Date activityTime;
 
     private String desc;
+
+    private String address;
+
     /** 状态：1:进行中 5：结束*/
     private Integer status;
     /** c端查看时,增加用户信息*/
     private UserVO userInfo;
+
+    public void check(){
+        Ensure.that(name).isNotEmpty("活动名称不能为空");
+        Ensure.that(address).isNotEmpty("活动地址不能为空");
+        Ensure.that(activityTime).isNotNull("活动日期不能为空");
+        Ensure.that(activityTime.after(new Date())).isTrue("活动日期不能小于当前时间");
+        Ensure.that(Objects.isNull(desc)||desc.length()<1<<8).isTrue("活动简介最多200字");
+    }
 }
