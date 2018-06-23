@@ -41,7 +41,7 @@
         <property name="dataSource" ref="mDatasource"/>
         <property name="typeAliasesPackage" value="com.gongsi.mini.entities"/>
         <property name="configLocation" value="classpath:mybatis/mybatis-config.xml"/>
-        <property name="mapperLocations" value="classpath:com/gongsi/mini/dao/*DAO.xml"/>
+        <property name="mapperLocations" value="classpath:com/gongsi/mini/dao/*Mapper.xml"/>
         <!--<property name="plugins">-->
             <!--<array>-->
                 <!--&lt;!&ndash;page interceptor&ndash;&gt;-->
@@ -50,11 +50,11 @@
         <!--</property>-->
     </bean>
 
-    <!--  MyBatis MapperScannerConfigurer -->
-    <bean id="mMapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.gongsi.mini.dao"/>
-        <property name="sqlSessionFactoryBeanName" value="mSqlSessionFactory"/>
-    </bean>
+    <!--  MyBatis MapperScannerConfigurer 与@MapperScan 冲突  暂时去掉-->
+    <!--<bean id="mMapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">-->
+        <!--<property name="basePackage" value="com.gongsi.mini.dao"/>-->
+        <!--<property name="sqlSessionFactoryBeanName" value="mSqlSessionFactory"/>-->
+    <!--</bean>-->
     <!-- =====================================Business datasource end=====================================-->
 
 </beans>
