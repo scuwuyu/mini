@@ -152,7 +152,7 @@
         activity_time = #{activityTime,jdbcType=TIMESTAMP},
       </if>
       <if test="desc != null" >
-        desc = #{desc,jdbcType=VARCHAR},
+        `desc` = #{desc,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
         status = #{status,jdbcType=TINYINT},
@@ -174,7 +174,7 @@
       longitude = #{longitude,jdbcType=DOUBLE},
       latitude = #{latitude,jdbcType=DOUBLE},
       activity_time = #{activityTime,jdbcType=TIMESTAMP},
-      desc = #{desc,jdbcType=VARCHAR},
+      `desc` = #{desc,jdbcType=VARCHAR},
       status = #{status,jdbcType=TINYINT},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       address = #{address,jdbcType=VARCHAR}
