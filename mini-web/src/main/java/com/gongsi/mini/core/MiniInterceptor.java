@@ -1,5 +1,6 @@
 package com.gongsi.mini.core;
 
+import com.gongsi.mini.constants.Constants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,6 +28,12 @@ public class MiniInterceptor implements HandlerInterceptor {
 
     @Override
     public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {
+        MiniContext miniContext = MiniContext.getContext();
+
+        if (miniContext.isInited()){
+            log.info(Constants.LOG_STRING,miniContext.getRequestUrl(),miniContext.getPostBody(),miniContext.getReturnBody());
+        }
+
         MiniContext.remove();
     }
 }

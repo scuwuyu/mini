@@ -3,6 +3,7 @@ package com.gongsi.mini.core;
 import com.gongsi.mini.core.ensure.Ensure;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpMethod;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,8 +14,14 @@ import java.io.IOException;
  */
 @Slf4j
 public class MiniContext {
+    /** 请求参数 */
     private String postBody;
+
+    /** 返回结果 */
+    private String returnBody;
+
     private boolean isInited = false;
+    protected HttpServletRequest request;
 
     private static final ThreadLocal<MiniContext> THREAD_LOCAL = new ThreadLocal<MiniContext>() {
         @Override
@@ -31,9 +38,10 @@ public class MiniContext {
     public void init(HttpServletRequest request) {
         Ensure.that(request).isNotNull("请求不能为空");
         this.isInited = true;
-        if (isPostRequest(request)) {
-            this.postBody = parsePostBody(request);
-        }
+        this.request = request;
+//        if (isPostRequest(request)) {
+//            this.postBody = parsePostBody(request);
+//        }
     }
 
     /** 判断是否post请求 */
@@ -56,6 +64,10 @@ public class MiniContext {
         return postBody;
     }
 
+    public void setPostBody(String postBody) {
+        this.postBody = postBody;
+    }
+
     /** 请求完成清理掉*/
     public static void remove() {
         THREAD_LOCAL.remove();
@@ -63,5 +75,22 @@ public class MiniContext {
 
     public boolean isInited() {
         return isInited;
+    }
+
+    /**
+     * 获取请求对应的URL
+     */
+    public String getRequestUrl() {
+        String queryString = request.getQueryString();
+        return StringUtils.isEmpty(queryString)?
+                request.getRequestURI():request.getRequestURI() + "?" + queryString;
+    }
+
+    public String getReturnBody() {
+        return returnBody;
+    }
+
+    public void setReturnBody(String returnBody) {
+        this.returnBody = returnBody;
     }
 }

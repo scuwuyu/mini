@@ -45,7 +45,7 @@
 	<Loggers>
 
 		<Logger name="com.alibaba.dubbo" level="warn" />
-		
+
 		<Logger name="com.gongsi" level="debug" />
 		
 		<Root level="info">

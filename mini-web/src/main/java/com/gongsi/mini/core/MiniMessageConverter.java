@@ -41,16 +41,21 @@ public class MiniMessageConverter extends AbstractHttpMessageConverter<Object> {
 
     @Override
     protected Object readInternal(Class clazz, HttpInputMessage inputMessage) throws IOException, HttpMessageNotReadableException {
-//        String body = MiniContext.getContext().getPostBody();
+        String body = IOUtils.toString(inputMessage.getBody(), "UTF-8");
+        MiniContext miniContext = MiniContext.getContext();
+        miniContext.setPostBody(body);
 
-        return JSON.parseObject(IOUtils.toString(inputMessage.getBody(),"UTF-8"),clazz);
-//        return JSON.parseObject(body, clazz);
+        return JSON.parseObject(body,clazz);
     }
 
     @Override
     protected void writeInternal(Object obj, HttpOutputMessage outputMessage) throws IOException, HttpMessageNotWritableException {
         Object result = ResultUtils.getSuccessResult(obj);
         String jsonStr = convertToJsonStr(result);
+
+        MiniContext miniContext = MiniContext.getContext();
+        miniContext.setReturnBody(jsonStr);
+
         OutputStream out = outputMessage.getBody();
         out.write(jsonStr.getBytes(CHARSET));
     }
