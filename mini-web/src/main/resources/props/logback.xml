@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration scan="false" scanPeriod="60 seconds" debug="false">
+    <property name="LOG_HOME" value="/home/www/logs/mini"/>
+    <property name="LOG_MAX_HISTORY" value="30"/>
+
+    <property name="LOG_ALL_HOME" value="${LOG_HOME}/mini.log"/>
+    <property name="LOG_ALL_ROLL_HOME" value="${LOG_HOME}/mini.log.%d{yyyy-MM-dd}"/>
+    <property name="LOG_ERROR_HOME" value="${LOG_HOME}/mini-error.log"/>
+    <property name="LOG_ERROR_ROLL_HOME" value="${LOG_HOME}/mini-error.log.%d{yyyy-MM-dd}"/>
+
+    <property name="ENCODER_PATTERN" value="[%d{yyyy-MM-dd HH:mm:ss}][%-5p]%file:%line - %m%n"/>
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss} [%thread] %-5level %logger{36}:%line - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="log-all" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+        <File>${LOG_ALL_HOME}</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_ALL_ROLL_HOME}</fileNamePattern>
+            <maxHistory>${LOG_MAX_HISTORY}</maxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${ENCODER_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="log-error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <File>${LOG_ERROR_HOME}</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_ERROR_ROLL_HOME}</fileNamePattern>
+            <maxHistory>${LOG_MAX_HISTORY}</maxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${ENCODER_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="com.gongsi" level="debug"/>
+
+    <root level="info">
+        <appender-ref ref="console"/>
+        <appender-ref ref="log-all"/>
+        <appender-ref ref="log-error"/>
+    </root>
+</configuration>

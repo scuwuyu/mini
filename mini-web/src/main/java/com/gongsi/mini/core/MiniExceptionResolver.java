@@ -37,6 +37,10 @@ public class MiniExceptionResolver extends SimpleMappingExceptionResolver {
             stream = response.getOutputStream();
             String jsonStr = JSON.toJSONString(result);
 
+            /** 返回结果在MessageConverter 或 ExceptionResolver */
+            MiniContext miniContext = MiniContext.getContext();
+            miniContext.setReturnBody(jsonStr);
+
             stream.write(jsonStr.getBytes(charset));
         } catch (IOException e) {
             logger.error("写入字符串错误",e);
