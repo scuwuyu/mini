@@ -2,7 +2,7 @@
 
 <configuration scan="false" scanPeriod="60 seconds" debug="false">
     <property name="LOG_HOME" value="/home/www/logs/mini"/>
-    <property name="LOG_MAX_HISTORY" value="30"/>
+    <property name="LOG_MAX_HISTORY" value="20"/>
 
     <property name="LOG_ALL_HOME" value="${LOG_HOME}/mini.log"/>
     <property name="LOG_ALL_ROLL_HOME" value="${LOG_HOME}/mini.log.%d{yyyy-MM-dd}"/>

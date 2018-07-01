@@ -152,7 +152,7 @@
     WHERE user_id = #{userId} AND default_address = 1
   </update>
   <select id="selectList" resultMap="VOMap">
-    SELECT name,address,mobile,default_address
+    SELECT id,name,address,mobile,default_address
     FROM address
     WHERE user_id = #{userId} AND status = 1
     ORDER BY default_address DESC,create_time DESC
