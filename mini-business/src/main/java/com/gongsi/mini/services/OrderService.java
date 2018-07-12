@@ -1,6 +1,7 @@
 package com.gongsi.mini.services;
 
 import com.gongsi.mini.core.Pagination;
+import com.gongsi.mini.vo.GoodsVO;
 import com.gongsi.mini.vo.OrderVO;
 import com.gongsi.mini.vo.UserSessionVO;
 import com.gongsi.mini.vo.page.OrderPageVO;
@@ -28,4 +29,6 @@ public interface OrderService {
     /** 活动订单列表*/
     Pagination<OrderVO> activityOrderList(OrderPageVO vo, UserSessionVO user);
 
+    /** 采购清单 列表*/
+    List<GoodsVO> activityBuyList(OrderPageVO vo, UserSessionVO user);
 }

@@ -27,12 +27,12 @@
 
   <insert id="batchInsert">
     INSERT INTO order_item (order_number, goods_id, goods_name, quantity, price, total_price)
-    VALUES (
+    VALUES
       <foreach collection="orderItems" item="item" separator=",">
-        #{item.orderNumber}, #{item.goodsId}, #{item.goodsName}, #{item.quantity}, #{item.price},#{item.totalPrice}
+        (
+          #{item.orderNumber}, #{item.goodsId}, #{item.goodsName}, #{item.quantity}, #{item.price},#{item.totalPrice}
+        )
       </foreach>
-
-    )
   </insert>
 
   <select id="selectByOrderNumber" resultMap="VOMap">

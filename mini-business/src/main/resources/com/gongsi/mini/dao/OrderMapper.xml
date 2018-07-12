@@ -50,13 +50,27 @@
   <select id="countActivityOrderList" resultType="java.lang.Integer">
     SELECT COUNT(*) FROM `order`
     WHERE activity_id = #{vo.activityId}
+    <if test="vo.status !=null">
+      AND status = #{vo.status}
+    </if>
   </select>
   <select id="activityOrderList" resultMap="VOMap">
     SELECT order_number, user_id, seller_id, activity_id,comment, status, create_time
     FROM `order`
     WHERE activity_id = #{vo.activityId}
+    <if test="vo.status !=null">
+      AND status = #{vo.status}
+    </if>
     ORDER BY id DESC
     limit #{pagination.offSize},#{pagination.pageSize}
+  </select>
+  <select id="activityBuyList" parameterType="java.lang.Long" resultType="com.gongsi.mini.vo.GoodsVO">
+    SELECT oi.goods_id id,oi.goods_name name,g.picture,SUM(oi.quantity) total
+    FROM order_item oi
+    JOIN (SELECT order_number FROM `order` WHERE activity_id = 6) o
+    ON o.order_number = oi.order_number
+    LEFT JOIN goods g ON g.id = oi.goods_id
+    GROUP BY goods_id;
   </select>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">

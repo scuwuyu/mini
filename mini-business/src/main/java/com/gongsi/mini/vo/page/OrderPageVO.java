@@ -11,4 +11,6 @@ public class OrderPageVO extends PageVO {
 
     private Long activityId;
 
+    private Integer status;
+
 }

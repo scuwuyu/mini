@@ -14,6 +14,8 @@ public class GoodsVO extends BaseVO {
     private String name;
     private String picture;
 
+    private Integer total;
+
     private String desc;
     private BigDecimal price;
     /** 需要删除的商品id*/

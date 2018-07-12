@@ -137,4 +137,9 @@ public class OrderServiceImpl implements OrderService {
 
         return pagination;
     }
+
+    /** 采购清单 列表*/
+    public List<GoodsVO> activityBuyList(OrderPageVO vo, UserSessionVO user){
+        return orderMapper.activityBuyList(vo.getActivityId());
+    }
 }

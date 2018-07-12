@@ -4,6 +4,7 @@ import com.gongsi.mini.core.Pagination;
 import com.gongsi.mini.core.ensure.Ensure;
 import com.gongsi.mini.services.OrderService;
 import com.gongsi.mini.utils.UserUtil;
+import com.gongsi.mini.vo.GoodsVO;
 import com.gongsi.mini.vo.OrderVO;
 import com.gongsi.mini.vo.page.OrderPageVO;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +34,14 @@ public class SellerOrderController {
     public Pagination<OrderVO> list(@RequestBody OrderPageVO vo){
         Ensure.that(vo.getActivityId()).isNotNull("活动id不能为空");
         return orderService.activityOrderList(vo, UserUtil.getUser(vo.getKey()));
+    }
+
+    /** 采购清单 列表*/
+    @RequestMapping(value = "/buy/list",method = RequestMethod.POST)
+    @ResponseBody
+    public List<GoodsVO> buyList(@RequestBody OrderPageVO vo){
+        Ensure.that(vo.getActivityId()).isNotNull("活动id不能为空");
+        return orderService.activityBuyList(vo, UserUtil.getUser(vo.getKey()));
     }
 
 }

@@ -2,6 +2,7 @@ package com.gongsi.mini.dao;
 
 import com.gongsi.mini.core.Pagination;
 import com.gongsi.mini.entities.Order;
+import com.gongsi.mini.vo.GoodsVO;
 import com.gongsi.mini.vo.OrderVO;
 import com.gongsi.mini.vo.page.OrderPageVO;
 import org.apache.ibatis.annotations.Param;
@@ -30,4 +31,6 @@ public interface OrderMapper {
     int countActivityOrderList(@Param("vo") OrderPageVO vo);
 
     List<OrderVO> activityOrderList(@Param("vo")OrderPageVO vo,@Param("pagination") Pagination pagination);
+
+    List<GoodsVO> activityBuyList(Long activityId);
 }
