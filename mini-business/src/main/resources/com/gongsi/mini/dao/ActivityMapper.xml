@@ -36,7 +36,11 @@
   <select id="selectList" resultMap="VOMap">
     select id,name,picture,activity_time,status,address
     from activity
-    WHERE user_id = #{userId} AND status = #{status}
+    WHERE user_id = #{userId}
+    <if test="vo.name !=null">
+      AND name like CONCAT("%",#{vo.name},"%")
+    </if>
+    AND status = #{vo.status}
     order by activity_time;
   </select>
 

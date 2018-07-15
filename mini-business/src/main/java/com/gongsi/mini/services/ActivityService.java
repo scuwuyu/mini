@@ -18,7 +18,7 @@ public interface ActivityService {
     /** 查询活动次数 */
     int countByUserId(String userId);
     /** 状态查询活动列表 */
-    List<ActivityVO> selectList(Integer status, UserSessionVO user);
+    List<ActivityVO> selectList(ActivityVO vo, UserSessionVO user);
 
     ActivityVO detail(Long id, UserSessionVO user);
 

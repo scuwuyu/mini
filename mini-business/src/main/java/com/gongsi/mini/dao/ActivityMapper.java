@@ -21,5 +21,5 @@ public interface ActivityMapper {
 
     int countByUserId(String userId);
 
-    List<ActivityVO> selectList(@Param("status") Integer status,@Param("userId") String userId);
+    List<ActivityVO> selectList(@Param("vo") ActivityVO vo,@Param("userId") String userId);
 }

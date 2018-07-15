@@ -53,8 +53,8 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     /** 状态查询活动列表 */
-    public List<ActivityVO> selectList(Integer status, UserSessionVO user){
-        return activityMapper.selectList(status,user.getUserId());
+    public List<ActivityVO> selectList(ActivityVO vo, UserSessionVO user){
+        return activityMapper.selectList(vo,user.getUserId());
     }
 
     /** c端 b端用户查看活动*/

@@ -56,6 +56,6 @@ public class ActivityController {
     @ResponseBody
     public List<ActivityVO> list(@RequestBody ActivityVO vo){
         Ensure.that(vo.getStatus()).isNotNull("活动状态不能为空");
-        return activityService.selectList(vo.getStatus(), UserUtil.getUser(vo.getKey()));
+        return activityService.selectList(vo, UserUtil.getUser(vo.getKey()));
     }
 }
