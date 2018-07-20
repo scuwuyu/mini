@@ -120,7 +120,10 @@ CREATE TABLE `order` (
   `seller_id` varchar(32) NOT NULL COMMENT '卖家用户id',
   `activity_id` BIGINT(20) unsigned NOT NULL DEFAULT '0' COMMENT '活动id',
 
-  `address_id` BIGINT(20) unsigned NOT NULL COMMENT '收货地址id',
+  `receiver_name` varchar(64) DEFAULT NULL COMMENT '收货人名称',
+  `receiver_address` varchar(256) DEFAULT NULL COMMENT '收货人地址',
+  `receiver_mobile` varchar(32) DEFAULT NULL COMMENT '收货人电话',
+
   `express_number` varchar(32) DEFAULT NULL COMMENT '快递单号',
   `express_name` varchar(32) DEFAULT NULL COMMENT '快递名称',
 

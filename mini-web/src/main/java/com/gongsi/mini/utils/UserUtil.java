@@ -17,7 +17,7 @@ public class UserUtil {
     public static UserSessionVO getUser(String key){
         if (StringUtils.isNotEmpty(key)){
             UserSessionVO vo = (UserSessionVO)SecurityUtils.getSubject().getSession().getAttribute(key);
-            Ensure.that(vo).isNotNull("用户未登陆");
+            Ensure.that(vo).isNotNull("用户未登陆","20001");
             return vo;
         }
 

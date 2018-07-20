@@ -2,8 +2,9 @@ package com.gongsi.mini.utils;
 
 import com.gongsi.mini.core.ensure.Ensure;
 import com.gongsi.mini.core.utils.IdGenerator;
-import com.gongsi.mini.entities.Goods;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -11,10 +12,17 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class TestUtils {
     public static void main(String[] args) {
-        Goods goods = new Goods();
-        goods.setPicture("dasdas");
-        Ensure.that(goods.getPicture()).isNull("打错了");
+        HashMap<String,String> map = new HashMap<>();
 
+        map.put("6","2");
+        map.put("3","2");
+        map.put("9","2");
+        map.put("1","2");
+        map.put("2","2");
+        map.put("8","2");
+        map.put("1","2");
+
+        System.out.println("map="+map.toString());
 
     }
 

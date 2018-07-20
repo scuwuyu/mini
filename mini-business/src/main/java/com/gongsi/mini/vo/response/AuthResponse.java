@@ -11,6 +11,8 @@ public class AuthResponse {
     /** 是否需要获取用户信息授权 */
     private boolean authInfo;
 
+    private String sessionId;
+
     public AuthResponse(String key,boolean authInfo) {
         this.authInfo = authInfo;
         this.key = key;

@@ -16,6 +16,7 @@ import com.gongsi.mini.vo.auth.AuthVO;
 import com.gongsi.mini.vo.response.AuthResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpRequest;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Objects;
 
 /**
@@ -44,9 +46,12 @@ public class AuthController {
      */
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     @ResponseBody
-    public AuthResponse login(@RequestBody AuthVO vo){
+    public AuthResponse login(@RequestBody AuthVO vo, HttpServletRequest request){
+        String sessionId = request.getSession().getId();
         WechatAuthResult wechatAuthResult = WechatAuthService.authByJSCode(vo);
         User user = userService.selectByOpenId(wechatAuthResult.getOpenid());
+//        User user = userService.selectByOpenId("onpsl0UX5089XAzWOGAFImrDqyWw");
+
 
         Subject currentUser = SecurityUtils.getSubject();
         try {
@@ -55,8 +60,11 @@ public class AuthController {
             log.error("用户登录错误:",e.getMessage(),e);
         }
         AuthResponse response = new AuthResponse(IdGenerator.nextId(),StringUtils.isEmpty(user.getAvatarUrl()));
-        log.info("response={},user={}",JSON.toJSONString(response), JSON.toJSONString(user));
+        response.setSessionId(sessionId);
+        log.info("登录response={},user={}",JSON.toJSONString(response), JSON.toJSONString(user));
         UserUtil.saveUser(response.getKey(), BeanMapper.map(user,UserSessionVO.class));
+
+        log.info("登录后session={}",JSON.toJSONString(UserUtil.getUser(response.getKey())));
         return response;
     }
 

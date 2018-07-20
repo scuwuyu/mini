@@ -20,6 +20,12 @@ public class EnsureParam<T> {
         }
     }
 
+    public void isNotNull(String msg,String code){
+        if (Objects.isNull(obj)){
+            throw new BusinessException(msg,code);
+        }
+    }
+
     public void isNull(String msg){
         if (Objects.nonNull(obj)){
             throw new BusinessException(msg);
