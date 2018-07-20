@@ -1,6 +1,7 @@
 package com.gongsi.mini.core.result;
 
 import com.gongsi.mini.core.exception.BusinessException;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Created by 吴宇 on 2018-05-27.
@@ -21,7 +22,8 @@ public class ResultUtils {
     }
 
     public static Result getBusinessExceptionResult(BusinessException ex) {
-        return new Result(FAULT_CODE, ex.getMessage());
+        return new Result(StringUtils.isEmpty(ex.getErrCode())?
+                FAULT_CODE:ex.getErrCode(), ex.getMessage());
     }
 
     public static Result getSuccessResult(Object obj){

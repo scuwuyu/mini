@@ -50,7 +50,6 @@ public class AuthController {
         String sessionId = request.getSession().getId();
         WechatAuthResult wechatAuthResult = WechatAuthService.authByJSCode(vo);
         User user = userService.selectByOpenId(wechatAuthResult.getOpenid());
-//        User user = userService.selectByOpenId("onpsl0UX5089XAzWOGAFImrDqyWw");
 
 
         Subject currentUser = SecurityUtils.getSubject();
@@ -64,7 +63,6 @@ public class AuthController {
         log.info("登录response={},user={}",JSON.toJSONString(response), JSON.toJSONString(user));
         UserUtil.saveUser(response.getKey(), BeanMapper.map(user,UserSessionVO.class));
 
-        log.info("登录后session={}",JSON.toJSONString(UserUtil.getUser(response.getKey())));
         return response;
     }
 

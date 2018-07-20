@@ -33,6 +33,22 @@ public class AddressController {
         return "ok";
     }
 
+    @RequestMapping(value = "/edit",method = RequestMethod.POST)
+    @ResponseBody
+    public String edit(@RequestBody AddressVO vo){
+        log.info("编辑收货地址vo={}", JSON.toJSONString(vo));
+        addressService.edit(vo, UserUtil.getUser(vo.getKey()));
+        return "ok";
+    }
+
+    @RequestMapping(value = "/delete",method = RequestMethod.POST)
+    @ResponseBody
+    public String delete(@RequestBody AddressVO vo){
+        log.info("删除收货地址vo={}", JSON.toJSONString(vo));
+        addressService.delete(vo, UserUtil.getUser(vo.getKey()));
+        return "ok";
+    }
+
     @RequestMapping(value = "/list",method = RequestMethod.POST)
     @ResponseBody
     public List<AddressVO> list(@RequestBody BaseVO vo){

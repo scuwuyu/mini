@@ -13,6 +13,12 @@ public interface AddressService {
     /** 新增收货地址*/
     void add(AddressVO vo, UserSessionVO user);
 
+    /** 编辑收货地址*/
+    void edit(AddressVO vo, UserSessionVO user);
+
+    /** 删除收货地址*/
+    void delete(AddressVO vo, UserSessionVO user);
+
     /**
      * 查询收货地址列表
      * @param user

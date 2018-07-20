@@ -13,7 +13,11 @@ public class Order {
 
     private Long activityId;
 
-    private Long addressId;
+    private String receiverName;
+
+    private String receiverAddress;
+
+    private String receiverMobile;
 
     private String expressNumber;
 
@@ -65,12 +69,28 @@ public class Order {
         this.activityId = activityId;
     }
 
-    public Long getAddressId() {
-        return addressId;
+    public String getReceiverName() {
+        return receiverName;
     }
 
-    public void setAddressId(Long addressId) {
-        this.addressId = addressId;
+    public void setReceiverName(String receiverName) {
+        this.receiverName = receiverName == null ? null : receiverName.trim();
+    }
+
+    public String getReceiverAddress() {
+        return receiverAddress;
+    }
+
+    public void setReceiverAddress(String receiverAddress) {
+        this.receiverAddress = receiverAddress == null ? null : receiverAddress.trim();
+    }
+
+    public String getReceiverMobile() {
+        return receiverMobile;
+    }
+
+    public void setReceiverMobile(String receiverMobile) {
+        this.receiverMobile = receiverMobile == null ? null : receiverMobile.trim();
     }
 
     public String getExpressNumber() {

@@ -26,6 +26,7 @@ public class AddressServiceImpl implements AddressService {
     /** 新增收货地址*/
     @Transactional
     public void add(AddressVO vo, UserSessionVO user){
+        vo.checkWhenAdd();
         /** 新增默认收货地址，需要清除原来的收货地址*/
         if (YesOrNO.YES.getCode().equals(vo.getDefaultAddress())){
             addressMapper.deleteDefaultAddress(user.getUserId());
@@ -34,6 +35,30 @@ public class AddressServiceImpl implements AddressService {
         address.setUserId(user.getUserId());
 
         addressMapper.insertSelective(address);
+    }
+
+    /** 编辑收货地址*/
+    public void edit(AddressVO vo, UserSessionVO user){
+        vo.checkWhenEdit();
+        selectById(vo.getId(),user.getUserId());
+        /** 新增默认收货地址，需要清除原来的收货地址*/
+        if (YesOrNO.YES.getCode().equals(vo.getDefaultAddress())){
+            addressMapper.deleteDefaultAddress(user.getUserId());
+        }
+        Address address = BeanMapper.map(vo, Address.class);
+        addressMapper.updateByPrimaryKeySelective(address);
+
+    }
+
+    /** 删除收货地址*/
+    public void delete(AddressVO vo, UserSessionVO user){
+        selectById(vo.getId(),user.getUserId());
+
+        Address address = new Address();
+        address.setId(vo.getId());
+        address.setStatus(false);
+
+        addressMapper.updateByPrimaryKeySelective(address);
     }
 
     /**

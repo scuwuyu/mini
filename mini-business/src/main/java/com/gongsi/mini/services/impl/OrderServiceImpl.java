@@ -6,6 +6,7 @@ import com.gongsi.mini.core.utils.BeanMapper;
 import com.gongsi.mini.core.utils.IdGenerator;
 import com.gongsi.mini.dao.OrderMapper;
 import com.gongsi.mini.entities.Activity;
+import com.gongsi.mini.entities.Address;
 import com.gongsi.mini.entities.Order;
 import com.gongsi.mini.entities.OrderItem;
 import com.gongsi.mini.services.*;
@@ -86,14 +87,16 @@ public class OrderServiceImpl implements OrderService {
         Ensure.that(vo.getOrderItemList()).isNotEmpty("商品列表不能为空");
         Activity activity = activityService.selectById(vo.getActivityId());
         Ensure.that(activity).isNotNull("活动不存在");
-        addressService.selectById(vo.getAddressId(),sessionVO.getUserId());
+        Address address = addressService.selectById(vo.getAddressId(),sessionVO.getUserId());
 
         Order order = new Order();
         order.setOrderNumber(IdGenerator.nextId());
         order.setUserId(sessionVO.getUserId());
         order.setSellerId(activity.getUserId());
         order.setActivityId(vo.getActivityId());
-        order.setAddressId(vo.getAddressId());
+        order.setReceiverName(address.getName());
+        order.setReceiverAddress(address.getAddress());
+        order.setReceiverMobile(address.getMobile());
         int result = orderMapper.insertSelective(order);
         Ensure.that(result).isEq(1,"保存订单失败");
 

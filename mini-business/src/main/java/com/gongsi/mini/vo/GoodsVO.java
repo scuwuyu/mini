@@ -1,5 +1,6 @@
 package com.gongsi.mini.vo;
 
+import com.gongsi.mini.core.ensure.Ensure;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -20,4 +21,9 @@ public class GoodsVO extends BaseVO {
     private BigDecimal price;
     /** 需要删除的商品id*/
     private List<Long> goodsIds;
+
+    public void check(){
+        Ensure.that(name).isNotEmpty("商品名称不能为空");
+        Ensure.that(price).isNotNull("商品价格不能为空");
+    }
 }

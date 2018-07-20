@@ -40,4 +40,10 @@ public class OrderVO extends BaseVO {
     /** 下单地址*/
     private Long addressId;
 
+    private String receiverName;
+
+    private String receiverAddress;
+
+    private String receiverMobile;
+
 }

@@ -26,6 +26,7 @@ public class GoodsServiceImpl implements GoodsService {
 
     /** 新增商品 */
     public void add(GoodsVO vo, UserSessionVO user){
+        vo.check();
         Goods goods = BeanMapper.map(vo, Goods.class);
         goods.setUserId(user.getUserId());
 
