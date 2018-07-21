@@ -69,7 +69,7 @@
   <select id="activityBuyList" parameterType="java.lang.Long" resultType="com.gongsi.mini.vo.GoodsVO">
     SELECT oi.goods_id id,oi.goods_name name,g.picture,SUM(oi.quantity) total
     FROM order_item oi
-    JOIN (SELECT order_number FROM `order` WHERE activity_id = 6) o
+    JOIN (SELECT order_number FROM `order` WHERE activity_id = #{activityId}) o
     ON o.order_number = oi.order_number
     LEFT JOIN goods g ON g.id = oi.goods_id
     GROUP BY goods_id;
