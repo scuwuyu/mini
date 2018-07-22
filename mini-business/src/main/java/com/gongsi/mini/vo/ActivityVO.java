@@ -1,5 +1,6 @@
 package com.gongsi.mini.vo;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.gongsi.mini.core.ensure.Ensure;
 import lombok.Data;
 
@@ -22,6 +23,7 @@ public class ActivityVO extends BaseVO{
 
     private Double latitude;
 
+    @JSONField(format = "yyyy-MM-dd")
     private Date activityTime;
 
     private String desc;
