@@ -48,7 +48,7 @@
     <logger name="com.gongsi" level="debug"/>
 
     <root level="info">
-        <appender-ref ref="console"/>
+        <appender-ref ref="console" level="off"/>
         <appender-ref ref="log-all"/>
         <appender-ref ref="log-error"/>
     </root>
