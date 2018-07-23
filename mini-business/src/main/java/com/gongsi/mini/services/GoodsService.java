@@ -15,7 +15,7 @@ public interface GoodsService {
     void add(GoodsVO vo, UserSessionVO user);
 
     /** 商品分页查询*/
-    Pagination<GoodsVO> selectList(GoodsPageVO vo, UserSessionVO user);
+    Pagination<GoodsVO> selectList(GoodsPageVO vo, String userId);
 
     void delete(List<Long> goodsIds, UserSessionVO user);
 

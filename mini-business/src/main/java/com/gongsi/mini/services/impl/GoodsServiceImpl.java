@@ -35,15 +35,15 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     /** 商品分页查询*/
-    public Pagination<GoodsVO> selectList(GoodsPageVO vo, UserSessionVO user){
+    public Pagination<GoodsVO> selectList(GoodsPageVO vo, String userId){
         Pagination<GoodsVO> pagination = new Pagination<>(vo.getCurrentPage(),vo.getPageSize());
-        int count = goodsMapper.countList(vo,user.getUserId());
+        int count = goodsMapper.countList(vo,userId);
         pagination.setTotalCount(count);
         if (count == 0){
             return pagination;
         }
 
-        List<GoodsVO> list = goodsMapper.selectList(vo,user.getUserId(),pagination);
+        List<GoodsVO> list = goodsMapper.selectList(vo,userId,pagination);
         pagination.setList(list);
 
         return pagination;

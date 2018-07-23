@@ -9,6 +9,7 @@ import com.gongsi.mini.entities.Activity;
 import com.gongsi.mini.entities.Address;
 import com.gongsi.mini.entities.Order;
 import com.gongsi.mini.entities.OrderItem;
+import com.gongsi.mini.enums.OrderStatusEn;
 import com.gongsi.mini.services.*;
 import com.gongsi.mini.vo.*;
 import com.gongsi.mini.vo.page.OrderPageVO;
@@ -144,5 +145,21 @@ public class OrderServiceImpl implements OrderService {
     /** 采购清单 列表*/
     public List<GoodsVO> activityBuyList(OrderPageVO vo, UserSessionVO user){
         return orderMapper.activityBuyList(vo.getActivityId());
+    }
+
+    /** 卖家发货 */
+    public void express(ExpressVO vo, UserSessionVO user){
+        Order order = orderMapper.selectByOrderNumber(vo.getOrderNumber());
+        Ensure.that(Objects.nonNull(order)&&order.getSellerId().equals(user.getUserId())).isTrue("订单不存在");
+
+        Ensure.that(OrderStatusEn.WAIT_EXPRESS.getCode().equals(order.getStatus())).isTrue("订单已经发货");
+
+        Long id = order.getId();
+        order = new Order();
+        order.setId(id);
+        order.setStatus(OrderStatusEn.EXPRESSED.getCode());
+        order.setExpressNumber(vo.getExpressNumber());
+        order.setExpressName(vo.getExpressName());
+        orderMapper.updateByPrimaryKeySelective(order);
     }
 }

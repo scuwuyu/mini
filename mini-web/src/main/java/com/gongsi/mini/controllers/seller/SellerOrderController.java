@@ -4,6 +4,7 @@ import com.gongsi.mini.core.Pagination;
 import com.gongsi.mini.core.ensure.Ensure;
 import com.gongsi.mini.services.OrderService;
 import com.gongsi.mini.utils.UserUtil;
+import com.gongsi.mini.vo.ExpressVO;
 import com.gongsi.mini.vo.GoodsVO;
 import com.gongsi.mini.vo.OrderVO;
 import com.gongsi.mini.vo.page.OrderPageVO;
@@ -43,5 +44,15 @@ public class SellerOrderController {
         Ensure.that(vo.getActivityId()).isNotNull("活动id不能为空");
         return orderService.activityBuyList(vo, UserUtil.getUser(vo.getKey()));
     }
+
+    /** 卖家发货 */
+    @RequestMapping(value = "/express",method = RequestMethod.POST)
+    @ResponseBody
+    public String express(@RequestBody ExpressVO vo){
+        vo.check();
+        orderService.express(vo, UserUtil.getUser(vo.getKey()));
+        return "ok";
+    }
+
 
 }

@@ -1,6 +1,5 @@
 package com.gongsi.mini.vo.page;
 
-import com.gongsi.mini.vo.BaseVO;
 import lombok.Data;
 
 /**
@@ -10,4 +9,7 @@ import lombok.Data;
 public class GoodsPageVO extends PageVO {
 
     private String name;
+
+    private Long activityId;
+
 }
