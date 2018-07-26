@@ -1,10 +1,10 @@
 package com.gongsi.mini.utils;
 
+import com.alibaba.fastjson.JSON;
 import com.gongsi.mini.core.ensure.Ensure;
 import com.gongsi.mini.core.utils.IdGenerator;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.Serializable;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -12,20 +12,27 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class TestUtils {
     public static void main(String[] args) {
-        HashMap<String,String> map = new HashMap<>();
-
-        map.put("6","2");
-        map.put("3","2");
-        map.put("9","2");
-        map.put("1","2");
-        map.put("2","2");
-        map.put("8","2");
-        map.put("1","2");
-
-        System.out.println("map="+map.toString());
-
+        Builder builder = new Builder();
+        builder.setName("123");
+        System.out.println(builder.test());
     }
 
+
+    public static class Builder implements Serializable {
+        private String name;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String test(){
+            return JSON.toJSONString(this);
+        }
+    }
 
     public void testId(){
         final Object lock = new Object();

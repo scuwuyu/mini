@@ -33,6 +33,12 @@ public class AddressController {
         return "ok";
     }
 
+    @RequestMapping(value = "/detail",method = RequestMethod.POST)
+    @ResponseBody
+    public AddressVO detail(@RequestBody AddressVO vo){
+        return addressService.detail(vo, UserUtil.getUser(vo.getKey()));
+    }
+
     @RequestMapping(value = "/edit",method = RequestMethod.POST)
     @ResponseBody
     public String edit(@RequestBody AddressVO vo){

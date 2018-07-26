@@ -25,6 +25,10 @@ public class AddressVO extends BaseVO {
 
     public void checkWhenEdit(){
         checkWhenAdd();
+        checkWhenDetail();
+    }
+
+    public void checkWhenDetail(){
         Ensure.that(id).isNotNull("地址id不能为空");
     }
 

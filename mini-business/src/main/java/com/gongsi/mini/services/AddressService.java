@@ -31,4 +31,7 @@ public interface AddressService {
 
     /** 检验并返回 收货地址*/
     Address selectById(Long id, String userId);
+
+    /** 地址详情 */
+    AddressVO detail(AddressVO vo, UserSessionVO user);
 }

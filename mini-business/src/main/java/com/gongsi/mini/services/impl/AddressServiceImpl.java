@@ -50,6 +50,14 @@ public class AddressServiceImpl implements AddressService {
 
     }
 
+    /** 地址详情 */
+    public AddressVO detail(AddressVO vo, UserSessionVO user){
+        vo.checkWhenDetail();
+        Address address = selectById(vo.getId(),user.getUserId());
+
+        return BeanMapper.map(address,AddressVO.class);
+    }
+
     /** 删除收货地址*/
     public void delete(AddressVO vo, UserSessionVO user){
         selectById(vo.getId(),user.getUserId());
@@ -91,4 +99,6 @@ public class AddressServiceImpl implements AddressService {
         Ensure.that(address.getUserId().equals(userId)).isTrue("收货地址不存在");
         return address;
     }
+
+
 }
