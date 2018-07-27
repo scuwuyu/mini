@@ -40,4 +40,7 @@ public interface OrderService {
 
     /** 卖家发货 */
     void express(ExpressVO vo, UserSessionVO user);
+
+    /** 订单详情 */
+    OrderVO detailSeller(String orderNumber, UserSessionVO user);
 }

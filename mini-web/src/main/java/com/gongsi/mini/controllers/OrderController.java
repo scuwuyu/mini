@@ -66,6 +66,7 @@ public class OrderController {
     }
 
     /** 订单详情 */
+    // TODO: 2018-07-27 在哪里用到
     @RequestMapping(value = "/detail",method = RequestMethod.POST)
     @ResponseBody
     public OrderVO detail(@RequestBody OrderVO vo){

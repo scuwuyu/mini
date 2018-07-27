@@ -45,6 +45,14 @@ public class SellerOrderController {
         return orderService.activityBuyList(vo, UserUtil.getUser(vo.getKey()));
     }
 
+    /** 订单详情 */
+    @RequestMapping(value = "/detail",method = RequestMethod.POST)
+    @ResponseBody
+    public OrderVO detail(@RequestBody OrderVO vo){
+        vo.checkOrderNumber();
+        return orderService.detailSeller(vo.getOrderNumber(), UserUtil.getUser(vo.getKey()));
+    }
+
     /** 卖家发货 */
     @RequestMapping(value = "/express",method = RequestMethod.POST)
     @ResponseBody

@@ -35,6 +35,10 @@ public class ActivityVO extends BaseVO{
     /** c端查看时,增加用户信息*/
     private UserVO userInfo;
 
+    /** 查询时间范围 */
+    private Date startTime;
+    private Date endTime;
+
     public void check(){
         Ensure.that(name).isNotEmpty("活动名称不能为空");
         Ensure.that(address).isNotEmpty("活动地址不能为空");

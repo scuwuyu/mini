@@ -53,10 +53,10 @@ public class OrderVO extends BaseVO {
 
     public void checkWhenEdit(){
         checkWhenOrder();
-        checkWhenDelete();
+        checkOrderNumber();
     }
 
-    public void checkWhenDelete(){
+    public void checkOrderNumber(){
         Ensure.that(orderNumber).isNotEmpty("订单号不能为空");
     }
 }

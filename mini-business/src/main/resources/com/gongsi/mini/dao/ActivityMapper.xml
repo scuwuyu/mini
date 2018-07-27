@@ -40,6 +40,12 @@
     <if test="vo.name !=null">
       AND name like CONCAT("%",#{vo.name},"%")
     </if>
+    <if test="vo.startTime !=null">
+      AND #{vo.startTime} <![CDATA[ <= ]]> activity_time
+    </if>
+    <if test="vo.endTime !=null">
+      AND #{vo.endTime} <![CDATA[ >= ]]> activity_time
+    </if>
     AND status = #{vo.status}
     order by activity_time;
   </select>

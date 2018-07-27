@@ -143,7 +143,7 @@ public class OrderServiceImpl implements OrderService {
 
     /** 删除订单 */
     public void delete(OrderVO vo, UserSessionVO sessionVO){
-        vo.checkWhenDelete();
+        vo.checkOrderNumber();
 
         Order order = orderMapper.selectByOrderNumber(vo.getOrderNumber());
         Ensure.that(order).isNotNull("订单不存在");
@@ -215,5 +215,26 @@ public class OrderServiceImpl implements OrderService {
         order.setExpressNumber(vo.getExpressNumber());
         order.setExpressName(vo.getExpressName());
         orderMapper.updateByPrimaryKeySelective(order);
+    }
+
+    /** 订单详情 */
+    public OrderVO detailSeller(String orderNumber, UserSessionVO user){
+        Order order = orderMapper.selectByOrderNumber(orderNumber);
+        Ensure.that(order).isNotNull("订单不存在");
+        Ensure.that(order.getSellerId().equals(user.getUserId())).isNotNull("订单不存在");
+
+        OrderVO orderVO = BeanMapper.map(order,OrderVO.class);
+        /** 卖家信息*/
+        Map<String,UserVO> map = userService.selectByIds(Collections.singletonList(order.getSellerId()));
+        orderVO.setSellerInfo(map.get(order.getSellerId()));
+
+        /** 活动信息*/
+        Activity activity = activityService.selectById(order.getActivityId());
+        orderVO.setActivityInfo(BeanMapper.map(activity, ActivityVO.class));
+
+        /** 商品信息*/
+        orderVO.setOrderItemList(orderItemService.selectByOrderNumber(orderNumber));
+
+        return orderVO;
     }
 }
