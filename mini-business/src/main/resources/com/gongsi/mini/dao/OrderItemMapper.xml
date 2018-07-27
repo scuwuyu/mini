@@ -35,12 +35,17 @@
       </foreach>
   </insert>
 
+  <update id="deleteByOrderNumber" parameterType="java.lang.String">
+    UPDATE order_item SET status = 0
+    WHERE order_number = #{orderNumber} AND status = 1
+  </update>
+
   <select id="selectByOrderNumber" resultMap="VOMap">
     SELECT oi.order_number,oi.goods_name,oi.quantity,oi.price,
             g.picture
     FROM order_item oi
     JOIN goods g ON g.id = oi.goods_id
-    WHERE oi.order_number = #{orderNumber}
+    WHERE oi.order_number = #{orderNumber} AND oi.status = 1
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 

@@ -5,6 +5,7 @@ import com.gongsi.mini.core.ensure.Ensure;
 import com.gongsi.mini.core.utils.BeanMapper;
 import com.gongsi.mini.dao.ActivityMapper;
 import com.gongsi.mini.entities.Activity;
+import com.gongsi.mini.enums.ActivityStatusEn;
 import com.gongsi.mini.services.ActivityService;
 import com.gongsi.mini.services.UserService;
 import com.gongsi.mini.vo.ActivityVO;
@@ -70,5 +71,13 @@ public class ActivityServiceImpl implements ActivityService {
 
     public Activity selectById(Long id){
         return activityMapper.selectByPrimaryKey(id);
+    }
+
+    public Activity selectAndCheck(Long activityId){
+        Activity activity = selectById(activityId);
+        Ensure.that(activity).isNotNull("活动不存在");
+        Ensure.that(ActivityStatusEn.END.getCode().equals(activity.getStatus()))
+                .isFalse("活动已结束");
+        return activity;
     }
 }

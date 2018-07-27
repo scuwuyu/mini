@@ -1,5 +1,6 @@
 package com.gongsi.mini.vo;
 
+import com.gongsi.mini.core.ensure.Ensure;
 import com.gongsi.mini.entities.OrderItem;
 import lombok.Data;
 
@@ -46,4 +47,16 @@ public class OrderVO extends BaseVO {
 
     private String receiverMobile;
 
+    public void checkWhenOrder(){
+        Ensure.that(orderItemList).isNotEmpty("商品列表不能为空");
+    }
+
+    public void checkWhenEdit(){
+        checkWhenOrder();
+        checkWhenDelete();
+    }
+
+    public void checkWhenDelete(){
+        Ensure.that(orderNumber).isNotEmpty("订单号不能为空");
+    }
 }

@@ -24,4 +24,8 @@ public class OrderItemServiceImpl implements OrderItemService {
     public int batchInsert(List<OrderItem> orderItems){
         return orderItemMapper.batchInsert(orderItems);
     }
+
+    public int deleteByOrderNumber(String orderNumber){
+        return orderItemMapper.deleteByOrderNumber(orderNumber);
+    }
 }

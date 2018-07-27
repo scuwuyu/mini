@@ -24,6 +24,11 @@ public interface OrderService {
     /** 下单，返回订单号 */
     String order(OrderVO vo, UserSessionVO sessionVO);
 
+    /** 编辑订单 */
+    void edit(OrderVO vo, UserSessionVO sessionVO);
+
+    /** 删除订单 */
+    void delete(OrderVO vo, UserSessionVO sessionVO);
 
     /** ------------------以下为b端操作------------------------*/
 

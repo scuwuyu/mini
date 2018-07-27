@@ -13,4 +13,6 @@ public interface OrderItemService {
     List<OrderItemVO> selectByOrderNumber(String orderNumber);
 
     int batchInsert(List<OrderItem> orderItems);
+
+    int deleteByOrderNumber(String orderNumber);
 }

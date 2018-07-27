@@ -23,4 +23,6 @@ public interface ActivityService {
     ActivityVO detail(Long id, UserSessionVO user);
 
     Activity selectById(Long id);
+
+    Activity selectAndCheck(Long activityId);
 }

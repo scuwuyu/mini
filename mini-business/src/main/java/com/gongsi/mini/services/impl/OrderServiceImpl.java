@@ -1,5 +1,6 @@
 package com.gongsi.mini.services.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.gongsi.mini.core.Pagination;
 import com.gongsi.mini.core.ensure.Ensure;
 import com.gongsi.mini.core.utils.BeanMapper;
@@ -9,10 +10,12 @@ import com.gongsi.mini.entities.Activity;
 import com.gongsi.mini.entities.Address;
 import com.gongsi.mini.entities.Order;
 import com.gongsi.mini.entities.OrderItem;
+import com.gongsi.mini.enums.ActivityStatusEn;
 import com.gongsi.mini.enums.OrderStatusEn;
 import com.gongsi.mini.services.*;
 import com.gongsi.mini.vo.*;
 import com.gongsi.mini.vo.page.OrderPageVO;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +29,7 @@ import java.util.stream.Collectors;
 /**
  * Created by 吴宇 on 2018-05-26.
  */
+@Slf4j
 @Service
 public class OrderServiceImpl implements OrderService {
     @Autowired
@@ -85,9 +89,8 @@ public class OrderServiceImpl implements OrderService {
     /** 下单，返回订单号 */
     @Transactional
     public String order(OrderVO vo, UserSessionVO sessionVO){
-        Ensure.that(vo.getOrderItemList()).isNotEmpty("商品列表不能为空");
-        Activity activity = activityService.selectById(vo.getActivityId());
-        Ensure.that(activity).isNotNull("活动不存在");
+        vo.checkWhenOrder();
+        Activity activity = activityService.selectAndCheck(vo.getActivityId());
         Address address = addressService.selectById(vo.getAddressId(),sessionVO.getUserId());
 
         Order order = new Order();
@@ -101,26 +104,77 @@ public class OrderServiceImpl implements OrderService {
         int result = orderMapper.insertSelective(order);
         Ensure.that(result).isEq(1,"保存订单失败");
 
-        List<GoodsVO> list = goodsService.selectByIds(vo.getOrderItemList().stream()
+        List<OrderItem> orderItems = covert(vo.getOrderItemList(),order.getOrderNumber());
+
+        result = orderItemService.batchInsert(orderItems);
+        Ensure.that(result==orderItems.size()).isTrue("保存商品列表失败");
+        return order.getOrderNumber();
+    }
+
+    /** C端用户 编辑订单 */
+    @Transactional
+    public void edit(OrderVO vo, UserSessionVO sessionVO){
+        vo.checkWhenEdit();
+        activityService.selectAndCheck(vo.getActivityId());
+        Address address = addressService.selectById(vo.getAddressId(),sessionVO.getUserId());
+
+        Order order = orderMapper.selectByOrderNumber(vo.getOrderNumber());
+        Ensure.that(order).isNotNull("订单不存在");
+        Ensure.that(OrderStatusEn.EXPRESSED.getCode().equals(order.getStatus())).isFalse("订单已发货，不能修改");
+        Ensure.that(sessionVO.getUserId().equals(order.getUserId())).isTrue("订单不存在");
+
+        log.info("修改之前的订单order={}", JSON.toJSONString(order));
+        Long id = order.getId();
+        order = new Order();
+        order.setId(id);
+        order.setReceiverName(address.getName());
+        order.setReceiverAddress(address.getAddress());
+        order.setReceiverMobile(address.getMobile());
+        int result = orderMapper.updateByPrimaryKeySelective(order);
+        Ensure.that(result).isEq(1,"修改订单失败");
+
+        /** 更新订单明细 */
+        List<OrderItem> orderItems = covert(vo.getOrderItemList(),vo.getOrderNumber());
+
+        orderItemService.deleteByOrderNumber(vo.getOrderNumber());
+        result = orderItemService.batchInsert(orderItems);
+        Ensure.that(result==orderItems.size()).isTrue("保存商品列表失败");
+    }
+
+    /** 删除订单 */
+    public void delete(OrderVO vo, UserSessionVO sessionVO){
+        vo.checkWhenDelete();
+
+        Order order = orderMapper.selectByOrderNumber(vo.getOrderNumber());
+        Ensure.that(order).isNotNull("订单不存在");
+        Ensure.that(OrderStatusEn.EXPRESSED.getCode().equals(order.getStatus())).isFalse("订单已发货，不能删除");
+        Ensure.that(sessionVO.getUserId().equals(order.getUserId())).isTrue("订单不存在");
+        activityService.selectAndCheck(order.getActivityId());
+
+        log.info("删除订单信息order={}",JSON.toJSONString(order));
+        orderMapper.deleteByPrimaryKey(order.getId());
+
+    }
+
+    private List<OrderItem> covert(List<OrderItemVO> orderItemList,String orderNumber){
+        List<GoodsVO> list = goodsService.selectByIds(orderItemList.stream()
                 .map(OrderItemVO::getGoodsId).collect(Collectors.toList())
         );
-        Ensure.that(vo.getOrderItemList().size()).isEq(list.size(),"部分商品已删除，请刷新重试");
+        Ensure.that(orderItemList.size()).isEq(list.size(),"部分商品已删除，请刷新重试");
         Map<Long,GoodsVO> map = list.stream().collect(Collectors.toMap(GoodsVO::getId,Function.identity()));
 
-        List<OrderItem> orderItems = vo.getOrderItemList().stream().map(item -> {
+        return orderItemList.stream().map(item -> {
             OrderItem orderItem = BeanMapper.map(item, OrderItem.class);
-            orderItem.setOrderNumber(order.getOrderNumber());
+            orderItem.setOrderNumber(orderNumber);
             orderItem.setGoodsName(map.get(item.getGoodsId()).getName());
             orderItem.setPrice(map.get(item.getGoodsId()).getPrice());
             orderItem.setTotalPrice(orderItem.getPrice().multiply(new BigDecimal(item.getQuantity())));
 
             return orderItem;
         }).collect(Collectors.toList());
-
-        result = orderItemService.batchInsert(orderItems);
-        Ensure.that(result==orderItems.size()).isTrue("保存商品列表失败");
-        return order.getOrderNumber();
     }
+
+
 
     /** ------------------以下为b端操作------------------------*/
 

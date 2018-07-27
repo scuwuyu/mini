@@ -42,8 +42,9 @@ public class OrderController {
     @ResponseBody
     public String edit(@RequestBody OrderVO vo){
         UserSessionVO sessionVO = UserUtil.getUser(vo.getKey());
-        log.info("下单信息vo={},sessionVO={}", JSON.toJSONString(vo),JSON.toJSONString(sessionVO));
-        return orderService.order(vo, sessionVO);
+        log.info("编辑订单vo={},sessionVO={}", JSON.toJSONString(vo),JSON.toJSONString(sessionVO));
+        orderService.edit(vo, sessionVO);
+        return "ok";
     }
 
     /** 删除订单 */
@@ -51,8 +52,9 @@ public class OrderController {
     @ResponseBody
     public String delete(@RequestBody OrderVO vo){
         UserSessionVO sessionVO = UserUtil.getUser(vo.getKey());
-        log.info("下单信息vo={},sessionVO={}", JSON.toJSONString(vo),JSON.toJSONString(sessionVO));
-        return orderService.order(vo, sessionVO);
+        log.info("删除订单vo={},sessionVO={}", JSON.toJSONString(vo),JSON.toJSONString(sessionVO));
+        orderService.delete(vo, sessionVO);
+        return "ok";
     }
 
     /** 我下的订单列表 */

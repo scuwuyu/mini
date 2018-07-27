@@ -22,4 +22,6 @@ public interface OrderItemMapper {
     List<OrderItemVO> selectByOrderNumber(String orderNumber);
 
     int batchInsert(@Param("orderItems") List<OrderItem> orderItems);
+
+    int deleteByOrderNumber(String orderNumber);
 }
