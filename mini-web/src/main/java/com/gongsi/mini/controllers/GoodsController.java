@@ -42,6 +42,20 @@ public class GoodsController {
         return "ok";
     }
 
+    @RequestMapping(value = "/edit",method = RequestMethod.POST)
+    @ResponseBody
+    public String edit(@RequestBody GoodsVO vo){
+        log.info("编辑商品vo={}", JSON.toJSONString(vo));
+        goodsService.edit(vo, UserUtil.getUser(vo.getKey()));
+        return "ok";
+    }
+
+    @RequestMapping(value = "/detail",method = RequestMethod.POST)
+    @ResponseBody
+    public GoodsVO detail(@RequestBody GoodsVO vo){
+        return goodsService.detail(vo, UserUtil.getUser(vo.getKey()));
+    }
+
     /** 我的商品列表 */
     @RequestMapping(value = "/list",method = RequestMethod.POST)
     @ResponseBody

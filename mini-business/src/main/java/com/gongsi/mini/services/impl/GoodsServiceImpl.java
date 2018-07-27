@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by 吴宇 on 2018-05-26.
@@ -26,13 +27,27 @@ public class GoodsServiceImpl implements GoodsService {
 
     /** 新增商品 */
     public void add(GoodsVO vo, UserSessionVO user){
-        vo.check();
+        vo.checkWhenAdd();
         Goods goods = BeanMapper.map(vo, Goods.class);
         goods.setUserId(user.getUserId());
 
         Integer result = goodsMapper.insertSelective(goods);
         Ensure.that(result).isEq(1,"商品保存失败");
     }
+
+    /** 编辑商品 */
+    public void edit(GoodsVO vo, UserSessionVO user){
+        vo.checkWhenEdit();
+        selectById(vo.getId(),user.getUserId());
+        Goods goods = BeanMapper.map(vo, Goods.class);
+        goodsMapper.updateByPrimaryKeySelective(goods);
+    }
+
+    public GoodsVO detail(GoodsVO vo, UserSessionVO user){
+        return selectById(vo.getId(),user.getUserId());
+    }
+
+
 
     /** 商品分页查询*/
     public Pagination<GoodsVO> selectList(GoodsPageVO vo, String userId){
@@ -58,5 +73,13 @@ public class GoodsServiceImpl implements GoodsService {
 
     public List<GoodsVO> selectByIds(List<Long> goodsIds){
         return goodsMapper.selectByIds(goodsIds);
+    }
+
+
+    public GoodsVO selectById(Long id,String userId){
+        Goods goods = goodsMapper.selectByPrimaryKey(id);
+        Ensure.that(Objects.nonNull(goods)&&goods.getUserId().equals(userId))
+                .isTrue("对应商品不存在");
+        return BeanMapper.map(goods, GoodsVO.class);
     }
 }

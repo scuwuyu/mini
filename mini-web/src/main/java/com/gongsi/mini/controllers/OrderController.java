@@ -37,6 +37,24 @@ public class OrderController {
         return orderService.order(vo, sessionVO);
     }
 
+    /** 编辑订单 */
+    @RequestMapping(value = "/edit",method = RequestMethod.POST)
+    @ResponseBody
+    public String edit(@RequestBody OrderVO vo){
+        UserSessionVO sessionVO = UserUtil.getUser(vo.getKey());
+        log.info("下单信息vo={},sessionVO={}", JSON.toJSONString(vo),JSON.toJSONString(sessionVO));
+        return orderService.order(vo, sessionVO);
+    }
+
+    /** 删除订单 */
+    @RequestMapping(value = "/delete",method = RequestMethod.POST)
+    @ResponseBody
+    public String delete(@RequestBody OrderVO vo){
+        UserSessionVO sessionVO = UserUtil.getUser(vo.getKey());
+        log.info("下单信息vo={},sessionVO={}", JSON.toJSONString(vo),JSON.toJSONString(sessionVO));
+        return orderService.order(vo, sessionVO);
+    }
+
     /** 我下的订单列表 */
     @RequestMapping(value = "/list",method = RequestMethod.POST)
     @ResponseBody

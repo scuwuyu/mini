@@ -22,8 +22,13 @@ public class GoodsVO extends BaseVO {
     /** 需要删除的商品id*/
     private List<Long> goodsIds;
 
-    public void check(){
+    public void checkWhenAdd(){
         Ensure.that(name).isNotEmpty("商品名称不能为空");
         Ensure.that(price).isNotNull("商品价格不能为空");
+    }
+
+    public void checkWhenEdit(){
+        Ensure.that(id).isNotNull("商品id不能为空");
+        checkWhenAdd();
     }
 }

@@ -14,6 +14,11 @@ public interface GoodsService {
     /** 新增商品 */
     void add(GoodsVO vo, UserSessionVO user);
 
+    /** 编辑商品 */
+    void edit(GoodsVO vo, UserSessionVO user);
+
+    GoodsVO detail(GoodsVO vo, UserSessionVO user);
+
     /** 商品分页查询*/
     Pagination<GoodsVO> selectList(GoodsPageVO vo, String userId);
 
