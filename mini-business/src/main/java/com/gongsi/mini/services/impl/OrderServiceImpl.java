@@ -225,9 +225,7 @@ public class OrderServiceImpl implements OrderService {
         Ensure.that(order.getSellerId().equals(user.getUserId())).isNotNull("订单不存在");
 
         OrderVO orderVO = BeanMapper.map(order,OrderVO.class);
-        /** 卖家信息*/
-        Map<String,UserVO> map = userService.selectByIds(Collections.singletonList(order.getSellerId()));
-        orderVO.setSellerInfo(map.get(order.getSellerId()));
+        /** 买家信息*/
 
         /** 活动信息*/
         Activity activity = activityService.selectById(order.getActivityId());

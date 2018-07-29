@@ -127,6 +127,7 @@ CREATE TABLE `order` (
   `express_number` varchar(32) DEFAULT NULL COMMENT '快递单号',
   `express_name` varchar(32) DEFAULT NULL COMMENT '快递名称',
 
+  `seller_comment` varchar(256) DEFAULT NULL COMMENT '卖家备注',
   `comment` varchar(256) DEFAULT NULL COMMENT '备注',
 	`status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态：1:待发货 5：已发货',
 

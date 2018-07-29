@@ -47,6 +47,10 @@ public class OrderVO extends BaseVO {
 
     private String receiverMobile;
 
+    private String expressNumber;
+
+    private String expressName;
+
     private String comment;
 
     public void checkWhenOrder(){

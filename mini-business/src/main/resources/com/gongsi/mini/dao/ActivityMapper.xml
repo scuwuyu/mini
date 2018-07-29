@@ -22,6 +22,7 @@
     <result column="activity_time" jdbcType="TIMESTAMP" property="activityTime" />
     <result column="status" jdbcType="TINYINT" property="status" />
     <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="desc" property="desc" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, user_id, name, picture, longitude, latitude, activity_time, `desc`, status, create_time,
@@ -34,7 +35,7 @@
   </select>
 
   <select id="selectList" resultMap="VOMap">
-    select id,name,picture,activity_time,status,address
+    select id,name,picture,activity_time,status,address,`desc`
     from activity
     WHERE user_id = #{userId}
     <if test="vo.name !=null">
