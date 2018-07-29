@@ -53,6 +53,14 @@ public class SellerOrderController {
         return orderService.detailSeller(vo.getOrderNumber(), UserUtil.getUser(vo.getKey()));
     }
 
+    /** 卖家备注 */
+    @RequestMapping(value = "/comment",method = RequestMethod.POST)
+    @ResponseBody
+    public String comment(@RequestBody OrderVO vo){
+        orderService.comment(vo, UserUtil.getUser(vo.getKey()));
+        return "ok";
+    }
+
     /** 卖家发货 */
     @RequestMapping(value = "/express",method = RequestMethod.POST)
     @ResponseBody

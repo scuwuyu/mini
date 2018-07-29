@@ -43,4 +43,7 @@ public interface OrderService {
 
     /** 订单详情 */
     OrderVO detailSeller(String orderNumber, UserSessionVO user);
+
+    /** 卖家备注 */
+    void comment(OrderVO vo, UserSessionVO user);
 }

@@ -78,8 +78,8 @@ public class GoodsServiceImpl implements GoodsService {
 
     public GoodsVO selectById(Long id,String userId){
         Goods goods = goodsMapper.selectByPrimaryKey(id);
-        Ensure.that(Objects.nonNull(goods)&&goods.getUserId().equals(userId))
-                .isTrue("对应商品不存在");
+//        Ensure.that(Objects.nonNull(goods)&&goods.getUserId().equals(userId))
+//                .isTrue("对应商品不存在");
         return BeanMapper.map(goods, GoodsVO.class);
     }
 }

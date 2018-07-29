@@ -207,12 +207,12 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderMapper.selectByOrderNumber(vo.getOrderNumber());
         Ensure.that(Objects.nonNull(order)&&order.getSellerId().equals(user.getUserId())).isTrue("订单不存在");
 
-        Ensure.that(OrderStatusEn.WAIT_EXPRESS.getCode().equals(order.getStatus())).isTrue("订单已经发货");
-
         Long id = order.getId();
         order = new Order();
         order.setId(id);
-        order.setStatus(OrderStatusEn.EXPRESSED.getCode());
+        if (OrderStatusEn.WAIT_EXPRESS.getCode().equals(order.getStatus())){
+            order.setStatus(OrderStatusEn.EXPRESSED.getCode());
+        }
         order.setExpressNumber(vo.getExpressNumber());
         order.setExpressName(vo.getExpressName());
         orderMapper.updateByPrimaryKeySelective(order);
@@ -235,5 +235,19 @@ public class OrderServiceImpl implements OrderService {
         orderVO.setOrderItemList(orderItemService.selectByOrderNumber(orderNumber));
 
         return orderVO;
+    }
+
+    /** 卖家备注 */
+    public void comment(OrderVO vo, UserSessionVO user){
+        vo.checkWhenSellerComment();
+        Order order = orderMapper.selectByOrderNumber(vo.getOrderNumber());
+        Ensure.that(Objects.nonNull(order)&&order.getSellerId().equals(user.getUserId())).isTrue("订单不存在");
+
+        Long id = order.getId();
+
+        order = new Order();
+        order.setId(id);
+        order.setSellerComment(vo.getSellerComment());
+        orderMapper.updateByPrimaryKeySelective(order);
     }
 }

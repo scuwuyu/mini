@@ -51,6 +51,7 @@ public class OrderVO extends BaseVO {
 
     private String expressName;
 
+    private String sellerComment;
     private String comment;
 
     public void checkWhenOrder(){
@@ -64,5 +65,10 @@ public class OrderVO extends BaseVO {
 
     public void checkOrderNumber(){
         Ensure.that(orderNumber).isNotEmpty("订单号不能为空");
+    }
+
+    public void checkWhenSellerComment(){
+        checkOrderNumber();
+        Ensure.that(sellerComment).isNotEmpty("备注不能为空");
     }
 }
