@@ -23,6 +23,8 @@ public class Order {
 
     private String expressName;
 
+    private String sellerComment;
+
     private String comment;
 
     private Integer status;
@@ -107,6 +109,14 @@ public class Order {
 
     public void setExpressName(String expressName) {
         this.expressName = expressName == null ? null : expressName.trim();
+    }
+
+    public String getSellerComment() {
+        return sellerComment;
+    }
+
+    public void setSellerComment(String sellerComment) {
+        this.sellerComment = sellerComment == null ? null : sellerComment.trim();
     }
 
     public String getComment() {

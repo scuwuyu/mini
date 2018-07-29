@@ -12,9 +12,11 @@
     <result column="receiver_mobile" property="receiverMobile" jdbcType="VARCHAR" />
     <result column="express_number" property="expressNumber" jdbcType="VARCHAR" />
     <result column="express_name" property="expressName" jdbcType="VARCHAR" />
+    <result column="seller_comment" property="sellerComment" jdbcType="VARCHAR" />
     <result column="comment" property="comment" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="TINYINT" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
   </resultMap>
 
   <resultMap id="VOMap" type="com.gongsi.mini.vo.OrderVO" >
@@ -29,7 +31,7 @@
   </resultMap>
   <sql id="Base_Column_List" >
     id, order_number, user_id, seller_id, activity_id, receiver_name, receiver_address, 
-    receiver_mobile, express_number, express_name, comment, status, create_time
+    receiver_mobile, express_number, express_name, seller_comment, comment, status, create_time
   </sql>
 
   <select id="countByUserId" parameterType="java.lang.String" resultType="java.lang.Integer">
@@ -89,18 +91,20 @@
     insert into order (id, order_number, user_id, 
       seller_id, activity_id, receiver_name, 
       receiver_address, receiver_mobile, express_number, 
-      express_name, comment, status, 
-      create_time)
+      express_name, seller_comment, comment, 
+      status, create_time
+      )
     values (#{id,jdbcType=BIGINT}, #{orderNumber,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
       #{sellerId,jdbcType=VARCHAR}, #{activityId,jdbcType=BIGINT}, #{receiverName,jdbcType=VARCHAR}, 
       #{receiverAddress,jdbcType=VARCHAR}, #{receiverMobile,jdbcType=VARCHAR}, #{expressNumber,jdbcType=VARCHAR}, 
-      #{expressName,jdbcType=VARCHAR}, #{comment,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
-      #{createTime,jdbcType=TIMESTAMP})
+      #{expressName,jdbcType=VARCHAR}, #{sellerComment,jdbcType=VARCHAR}, #{comment,jdbcType=VARCHAR}, 
+      #{status,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.gongsi.mini.entities.Order">
+  <insert id="insertSelective" parameterType="com.gongsi.mini.entities.Order" >
     insert into `order`
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
         id,
       </if>
       <if test="orderNumber != null" >
@@ -129,6 +133,9 @@
       </if>
       <if test="expressName != null" >
         express_name,
+      </if>
+      <if test="sellerComment != null" >
+        seller_comment,
       </if>
       <if test="comment != null" >
         comment,
@@ -171,6 +178,9 @@
       <if test="expressName != null" >
         #{expressName,jdbcType=VARCHAR},
       </if>
+      <if test="sellerComment != null" >
+        #{sellerComment,jdbcType=VARCHAR},
+      </if>
       <if test="comment != null" >
         #{comment,jdbcType=VARCHAR},
       </if>
@@ -182,10 +192,10 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.gongsi.mini.entities.Order">
+  <update id="updateByPrimaryKeySelective" parameterType="com.gongsi.mini.entities.Order" >
     update `order`
-    <set>
-      <if test="orderNumber != null">
+    <set >
+      <if test="orderNumber != null" >
         order_number = #{orderNumber,jdbcType=VARCHAR},
       </if>
       <if test="userId != null" >
@@ -212,6 +222,9 @@
       <if test="expressName != null" >
         express_name = #{expressName,jdbcType=VARCHAR},
       </if>
+      <if test="sellerComment != null" >
+        seller_comment = #{sellerComment,jdbcType=VARCHAR},
+      </if>
       <if test="comment != null" >
         comment = #{comment,jdbcType=VARCHAR},
       </if>
@@ -235,9 +248,10 @@
       receiver_mobile = #{receiverMobile,jdbcType=VARCHAR},
       express_number = #{expressNumber,jdbcType=VARCHAR},
       express_name = #{expressName,jdbcType=VARCHAR},
+      seller_comment = #{sellerComment,jdbcType=VARCHAR},
       comment = #{comment,jdbcType=VARCHAR},
       status = #{status,jdbcType=TINYINT},
-      create_time = #{createTime,jdbcType=TIMESTAMP}
+      create_time = #{createTime,jdbcType=TIMESTAMP},
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>
