@@ -47,6 +47,8 @@ public class OrderVO extends BaseVO {
 
     private String receiverMobile;
 
+    private String comment;
+
     public void checkWhenOrder(){
         Ensure.that(orderItemList).isNotEmpty("商品列表不能为空");
     }

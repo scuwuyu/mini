@@ -37,7 +37,8 @@ public class OrderController {
         return orderService.order(vo, sessionVO);
     }
 
-    /** 编辑订单 */
+    /** 编辑订单
+     * 暂时不做
     @RequestMapping(value = "/edit",method = RequestMethod.POST)
     @ResponseBody
     public String edit(@RequestBody OrderVO vo){
@@ -45,7 +46,7 @@ public class OrderController {
         log.info("编辑订单vo={},sessionVO={}", JSON.toJSONString(vo),JSON.toJSONString(sessionVO));
         orderService.edit(vo, sessionVO);
         return "ok";
-    }
+    }*/
 
     /** 删除订单 */
     @RequestMapping(value = "/delete",method = RequestMethod.POST)
@@ -66,7 +67,6 @@ public class OrderController {
     }
 
     /** 订单详情 */
-    // TODO: 2018-07-27 在哪里用到
     @RequestMapping(value = "/detail",method = RequestMethod.POST)
     @ResponseBody
     public OrderVO detail(@RequestBody OrderVO vo){

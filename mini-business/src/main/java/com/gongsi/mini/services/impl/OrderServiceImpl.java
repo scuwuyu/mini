@@ -101,6 +101,7 @@ public class OrderServiceImpl implements OrderService {
         order.setReceiverName(address.getName());
         order.setReceiverAddress(address.getAddress());
         order.setReceiverMobile(address.getMobile());
+        order.setComment(vo.getComment());
         int result = orderMapper.insertSelective(order);
         Ensure.that(result).isEq(1,"保存订单失败");
 
