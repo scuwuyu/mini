@@ -3,6 +3,7 @@ package com.gongsi.mini.utils;
 import com.alibaba.fastjson.JSON;
 import com.gongsi.mini.core.ensure.Ensure;
 import com.gongsi.mini.core.utils.IdGenerator;
+import main.java.com.upyun.UpYunUtils;
 
 import java.io.Serializable;
 import java.util.concurrent.ConcurrentHashMap;
@@ -12,9 +13,9 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class TestUtils {
     public static void main(String[] args) {
-        Builder builder = new Builder();
-        builder.setName("123");
-        System.out.println(builder.test());
+
+        System.out.println("==++"+ UpYunUtils.md5("1111"));
+        System.out.println("==++"+ MD5Util.getInstance().md5("1111"));
     }
 
 

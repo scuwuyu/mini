@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by 吴宇 on 2018-05-27.
@@ -74,5 +75,11 @@ public class DateUtils {
         cal.setTime(date);
         cal.add(unit, num);
         return cal.getTime();
+    }
+
+    public static String toGMTString(Date date) {
+        SimpleDateFormat df = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss z", Locale.UK);
+        df.setTimeZone(new java.util.SimpleTimeZone(0, "GMT"));
+        return df.format(date);
     }
 }

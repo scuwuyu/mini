@@ -15,7 +15,5 @@ public class ExpressVO extends BaseVO {
 
     public void check(){
         Ensure.that(orderNumber).isNotEmpty("订单号不能为空");
-        Ensure.that(expressNumber).isNotEmpty("快递单号不能为空");
-        Ensure.that(expressName).isNotEmpty("快递名称不能为空");
     }
 }
