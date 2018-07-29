@@ -60,7 +60,14 @@ public class OrderServiceImpl implements OrderService {
         Set<String> sellerIds = list.stream().map(OrderVO::getSellerId).collect(Collectors.toSet());
         Map<String,UserVO> map = userService.selectByIds(new ArrayList<>(sellerIds));
 
-        list.forEach(item -> item.setSellerInfo(map.get(item.getSellerId())));
+        /** 查询活动信息*/
+        Set<Long> activityIds = list.stream().map(OrderVO::getActivityId).collect(Collectors.toSet());
+        Map<Long,ActivityVO> activityVOMap = activityService.selectByIds(new ArrayList<>(activityIds));
+
+        list.forEach(item -> {
+            item.setSellerInfo(map.get(item.getSellerId()));
+            item.setActivityInfo(activityVOMap.get(item.getActivityId()));
+        });
 
         return list;
     }

@@ -4,6 +4,7 @@ import com.gongsi.mini.entities.Activity;
 import com.gongsi.mini.vo.ActivityVO;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface ActivityMapper {
@@ -22,4 +23,6 @@ public interface ActivityMapper {
     int countByUserId(String userId);
 
     List<ActivityVO> selectList(@Param("vo") ActivityVO vo,@Param("userId") String userId);
+
+    List<ActivityVO> selectByIds(@Param("activityIds") ArrayList<Long> activityIds);
 }

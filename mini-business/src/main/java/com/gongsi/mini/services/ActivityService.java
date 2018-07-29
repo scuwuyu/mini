@@ -4,7 +4,9 @@ import com.gongsi.mini.entities.Activity;
 import com.gongsi.mini.vo.ActivityVO;
 import com.gongsi.mini.vo.UserSessionVO;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 吴宇 on 2018-05-23.
@@ -25,4 +27,6 @@ public interface ActivityService {
     Activity selectById(Long id);
 
     Activity selectAndCheck(Long activityId);
+
+    Map<Long,ActivityVO> selectByIds(ArrayList<Long> activityIds);
 }

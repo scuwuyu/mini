@@ -12,14 +12,13 @@ import com.gongsi.mini.vo.ActivityVO;
 import com.gongsi.mini.vo.UserSessionVO;
 import com.gongsi.mini.vo.UserVO;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.beans.BeanMap;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * Created by 吴宇 on 2018-05-23.
@@ -79,5 +78,14 @@ public class ActivityServiceImpl implements ActivityService {
         Ensure.that(ActivityStatusEn.END.getCode().equals(activity.getStatus()))
                 .isFalse("活动已结束");
         return activity;
+    }
+
+    public Map<Long,ActivityVO> selectByIds(ArrayList<Long> activityIds){
+        List<ActivityVO> list = activityMapper.selectByIds(activityIds);
+        if (CollectionUtils.isEmpty(list)){
+            return new HashMap<>();
+        }
+
+        return list.stream().collect(Collectors.toMap(ActivityVO::getId, Function.identity()));
     }
 }

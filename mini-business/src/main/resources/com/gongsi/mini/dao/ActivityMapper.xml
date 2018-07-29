@@ -51,6 +51,17 @@
     order by activity_time;
   </select>
 
+  <select id="selectByIds" resultMap="VOMap">
+    SELECT id,name
+    FROM `activity`
+    WHERE id IN
+    <foreach collection="activityIds" item="activityId" open="(" close=")" separator=",">
+      #{activityId}
+    </foreach>
+  </select>
+
+
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
