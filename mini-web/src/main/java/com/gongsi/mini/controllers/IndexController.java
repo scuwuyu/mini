@@ -27,7 +27,7 @@ public class IndexController {
         response.setCharacterEncoding("UTF-8");
         response.setHeader("Cache-Control", "no-cache, must-revalidate");
         return "I konw you are missing yourself !\n" +
-                "别乱搞 ！";
+                "错误页面！";
     }
 
     /** 测试页面 */
