@@ -1,7 +1,6 @@
 package com.gongsi.mini.vo;
 
 import com.gongsi.mini.core.ensure.Ensure;
-import com.gongsi.mini.entities.OrderItem;
 import lombok.Data;
 
 import java.util.Date;
