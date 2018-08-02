@@ -198,7 +198,6 @@ public class OrderServiceImpl implements OrderService {
         pagination.setList(list);
         /** 设置用户信息 */
         Map<String,UserVO> map = userService.selectByIds(new ArrayList<>(list.stream().map(OrderVO::getUserId).collect(Collectors.toSet())));
-
         list.forEach(item -> item.setBuyerInfo(map.get(item.getUserId())));
 
         return pagination;
@@ -211,13 +210,12 @@ public class OrderServiceImpl implements OrderService {
 
     /** 卖家发货 */
     public void express(ExpressVO vo, UserSessionVO user){
-        Order order = orderMapper.selectByOrderNumber(vo.getOrderNumber());
-        Ensure.that(Objects.nonNull(order)&&order.getSellerId().equals(user.getUserId())).isTrue("订单不存在");
+        Order record = orderMapper.selectByOrderNumber(vo.getOrderNumber());
+        Ensure.that(Objects.nonNull(record)&&record.getSellerId().equals(user.getUserId())).isTrue("订单不存在");
 
-        Long id = order.getId();
-        order = new Order();
-        order.setId(id);
-        if (OrderStatusEn.WAIT_EXPRESS.getCode().equals(order.getStatus())){
+        Order order = new Order();
+        order.setId(record.getId());
+        if (OrderStatusEn.WAIT_EXPRESS.getCode().equals(record.getStatus())){
             order.setStatus(OrderStatusEn.EXPRESSED.getCode());
         }
         order.setExpressNumber(vo.getExpressNumber());

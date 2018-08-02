@@ -4,13 +4,16 @@ import com.alibaba.fastjson.JSON;
 import com.gongsi.mini.core.ensure.Ensure;
 import com.gongsi.mini.core.utils.BeanMapper;
 import com.gongsi.mini.dao.ActivityMapper;
+import com.gongsi.mini.dao.OrderMapper;
 import com.gongsi.mini.entities.Activity;
 import com.gongsi.mini.enums.ActivityStatusEn;
+import com.gongsi.mini.enums.OrderStatusEn;
 import com.gongsi.mini.services.ActivityService;
 import com.gongsi.mini.services.UserService;
 import com.gongsi.mini.vo.ActivityVO;
 import com.gongsi.mini.vo.UserSessionVO;
 import com.gongsi.mini.vo.UserVO;
+import com.gongsi.mini.vo.page.OrderPageVO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +33,9 @@ public class ActivityServiceImpl implements ActivityService {
     private ActivityMapper activityMapper;
     @Autowired
     private UserService userService;
+    // TODO: 2018-08-02 后面移除位置
+    @Autowired
+    private OrderMapper orderMapper;
     /** 新增活动*/
     public Integer add(ActivityVO activityVO, UserSessionVO sessionVO){
         Activity activity = BeanMapper.map(activityVO,Activity.class);
@@ -65,6 +71,14 @@ public class ActivityServiceImpl implements ActivityService {
         Map<String,UserVO> map = userService.selectByIds(Collections.singletonList(user.getUserId()));
 
         vo.setUserInfo(map.get(user.getUserId()));
+
+        /** 查询订单数 */
+        OrderPageVO orderPageVO = new OrderPageVO();
+        orderPageVO.setActivityId(id);
+        vo.setTotalNumber(orderMapper.countActivityOrderList(orderPageVO));
+        orderPageVO.setStatus(OrderStatusEn.WAIT_EXPRESS.getCode());
+        vo.setWaitExpressNumber(orderMapper.countActivityOrderList(orderPageVO));
+
         return vo;
     }
 

@@ -15,15 +15,21 @@ public class UserUtil {
     }
 
     public static UserSessionVO getUser(String key){
-        if (StringUtils.isNotEmpty(key)){
-            UserSessionVO vo = (UserSessionVO)SecurityUtils.getSubject().getSession().getAttribute(key);
-            Ensure.that(vo).isNotNull("用户未登陆","20001");
-            return vo;
-        }
-
-        UserSessionVO vo = new UserSessionVO();
-        vo.setUserId("123456");
-        vo.setOpenId("openid");
+        UserSessionVO vo = (UserSessionVO)SecurityUtils.getSubject().getSession().getAttribute(key);
+        Ensure.that(vo).isNotNull("用户未登陆","20001");
         return vo;
     }
+
+//    public static UserSessionVO getUser(String key){
+//        if (StringUtils.isNotEmpty(key)){
+//            UserSessionVO vo = (UserSessionVO)SecurityUtils.getSubject().getSession().getAttribute(key);
+//            Ensure.that(vo).isNotNull("用户未登陆","20001");
+//            return vo;
+//        }
+//
+//        UserSessionVO vo = new UserSessionVO();
+//        vo.setUserId("123456");
+//        vo.setOpenId("openid");
+//        return vo;
+//    }
 }

@@ -136,6 +136,7 @@ CREATE TABLE `order` (
   `modify_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`),
   KEY `idx_order_number` (`order_number`) USING BTREE,
+  KEY `idx_activity_id` (`activity_id`) USING BTREE,
   KEY `idx_user_id` (`user_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单表';
 

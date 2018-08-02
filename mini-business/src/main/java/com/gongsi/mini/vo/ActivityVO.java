@@ -39,6 +39,9 @@ public class ActivityVO extends BaseVO{
     private Date startTime;
     private Date endTime;
 
+    private Integer totalNumber;
+    private Integer waitExpressNumber;
+
     public void check(){
         Ensure.that(name).isNotEmpty("活动名称不能为空");
         Ensure.that(address).isNotEmpty("活动地址不能为空");
