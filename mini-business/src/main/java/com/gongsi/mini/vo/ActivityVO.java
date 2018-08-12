@@ -47,11 +47,15 @@ public class ActivityVO extends BaseVO{
     @JSONField(format = DateUtils.YYYY_MM_DD_HHMMSS)
     private Date createTime;
 
-    public void check(){
+    public void checkWhenAdd(){
+        checkWhenEdit();
+        Ensure.that( DateUtils.add(activityTime,1, Calendar.DAY_OF_MONTH).after(new Date())).isTrue("活动日期不能小于当前时间");
+    }
+
+    public void checkWhenEdit(){
         Ensure.that(name).isNotEmpty("活动名称不能为空");
         Ensure.that(address).isNotEmpty("活动地址不能为空");
         Ensure.that(activityTime).isNotNull("活动日期不能为空");
-        Ensure.that( DateUtils.add(activityTime,1, Calendar.DAY_OF_MONTH).after(new Date())).isTrue("活动日期不能小于当前时间");
         Ensure.that(Objects.isNull(desc)||desc.length()<1<<8).isTrue("活动简介最多200字");
     }
 }

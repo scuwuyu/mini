@@ -40,7 +40,8 @@ public class MiniInterceptor implements HandlerInterceptor {
         MiniContext miniContext = MiniContext.getContext();
 
         if (miniContext.isInited()){
-            log.info(Constants.LOG_STRING,miniContext.getRequestUrl(),miniContext.getPostBody(),miniContext.getReturnBody());
+            log.info(Constants.LOG_STRING,miniContext.getRequestUrl(),miniContext.getPostBody(),miniContext.getReturnBody(),
+                    System.currentTimeMillis()-miniContext.getStartTime());
         }
 
         MiniContext.remove();
