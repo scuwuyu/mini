@@ -180,7 +180,7 @@ public class MultipleReadHttpServletRequestWrapper extends HttpServletRequestWra
      * @see javax.servlet.ServletRequest#getParameterMap()
      */
     @SuppressWarnings("unchecked")
-    public Map getParameterMap() {
+    public Map<String, String[]> getParameterMap() {
         try {
             parseRequest();
         } catch (IOException e) {
@@ -195,7 +195,7 @@ public class MultipleReadHttpServletRequestWrapper extends HttpServletRequestWra
      * @see javax.servlet.ServletRequest#getParameterNames()
      */
     @SuppressWarnings("unchecked")
-    public Enumeration getParameterNames() {
+    public Enumeration<String> getParameterNames() {
         try {
             parseRequest();
         } catch (IOException e) {

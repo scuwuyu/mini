@@ -2,8 +2,10 @@ package com.gongsi.mini.vo;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.gongsi.mini.core.ensure.Ensure;
+import com.gongsi.mini.core.utils.DateUtils;
 import lombok.Data;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
@@ -23,7 +25,7 @@ public class ActivityVO extends BaseVO{
 
     private Double latitude;
 
-    @JSONField(format = "yyyy-MM-dd")
+    @JSONField(format = DateUtils.YYYY_MM_DD)
     private Date activityTime;
 
     private String desc;
@@ -42,11 +44,18 @@ public class ActivityVO extends BaseVO{
     private Integer totalNumber;
     private Integer waitExpressNumber;
 
-    public void check(){
+    @JSONField(format = DateUtils.YYYY_MM_DD_HHMMSS)
+    private Date createTime;
+
+    public void checkWhenAdd(){
+        checkWhenEdit();
+        Ensure.that( DateUtils.add(activityTime,1, Calendar.DAY_OF_MONTH).after(new Date())).isTrue("活动日期不能小于当前时间");
+    }
+
+    public void checkWhenEdit(){
         Ensure.that(name).isNotEmpty("活动名称不能为空");
         Ensure.that(address).isNotEmpty("活动地址不能为空");
         Ensure.that(activityTime).isNotNull("活动日期不能为空");
-        Ensure.that(activityTime.after(new Date())).isTrue("活动日期不能小于当前时间");
         Ensure.that(Objects.isNull(desc)||desc.length()<1<<8).isTrue("活动简介最多200字");
     }
 }

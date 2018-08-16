@@ -20,6 +20,9 @@ public class MiniContext {
     /** 返回结果 */
     private String returnBody;
 
+    /** 请求开始时间*/
+    private long startTime;
+
     private boolean isInited = false;
     protected HttpServletRequest request;
 
@@ -39,6 +42,7 @@ public class MiniContext {
         Ensure.that(request).isNotNull("请求不能为空");
         this.isInited = true;
         this.request = request;
+        this.startTime = System.currentTimeMillis();
 //        if (isPostRequest(request)) {
 //            this.postBody = parsePostBody(request);
 //        }
@@ -92,5 +96,13 @@ public class MiniContext {
 
     public void setReturnBody(String returnBody) {
         this.returnBody = returnBody;
+    }
+
+    public long getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(long startTime) {
+        this.startTime = startTime;
     }
 }

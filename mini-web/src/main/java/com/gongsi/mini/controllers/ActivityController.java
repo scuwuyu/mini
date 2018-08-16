@@ -30,14 +30,14 @@ public class ActivityController {
     @ResponseBody
     public String add(@RequestBody ActivityVO vo){
         Ensure.that(vo.getId()).isNull("id只能为空");
-        vo.check();
+        vo.checkWhenAdd();
         Integer result = activityService.add(vo, UserUtil.getUser(vo.getKey()));
         return "ok";
     }
     @RequestMapping(value = "/edit",method = RequestMethod.POST)
     @ResponseBody
     public String edit(@RequestBody ActivityVO vo){
-        vo.check();
+        vo.checkWhenEdit();
         activityService.edit(vo, UserUtil.getUser(vo.getKey()));
         return "ok";
     }
