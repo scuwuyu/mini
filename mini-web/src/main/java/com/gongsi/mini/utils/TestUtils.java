@@ -2,12 +2,9 @@ package com.gongsi.mini.utils;
 
 import com.alibaba.fastjson.JSON;
 import com.gongsi.mini.core.ensure.Ensure;
-import com.gongsi.mini.core.utils.DateUtils;
 import com.gongsi.mini.core.utils.IdGenerator;
-import main.java.com.upyun.UpYunUtils;
-
+import com.gongsi.mini.vo.ActivityVO;
 import java.io.Serializable;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -16,13 +13,12 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class TestUtils {
     public static void main(String[] args) {
-        Date date = DateUtils.parse("2018-08-09",DateUtils.YYYY_MM_DD);
 
+        ActivityVO activityVO = new ActivityVO();
+        activityVO.setActivityTime(new Date());
+        activityVO.setId(12L);
 
-        System.out.println("==++"+ date.after(new Date()));
-        date = DateUtils.add(date,1, Calendar.DAY_OF_MONTH);
-        System.out.println("==++"+date.after(new Date()));
-        System.out.println("==++"+ MD5Util.getInstance().md5("1111"));
+        System.out.println(JSON.toJSONString(activityVO));
     }
 
 
