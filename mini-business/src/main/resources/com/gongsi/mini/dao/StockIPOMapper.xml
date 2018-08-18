@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gongsi.mini.dao.StockIPOMapper" >
+  <resultMap id="BaseResultMap" type="com.gongsi.mini.entities.StockIPO" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="code" property="code" jdbcType="CHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="total_initial_issue" property="totalInitialIssue" jdbcType="VARCHAR" />
+    <result column="online_issuance_date" property="onlineIssuanceDate" jdbcType="VARCHAR" />
+    <result column="issue_price" property="issuePrice" jdbcType="VARCHAR" />
+    <result column="announce_success_rate_result_date" property="announceSuccessRateResultDate" jdbcType="VARCHAR" />
+    <result column="listed_date" property="listedDate" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, code, name, total_initial_issue, online_issuance_date, issue_price, announce_success_rate_result_date, 
+    listed_date, create_time, modify_time
+  </sql>
+  <select id="selectByCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from stock_ipo
+    where code = #{code}
+  </select>
+
+
+
+
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from stock_ipo
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from stock_ipo
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.gongsi.mini.entities.StockIPO" >
+    insert into stock_ipo (id, code, name, total_initial_issue, 
+      online_issuance_date, issue_price, announce_success_rate_result_date, 
+      listed_date, create_time, modify_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{code,jdbcType=CHAR}, #{name,jdbcType=VARCHAR}, #{totalInitialIssue,jdbcType=VARCHAR}, 
+      #{onlineIssuanceDate,jdbcType=VARCHAR}, #{issuePrice,jdbcType=VARCHAR}, #{announceSuccessRateResultDate,jdbcType=VARCHAR}, 
+      #{listedDate,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.gongsi.mini.entities.StockIPO" >
+    insert into stock_ipo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="totalInitialIssue != null" >
+        total_initial_issue,
+      </if>
+      <if test="onlineIssuanceDate != null" >
+        online_issuance_date,
+      </if>
+      <if test="issuePrice != null" >
+        issue_price,
+      </if>
+      <if test="announceSuccessRateResultDate != null" >
+        announce_success_rate_result_date,
+      </if>
+      <if test="listedDate != null" >
+        listed_date,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=CHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="totalInitialIssue != null" >
+        #{totalInitialIssue,jdbcType=VARCHAR},
+      </if>
+      <if test="onlineIssuanceDate != null" >
+        #{onlineIssuanceDate,jdbcType=VARCHAR},
+      </if>
+      <if test="issuePrice != null" >
+        #{issuePrice,jdbcType=VARCHAR},
+      </if>
+      <if test="announceSuccessRateResultDate != null" >
+        #{announceSuccessRateResultDate,jdbcType=VARCHAR},
+      </if>
+      <if test="listedDate != null" >
+        #{listedDate,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gongsi.mini.entities.StockIPO" >
+    update stock_ipo
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=CHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="totalInitialIssue != null" >
+        total_initial_issue = #{totalInitialIssue,jdbcType=VARCHAR},
+      </if>
+      <if test="onlineIssuanceDate != null" >
+        online_issuance_date = #{onlineIssuanceDate,jdbcType=VARCHAR},
+      </if>
+      <if test="issuePrice != null" >
+        issue_price = #{issuePrice,jdbcType=VARCHAR},
+      </if>
+      <if test="announceSuccessRateResultDate != null" >
+        announce_success_rate_result_date = #{announceSuccessRateResultDate,jdbcType=VARCHAR},
+      </if>
+      <if test="listedDate != null" >
+        listed_date = #{listedDate,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gongsi.mini.entities.StockIPO" >
+    update stock_ipo
+    set code = #{code,jdbcType=CHAR},
+      name = #{name,jdbcType=VARCHAR},
+      total_initial_issue = #{totalInitialIssue,jdbcType=VARCHAR},
+      online_issuance_date = #{onlineIssuanceDate,jdbcType=VARCHAR},
+      issue_price = #{issuePrice,jdbcType=VARCHAR},
+      announce_success_rate_result_date = #{announceSuccessRateResultDate,jdbcType=VARCHAR},
+      listed_date = #{listedDate,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

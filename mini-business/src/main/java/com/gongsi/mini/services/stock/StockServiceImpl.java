@@ -23,7 +23,7 @@ import java.util.List;
  * Created by wuyu on 2018/8/16.
  */
 @Slf4j
-@Service
+@Service("stockService")
 public class StockServiceImpl {
 
     private static final String URL_SHANGHAI = "http://ipo.sseinfo.com/info/commonQuery.do?isPagination=true&sqlId=COMMON_SSE_IPO_IPO_LIST_L&pageHelp.pageSize=5";
