@@ -81,9 +81,13 @@ public class StockServiceImpl {
             stock.setTotal_initial_issue(tds.get(5).text());
             stock.setOnline_issuance_date(tds.get(2).text());
             stock.setIssue_price(tds.get(3).text());
-
             stock.setAnnounce_success_rate_result_date(tds.get(11).text());
             stock.setListed_date(tds.get(12).text());
+
+            if ("暂缓发行".equals(stock.getOnline_issuance_date())){
+                stock.setOnline_issuance_date("-");
+            }
+
             list.add(stock);
         });
 
