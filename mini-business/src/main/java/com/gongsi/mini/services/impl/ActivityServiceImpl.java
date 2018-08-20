@@ -1,6 +1,7 @@
 package com.gongsi.mini.services.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.gongsi.mini.core.Pagination;
 import com.gongsi.mini.core.ensure.Ensure;
 import com.gongsi.mini.core.utils.BeanMapper;
 import com.gongsi.mini.dao.ActivityMapper;
@@ -59,8 +60,17 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     /** 状态查询活动列表 */
-    public List<ActivityVO> selectList(ActivityVO vo, UserSessionVO user){
-        return activityMapper.selectList(vo,user.getUserId());
+    public Pagination<ActivityVO> selectList(ActivityVO vo, UserSessionVO user){
+        Pagination<ActivityVO> pagination = new Pagination<>(vo.getCurrentPage(),vo.getPageSize());
+        pagination.setTotalCount(activityMapper.countList(vo,user.getUserId()));
+
+        if (pagination.getTotalCount()==0){
+            return pagination;
+        }
+
+        pagination.setList(activityMapper.selectList(vo,user.getUserId(),pagination));
+
+        return pagination;
     }
 
     /** c端 b端用户查看活动*/

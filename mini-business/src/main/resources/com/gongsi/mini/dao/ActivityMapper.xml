@@ -28,15 +28,7 @@
     id, user_id, name, picture, longitude, latitude, activity_time, `desc`, status, create_time,
     address
   </sql>
-
-  <select id="countByUserId" parameterType="java.lang.String" resultType="java.lang.Integer">
-    SELECT COUNT(*) FROM activity
-    WHERE user_id = #{userId}
-  </select>
-
-  <select id="selectList" resultMap="VOMap">
-    select id,name,picture,activity_time,status,address,`desc`
-    from activity
+  <sql id="WHERECONDITION">
     WHERE user_id = #{userId}
     <if test="vo.name !=null">
       AND name like CONCAT("%",#{vo.name},"%")
@@ -48,7 +40,25 @@
       AND #{vo.endTime} <![CDATA[ >= ]]> activity_time
     </if>
     AND status = #{vo.status}
-    order by activity_time;
+  </sql>
+
+
+  <select id="countByUserId" parameterType="java.lang.String" resultType="java.lang.Integer">
+    SELECT COUNT(*) FROM activity
+    WHERE user_id = #{userId}
+  </select>
+
+  <select id="selectList" resultMap="VOMap">
+    select id,name,picture,activity_time,status,address,`desc`
+    from activity
+    <include refid="WHERECONDITION"/>
+    order by activity_time
+    limit #{pagination.offSize},#{pagination.pageSize} ;
+  </select>
+  <select id="countList" resultType="java.lang.Integer">
+    select COUNT(*)
+    from activity
+    <include refid="WHERECONDITION"/>
   </select>
 
   <select id="selectByIds" resultMap="VOMap">

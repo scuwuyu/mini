@@ -1,5 +1,6 @@
 package com.gongsi.mini.services;
 
+import com.gongsi.mini.core.Pagination;
 import com.gongsi.mini.entities.Activity;
 import com.gongsi.mini.vo.ActivityVO;
 import com.gongsi.mini.vo.UserSessionVO;
@@ -20,7 +21,7 @@ public interface ActivityService {
     /** 查询活动次数 */
     int countByUserId(String userId);
     /** 状态查询活动列表 */
-    List<ActivityVO> selectList(ActivityVO vo, UserSessionVO user);
+    Pagination<ActivityVO> selectList(ActivityVO vo, UserSessionVO user);
 
     ActivityVO detail(Long id, UserSessionVO user);
 

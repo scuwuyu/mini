@@ -1,5 +1,6 @@
 package com.gongsi.mini.dao;
 
+import com.gongsi.mini.core.Pagination;
 import com.gongsi.mini.entities.Activity;
 import com.gongsi.mini.vo.ActivityVO;
 import org.apache.ibatis.annotations.Param;
@@ -22,7 +23,9 @@ public interface ActivityMapper {
 
     int countByUserId(String userId);
 
-    List<ActivityVO> selectList(@Param("vo") ActivityVO vo,@Param("userId") String userId);
+    int countList(@Param("vo") ActivityVO vo,@Param("userId") String userId);
+    List<ActivityVO> selectList(@Param("vo") ActivityVO vo,@Param("userId") String userId,
+                                @Param("pagination") Pagination<ActivityVO> pagination);
 
     List<ActivityVO> selectByIds(@Param("activityIds") ArrayList<Long> activityIds);
 }

@@ -1,5 +1,6 @@
 package com.gongsi.mini.controllers;
 
+import com.gongsi.mini.core.Pagination;
 import com.gongsi.mini.core.ensure.Ensure;
 import com.gongsi.mini.core.result.Result;
 import com.gongsi.mini.core.result.ResultUtils;
@@ -54,7 +55,7 @@ public class ActivityController {
 
     @RequestMapping(value = "/list",method = RequestMethod.POST)
     @ResponseBody
-    public List<ActivityVO> list(@RequestBody ActivityVO vo){
+    public Pagination<ActivityVO> list(@RequestBody ActivityVO vo){
         Ensure.that(vo.getStatus()).isNotNull("活动状态不能为空");
         return activityService.selectList(vo, UserUtil.getUser(vo.getKey()));
     }

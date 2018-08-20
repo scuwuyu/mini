@@ -27,7 +27,7 @@ public class Pagination<T> implements Serializable {
     /**
      * 每页记录数
      */
-    private Integer pageSize = 20;
+    private Integer pageSize = 10;
 
     /**
      * 总记录数
@@ -61,7 +61,7 @@ public class Pagination<T> implements Serializable {
 
     public void setPageSize(Integer pageSize) {
         if (Objects.isNull(pageSize)||pageSize < 1) {
-            pageSize = 1;
+            pageSize = 10;
         } else if (pageSize > MAX_PAGE_SIZE) {
             pageSize = MAX_PAGE_SIZE;
         }

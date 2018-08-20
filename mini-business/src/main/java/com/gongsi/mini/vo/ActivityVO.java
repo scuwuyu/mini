@@ -3,6 +3,7 @@ package com.gongsi.mini.vo;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.gongsi.mini.core.ensure.Ensure;
 import com.gongsi.mini.core.utils.DateUtils;
+import com.gongsi.mini.vo.page.PageVO;
 import lombok.Data;
 
 import java.util.Calendar;
@@ -13,7 +14,7 @@ import java.util.Objects;
  * Created by 吴宇 on 2018-05-23.
  */
 @Data
-public class ActivityVO extends BaseVO{
+public class ActivityVO extends PageVO{
     /** 活动id */
     private Long id;
 
