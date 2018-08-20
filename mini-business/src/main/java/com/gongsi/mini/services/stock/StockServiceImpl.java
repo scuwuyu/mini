@@ -85,7 +85,7 @@ public class StockServiceImpl {
             stock.setListed_date(tds.get(12).text());
 
             if ("暂缓发行".equals(stock.getOnline_issuance_date())){
-                stock.setOnline_issuance_date("-");
+                stock.setOnline_issuance_date("--");
             }
 
             list.add(stock);
