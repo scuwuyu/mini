@@ -4,6 +4,7 @@ import com.gongsi.mini.core.Pagination;
 import com.gongsi.mini.core.ensure.Ensure;
 import com.gongsi.mini.core.result.Result;
 import com.gongsi.mini.core.result.ResultUtils;
+import com.gongsi.mini.entities.Activity;
 import com.gongsi.mini.services.ActivityService;
 import com.gongsi.mini.utils.UserUtil;
 import com.gongsi.mini.vo.ActivityVO;
@@ -29,11 +30,11 @@ public class ActivityController {
 
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     @ResponseBody
-    public String add(@RequestBody ActivityVO vo){
+    public Long add(@RequestBody ActivityVO vo){
         Ensure.that(vo.getId()).isNull("id只能为空");
         vo.checkWhenAdd();
-        Integer result = activityService.add(vo, UserUtil.getUser(vo.getKey()));
-        return "ok";
+        Activity result = activityService.add(vo, UserUtil.getUser(vo.getKey()));
+        return result.getId();
     }
     @RequestMapping(value = "/edit",method = RequestMethod.POST)
     @ResponseBody

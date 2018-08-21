@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public interface ActivityService {
     /** 新增活动*/
-    Integer add(ActivityVO activityVO, UserSessionVO sessionVO);
+    Activity add(ActivityVO activityVO, UserSessionVO sessionVO);
 
     /** 编辑活动*/
     void edit(ActivityVO activityVO, UserSessionVO sessionVO);

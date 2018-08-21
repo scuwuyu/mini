@@ -231,6 +231,8 @@ public class OrderServiceImpl implements OrderService {
 
         OrderVO orderVO = BeanMapper.map(order,OrderVO.class);
         /** 买家信息*/
+        Map<String,UserVO> map = userService.selectByIds(Collections.singletonList(order.getUserId()));
+        orderVO.setBuyerInfo(map.get(order.getUserId()));
 
         /** 活动信息*/
         Activity activity = activityService.selectById(order.getActivityId());

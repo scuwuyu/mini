@@ -83,6 +83,9 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.gongsi.mini.entities.Activity" >
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into activity (id, user_id, name, 
       picture, longitude, latitude, 
       activity_time, `desc`,address)

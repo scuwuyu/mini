@@ -38,10 +38,12 @@ public class ActivityServiceImpl implements ActivityService {
     @Autowired
     private OrderMapper orderMapper;
     /** 新增活动*/
-    public Integer add(ActivityVO activityVO, UserSessionVO sessionVO){
+    public Activity add(ActivityVO activityVO, UserSessionVO sessionVO){
         Activity activity = BeanMapper.map(activityVO,Activity.class);
         activity.setUserId(sessionVO.getUserId());
-        return activityMapper.insert(activity);
+        activityMapper.insert(activity);
+
+        return activity;
     }
 
     /** 编辑活动*/
