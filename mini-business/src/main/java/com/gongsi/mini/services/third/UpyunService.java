@@ -28,7 +28,7 @@ public class UpyunService {
     /**
      * formapi 请求url前缀
      */
-    private static final String FORMAPI_URL_PREFIX = "http://v0.api.upyun.com/";
+    private static final String FORMAPI_URL_PREFIX = "https://v0.api.upyun.com/";
 
     @Value("${upyun.bucket}")
     private String bucket;

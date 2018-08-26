@@ -176,6 +176,18 @@ CREATE TABLE `address` (
   KEY `idx_user_id` (`user_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='收货地址表';
 
+--  小程序问题表
+CREATE TABLE `mini_question` (
+  `id` BIGINT(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `question` varchar(64) DEFAULT NULL COMMENT '问题',
+  `answer` varchar(256) DEFAULT NULL COMMENT '答案',
+  `type` tinyint(2) NOT NULL DEFAULT '1' COMMENT '类型：1:卖家问题 2：买家问题',
+
+  `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `modify_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='小程序问题表';
+
 
 --  问题：
 --  	1、开启专属代购套餐全部月为单位。

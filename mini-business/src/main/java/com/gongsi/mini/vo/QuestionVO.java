@@ -13,5 +13,6 @@ public class QuestionVO extends BaseVO{
 
     public void check(){
         Ensure.that(type).isNotNull("问题类型不能为空");
+        Ensure.that(type==1||type==2).isTrue("问题类型不正确");
     }
 }
