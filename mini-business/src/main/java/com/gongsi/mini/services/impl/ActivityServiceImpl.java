@@ -80,9 +80,10 @@ public class ActivityServiceImpl implements ActivityService {
         log.info("查看活动详情user={},id={}", JSON.toJSONString(user),id);
         Activity activity = activityMapper.selectByPrimaryKey(id);
         ActivityVO vo = BeanMapper.map(activity,ActivityVO.class);
-        Map<String,UserVO> map = userService.selectByIds(Collections.singletonList(user.getUserId()));
+        /** 使用活动创建人的信息 */
+        Map<String,UserVO> map = userService.selectByIds(Collections.singletonList(activity.getUserId()));
 
-        vo.setUserInfo(map.get(user.getUserId()));
+        vo.setUserInfo(map.get(activity.getUserId()));
 
         /** 查询订单数 */
         OrderPageVO orderPageVO = new OrderPageVO();
