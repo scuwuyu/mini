@@ -188,3 +188,12 @@ CREATE TABLE `mini_question` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='小程序问题表';
 
+--  初始化问题列表
+INSERT INTO `mini_question` (`question`, `answer`, `type`) VALUES ('代购超人是什么？', '代购助手是一款面向代购卖家的下单管理工具', 1);
+INSERT INTO `mini_question` (`question`, `answer`, `type`) VALUES ('代购超人包括哪些功能？', '1、支持创建活动，比如“十一飞韩国”\r\\n2、支持活动分享给买家，让买家自助下单\\n\r3、支持订单汇总和采购清单统计，方便卖家管理和采购\\n\r4、支持订单发货功能', 1);
+INSERT INTO `mini_question` (`question`, `answer`, `type`) VALUES ('代购超人能给你带来什么帮助？', '1、帮助卖家无纸化、电子化管理订单\r\\n2、大大提升下单效率，减少卖家一个个记录订单操作\\n\r3、历史订单、历史活动数据一览无余\r\\n4、系统自动帮你统计每个商品的需采购的数量，减少卖家工作\r\\n5、简易的发货和物流管理', 1);
+INSERT INTO `mini_question` (`question`, `answer`, `type`) VALUES ('作为卖家，你该如何有效使用代购超人？', '1、第一步你可以先在商品库建立你能代购的商品，比如“SKII”\r\\n2、第二步当你有一个行程时，可以发布一个活动，比如“十一飞韩国“\r\\n3、第三步将你的活动分享给你的朋友、群，让他们自助下单（与买家的沟通、支付依然在微信中完成），可以点击“活动订单”查看所有买家下的订单，你也可以对订单进行备注，比如“这个订单已支付”。点击“采购清单”可以看到系统自动统计采购单\r\\n4、第四步就是设置活动结束（这样买家就无法下单了），然后十一飞到韩国进行采购，完成采购后，进行一一发货', 1);
+INSERT INTO `mini_question` (`question`, `answer`, `type`) VALUES ('目前不支持什么功能？', '1、目前不支持商品关联活动，即不同的活动（比如韩国）只能下单对应活动的商品\r\\n2、目前不支持直接在小程序上直接进行支付，建议依然微信打款，可在小程序订单中进行备注\\n\r3、\r物流未对接第三方，暂未开放物流查询', 1);
+INSERT INTO `mini_question` (`question`, `answer`, `type`) VALUES ('买家如何使用代购超人？', '买家可以通过卖家分享给自己的小程序卡片，进入当前活动进行下单，并在“我的—我是买家—我的订单”中查看自己下的订单，以及订单详情', 2);
+INSERT INTO `mini_question` (`question`, `answer`, `type`) VALUES ('如果我下错了，或者不想要了怎么办？', '你可以在订单列表中取消订单', 2);
+

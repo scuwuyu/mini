@@ -6,6 +6,7 @@ import com.gongsi.mini.core.utils.BeanMapper;
 import com.gongsi.mini.dao.GoodsMapper;
 import com.gongsi.mini.entities.Goods;
 import com.gongsi.mini.services.GoodsService;
+import com.gongsi.mini.utils.UrlCoderUtils;
 import com.gongsi.mini.vo.GoodsVO;
 import com.gongsi.mini.vo.UserSessionVO;
 import com.gongsi.mini.vo.page.GoodsPageVO;
@@ -31,6 +32,7 @@ public class GoodsServiceImpl implements GoodsService {
         Goods goods = BeanMapper.map(vo, Goods.class);
         goods.setUserId(user.getUserId());
 
+        goods.setDesc(UrlCoderUtils.encode(goods.getDesc()));
         Integer result = goodsMapper.insertSelective(goods);
         Ensure.that(result).isEq(1,"商品保存失败");
     }
@@ -40,6 +42,8 @@ public class GoodsServiceImpl implements GoodsService {
         vo.checkWhenEdit();
         selectById(vo.getId(),user.getUserId());
         Goods goods = BeanMapper.map(vo, Goods.class);
+
+        goods.setDesc(UrlCoderUtils.encode(goods.getDesc()));
         goodsMapper.updateByPrimaryKeySelective(goods);
     }
 
@@ -80,6 +84,7 @@ public class GoodsServiceImpl implements GoodsService {
         Goods goods = goodsMapper.selectByPrimaryKey(id);
 //        Ensure.that(Objects.nonNull(goods)&&goods.getUserId().equals(userId))
 //                .isTrue("对应商品不存在");
+        goods.setDesc(UrlCoderUtils.decode(goods.getDesc()));
         return BeanMapper.map(goods, GoodsVO.class);
     }
 }

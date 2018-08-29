@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService {
 
     /** 如果不存在则创建*/
     public synchronized User selectByOpenId(String openId){
-        User user = selectByUserId(openId);
+        User user = userMapper.selectByOpenId(openId);
 
         if (Objects.isNull(user)){
             user = new User();
