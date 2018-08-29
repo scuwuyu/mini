@@ -3,7 +3,7 @@
 CREATE TABLE `user` (
   `id` BIGINT(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
   `user_id` varchar(32) NOT NULL COMMENT '用户id',
-  `nickName` varchar(64) DEFAULT NULL COMMENT '用户昵称',
+  `nickName` varchar(128) DEFAULT NULL COMMENT '用户昵称',
   `open_id` varchar(32) NOT NULL COMMENT '微信openid',
   `avatar_url` varchar(256) DEFAULT NULL COMMENT '用户头像',
   `is_seller` TINYINT(1) NOT NULL DEFAULT '0' COMMENT '是否开通卖家:0.否，1.是',
@@ -103,7 +103,7 @@ CREATE TABLE `goods` (
   `picture` varchar(128) DEFAULT NULL COMMENT '商品图片',
   `price` DECIMAL(10,2) NOT NULL DEFAULT '0' COMMENT '商品价格，单位元',
 
-  `desc` varchar(256) DEFAULT NULL COMMENT '简介',
+  `desc` text COMMENT '商品简介',
   `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态：1:有效 0：删除',
 
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -187,10 +187,4 @@ CREATE TABLE `mini_question` (
   `modify_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='小程序问题表';
-
-
---  问题：
---  	1、开启专属代购套餐全部月为单位。
---    2、活动列表，活动地址显示什么？
-
 

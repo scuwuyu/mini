@@ -9,12 +9,15 @@ import com.gongsi.mini.entities.User;
 import com.gongsi.mini.services.ActivityService;
 import com.gongsi.mini.services.OrderService;
 import com.gongsi.mini.services.UserService;
+import com.gongsi.mini.utils.UrlCoderUtils;
 import com.gongsi.mini.vo.MineVO;
 import com.gongsi.mini.vo.UserVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,12 +41,17 @@ public class UserServiceImpl implements UserService {
     private OrderService orderService;
 
     public User selectByUserId(String userId){
-        return userMapper.selectByUserId(userId);
+        User user = userMapper.selectByUserId(userId);
+        if (Objects.nonNull(user)){
+            user.setNickName(UrlCoderUtils.decode(user.getNickName()));
+        }
+
+        return user;
     }
 
     /** 我的页面*/
     public MineVO mine(String userId){
-        User user = userMapper.selectByUserId(userId);
+        User user = selectByUserId(userId);
         Ensure.that(user).isNotNull("用户不存在");
         MineVO mineVO = BeanMapper.map(user,MineVO.class);
 
@@ -59,12 +67,15 @@ public class UserServiceImpl implements UserService {
             return new HashMap<>();
         }
 
-        return list.stream().collect(Collectors.toMap(UserVO::getUserId, Function.identity()));
+        return list.stream().map(item -> {
+            item.setNickName(UrlCoderUtils.decode(item.getNickName()));
+            return item;
+        }).collect(Collectors.toMap(UserVO::getUserId, Function.identity()));
     }
 
     /** 如果不存在则创建*/
     public synchronized User selectByOpenId(String openId){
-        User user = userMapper.selectByOpenId(openId);
+        User user = selectByUserId(openId);
 
         if (Objects.isNull(user)){
             user = new User();
@@ -79,7 +90,7 @@ public class UserServiceImpl implements UserService {
         log.info("更新用户信息vo={}", JSON.toJSONString(vo));
         User user = new User();
         user.setUserId(vo.getUserId());
-        user.setNickName(vo.getNickName());
+        user.setNickName(UrlCoderUtils.encode(vo.getNickName()));
         user.setAvatarUrl(vo.getAvatarUrl());
 
         int result = userMapper.updateByUserIdSelective(user);
