@@ -188,6 +188,19 @@ CREATE TABLE `mini_question` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='小程序问题表';
 
+--  建议与反馈
+CREATE TABLE `advise` (
+  `id` BIGINT(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `user_id` varchar(32) NOT NULL COMMENT '用户id',
+  `advise` varchar(256) DEFAULT NULL COMMENT '建议',
+
+  `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `modify_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='小程序问题表';
+
+
+
 --  初始化问题列表
 INSERT INTO `mini_question` (`question`, `answer`, `type`) VALUES ('代购超人是什么？', '代购助手是一款面向代购卖家的下单管理工具', 1);
 INSERT INTO `mini_question` (`question`, `answer`, `type`) VALUES ('代购超人包括哪些功能？', '1、支持创建活动，比如“十一飞韩国”\r\\n2、支持活动分享给买家，让买家自助下单\\n\r3、支持订单汇总和采购清单统计，方便卖家管理和采购\\n\r4、支持订单发货功能', 1);

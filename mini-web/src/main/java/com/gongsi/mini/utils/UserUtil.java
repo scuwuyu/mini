@@ -19,14 +19,14 @@ public class UserUtil {
 //        return getTestUser(key);
     }
 
-    public static UserSessionVO getRealUser(String key){
+    private static UserSessionVO getRealUser(String key){
         Ensure.that(key).isNotEmpty("用户key不能为空");
         UserSessionVO vo = (UserSessionVO)SecurityUtils.getSubject().getSession().getAttribute(key);
         Ensure.that(vo).isNotNull("用户未登陆","20001");
         return vo;
     }
 
-    public static UserSessionVO getTestUser(String key){
+    private static UserSessionVO getTestUser(String key){
         if (StringUtils.isNotEmpty(key)){
             UserSessionVO vo = (UserSessionVO)SecurityUtils.getSubject().getSession().getAttribute(key);
             Ensure.that(vo).isNotNull("用户未登陆","20001");
