@@ -4,9 +4,14 @@ import com.alibaba.fastjson.JSON;
 import com.gongsi.mini.core.ensure.Ensure;
 import com.gongsi.mini.core.utils.IdGenerator;
 import com.gongsi.mini.vo.ActivityVO;
+import com.gongsi.mini.vo.UserVO;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 /**
  * Created by 吴宇 on 2018-05-27.
@@ -14,11 +19,22 @@ import java.util.concurrent.ConcurrentHashMap;
 public class TestUtils {
     public static void main(String[] args) {
 
-        ActivityVO activityVO = new ActivityVO();
-        activityVO.setActivityTime(new Date());
-        activityVO.setId(12L);
+        testJDK8();
+    }
 
-        System.out.println(JSON.toJSONString(activityVO));
+    private static void testJDK8(){
+        List<UserVO> list = new ArrayList<>();
+        UserVO userVO = new UserVO();
+        userVO.setUserId("923");
+        list.add(userVO);
+        userVO = new UserVO();
+        userVO.setUserId("456");
+        list.add(userVO);
+
+
+        System.out.println(list.stream().map(UserVO::getUserId).collect(Collectors.toList()));
+        System.out.println(list.stream().collect(Collectors.mapping(UserVO::getUserId,Collectors.toList())));
+
     }
 
 
@@ -57,4 +73,7 @@ public class TestUtils {
             },"Thread-"+i).start();
         }
     }
+
+
+
 }

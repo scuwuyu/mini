@@ -11,6 +11,7 @@ import com.gongsi.mini.enums.ActivityStatusEn;
 import com.gongsi.mini.enums.OrderStatusEn;
 import com.gongsi.mini.services.ActivityService;
 import com.gongsi.mini.services.UserService;
+import com.gongsi.mini.utils.UrlCoderUtils;
 import com.gongsi.mini.vo.ActivityVO;
 import com.gongsi.mini.vo.UserSessionVO;
 import com.gongsi.mini.vo.UserVO;
@@ -41,6 +42,8 @@ public class ActivityServiceImpl implements ActivityService {
     public Activity add(ActivityVO activityVO, UserSessionVO sessionVO){
         Activity activity = BeanMapper.map(activityVO,Activity.class);
         activity.setUserId(sessionVO.getUserId());
+        encode(activity);
+
         activityMapper.insert(activity);
 
         return activity;
@@ -52,6 +55,7 @@ public class ActivityServiceImpl implements ActivityService {
         Ensure.that(record).isNotNull("对应的活动不存在");
         Ensure.that(record.getUserId().equals(sessionVO.getUserId())).isTrue("对应的活动不存在");
         Activity activity = BeanMapper.map(activityVO,Activity.class);
+        encode(activity);
         int result = activityMapper.updateByPrimaryKeySelective(activity);
         Ensure.that(result).isGt(0,"更新失败");
     }
@@ -69,8 +73,9 @@ public class ActivityServiceImpl implements ActivityService {
         if (pagination.getTotalCount()==0){
             return pagination;
         }
-
-        pagination.setList(activityMapper.selectList(vo,user.getUserId(),pagination));
+        List<ActivityVO> list = activityMapper.selectList(vo,user.getUserId(),pagination);
+        list.forEach(this::decode);
+        pagination.setList(list);
 
         return pagination;
     }
@@ -80,6 +85,7 @@ public class ActivityServiceImpl implements ActivityService {
         log.info("查看活动详情user={},id={}", JSON.toJSONString(user),id);
         Activity activity = activityMapper.selectByPrimaryKey(id);
         ActivityVO vo = BeanMapper.map(activity,ActivityVO.class);
+        decode(vo);
         /** 使用活动创建人的信息 */
         Map<String,UserVO> map = userService.selectByIds(Collections.singletonList(activity.getUserId()));
 
@@ -96,7 +102,9 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     public Activity selectById(Long id){
-        return activityMapper.selectByPrimaryKey(id);
+        Activity activity = activityMapper.selectByPrimaryKey(id);
+        decode(activity);
+        return activity;
     }
 
     public Activity selectAndCheck(Long activityId){
@@ -113,6 +121,25 @@ public class ActivityServiceImpl implements ActivityService {
             return new HashMap<>();
         }
 
-        return list.stream().collect(Collectors.toMap(ActivityVO::getId, Function.identity()));
+        return list.stream().map(item -> {
+            this.decode(item);
+            return item;
+        }).collect(Collectors.toMap(ActivityVO::getId, Function.identity()));
+    }
+
+
+    private void encode(Activity activity){
+        activity.setAddress(UrlCoderUtils.encode(activity.getAddress()));
+        activity.setDesc(UrlCoderUtils.encode(activity.getDesc()));
+    }
+
+    private void decode(ActivityVO activity){
+        activity.setAddress(UrlCoderUtils.decode(activity.getAddress()));
+        activity.setDesc(UrlCoderUtils.decode(activity.getDesc()));
+    }
+
+    private void decode(Activity activity){
+        activity.setAddress(UrlCoderUtils.decode(activity.getAddress()));
+        activity.setDesc(UrlCoderUtils.decode(activity.getDesc()));
     }
 }
