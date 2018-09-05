@@ -79,7 +79,7 @@ CREATE TABLE `transaction` (
 CREATE TABLE `activity` (
   `id` BIGINT(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
   `user_id` varchar(32) NOT NULL COMMENT '用户id',
-  `name` varchar(64) NOT NULL COMMENT '活动名称',
+  `name` varchar(128) NOT NULL COMMENT '活动名称',
   `picture` varchar(128) DEFAULT NULL COMMENT '活动图片',
 
   `longitude` DOUBLE DEFAULT NULL COMMENT '活动经度',
