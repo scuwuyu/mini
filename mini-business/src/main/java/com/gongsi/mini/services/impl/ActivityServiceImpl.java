@@ -18,6 +18,7 @@ import com.gongsi.mini.vo.UserVO;
 import com.gongsi.mini.vo.page.OrderPageVO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -129,16 +130,23 @@ public class ActivityServiceImpl implements ActivityService {
 
 
     private void encode(Activity activity){
+        activity.setName(UrlCoderUtils.encode(activity.getName()));
         activity.setAddress(UrlCoderUtils.encode(activity.getAddress()));
         activity.setDesc(UrlCoderUtils.encode(activity.getDesc()));
     }
 
     private void decode(ActivityVO activity){
-        activity.setAddress(UrlCoderUtils.decode(activity.getAddress()));
-        activity.setDesc(UrlCoderUtils.decode(activity.getDesc()));
+        activity.setName(UrlCoderUtils.decode(activity.getName()));
+        if (StringUtils.isNotEmpty(activity.getAddress())){
+            activity.setAddress(UrlCoderUtils.decode(activity.getAddress()));
+        }
+        if (StringUtils.isNotEmpty(activity.getDesc())){
+            activity.setDesc(UrlCoderUtils.decode(activity.getDesc()));
+        }
     }
 
     private void decode(Activity activity){
+        activity.setName(UrlCoderUtils.decode(activity.getName()));
         activity.setAddress(UrlCoderUtils.decode(activity.getAddress()));
         activity.setDesc(UrlCoderUtils.decode(activity.getDesc()));
     }
