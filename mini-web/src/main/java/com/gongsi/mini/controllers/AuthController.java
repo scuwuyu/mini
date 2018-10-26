@@ -1,15 +1,19 @@
 package com.gongsi.mini.controllers;
 
 import com.alibaba.fastjson.JSON;
+import com.gongsi.mini.constants.Constants;
 import com.gongsi.mini.core.ensure.Ensure;
 import com.gongsi.mini.core.utils.BeanMapper;
 import com.gongsi.mini.core.utils.IdGenerator;
+import com.gongsi.mini.entities.AppToken;
 import com.gongsi.mini.entities.User;
+import com.gongsi.mini.services.AppTokenService;
 import com.gongsi.mini.services.UserService;
 import com.gongsi.mini.services.http.WechatAuthResult;
 import com.gongsi.mini.services.http.WechatAuthService;
 import com.gongsi.mini.shiro.MyToken;
 import com.gongsi.mini.utils.UserUtil;
+import com.gongsi.mini.vo.MiniCodeVO;
 import com.gongsi.mini.vo.UserSessionVO;
 import com.gongsi.mini.vo.UserVO;
 import com.gongsi.mini.vo.auth.AuthVO;
@@ -39,6 +43,9 @@ public class AuthController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private AppTokenService appTokenService;
     /**
      * openId 注册用户信息
      * @param vo
@@ -48,7 +55,7 @@ public class AuthController {
     @ResponseBody
     public AuthResponse login(@RequestBody AuthVO vo, HttpServletRequest request){
         String sessionId = request.getSession().getId();
-        WechatAuthResult wechatAuthResult = WechatAuthService.authByJSCode(vo);
+        WechatAuthResult wechatAuthResult = WechatAuthService.authByJSCode(vo,appTokenService.selectByAppId(Constants.APP_ID));
         User user = userService.selectByOpenId(wechatAuthResult.getOpenid());
 
 
@@ -80,5 +87,17 @@ public class AuthController {
 
         userService.updateByUserId(vo);
         return "ok";
+    }
+
+    /**
+     * 获取小程序ACCESS_TOKEN
+     */
+    @RequestMapping(value = "/token",method = RequestMethod.POST)
+    @ResponseBody
+    public String save(@RequestBody MiniCodeVO vo){
+        UserUtil.getUser(vo.getKey());
+        AppToken appToken = appTokenService.selectByAppId(Constants.APP_ID);
+        Ensure.that(appToken).isNotNull("系统繁忙，请稍后再试");
+        return appToken.getAccessToken();
     }
 }

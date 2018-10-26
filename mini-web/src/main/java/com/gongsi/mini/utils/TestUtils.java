@@ -7,9 +7,7 @@ import com.gongsi.mini.vo.ActivityVO;
 import com.gongsi.mini.vo.UserVO;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
@@ -18,61 +16,61 @@ import java.util.stream.Collectors;
  */
 public class TestUtils {
     public static void main(String[] args) {
-
-        testJDK8();
-    }
-
-    private static void testJDK8(){
-        List<UserVO> list = new ArrayList<>();
-        UserVO userVO = new UserVO();
-        userVO.setUserId("923");
-        list.add(userVO);
-        userVO = new UserVO();
-        userVO.setUserId("456");
-        list.add(userVO);
-
-
-        System.out.println(list.stream().map(UserVO::getUserId).collect(Collectors.toList()));
-        System.out.println(list.stream().collect(Collectors.mapping(UserVO::getUserId,Collectors.toList())));
+        testSort();
 
     }
 
+    public static void testSort(){
+//        Integer[] arrays = new Integer[]{
+//                0,0,0, 0,0,0, 0,0,0, 0,0,0, 0,0,0, 3,
+//                0,0,0, 0,0,0, 0,0,0, 0,0,0, 3,3,3, 30
+//        };
 
-    public static class Builder implements Serializable {
-        private String name;
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String test(){
-            return JSON.toJSONString(this);
-        }
+        List<Integer> list = create128();
+        System.out.println(list);
+        Collections.sort(list,COMPARATOR);
+        System.out.println(list);
     }
 
-    public void testId(){
-        final Object lock = new Object();
-        final ConcurrentHashMap<String,Object> map = new ConcurrentHashMap<>();
-
-        for (int i=0;i<10;i++){
-            new Thread(()->{
-                for (int j=0;j<100000;j++){
-                    String id = IdGenerator.nextId();
-                    synchronized (lock){
-                        System.out.println(Thread.currentThread().getName()+"======"+id);
-                        if (map.containsKey(id)){
-                            Ensure.that(true).isFalse("已经存在了");
-                        }
-                        map.putIfAbsent(id,"");
-                    }
-                }
-            },"Thread-"+i).start();
+    public static final Comparator<Integer> COMPARATOR = (o1,o2) -> {
+        try {
+            Thread.sleep(20L);
+        } catch (InterruptedException e) {
         }
+        return o1>o2?1:-1;
+    };
+
+
+    private static List<Integer> create128(){
+        List<Integer> list = new ArrayList<>();
+        list.addAll(create(80));
+        list.addAll(create(52));
+        list.addAll(create(26));
+        list.addAll(create(25));
+
+        return list;
     }
+
+    private static List<Integer> create64(){
+        List<Integer> list = new ArrayList<>();
+        list.addAll(create(120));
+        list.addAll(create(80));
+        list.addAll(create(3));
+        list.addAll(create(1));
+
+        return list;
+    }
+
+    private static List<Integer> create(Integer i){
+        List<Integer> list = new ArrayList<>();
+        while (i>0){
+            list.add(i);
+            i--;
+        }
+
+        return list;
+    }
+
 
 
 

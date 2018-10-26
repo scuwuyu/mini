@@ -13,11 +13,14 @@
 
     <task:executor id="taskExecutor" pool-size="3"/>
 
-    <task:scheduler id="taskScheduler" pool-size="3"/>
+    <task:scheduler id="taskScheduler" pool-size="10"/>
 
     <task:scheduled-tasks scheduler="taskScheduler">
         <!-- 股票同步,半个小时执行一次  -->
         <task:scheduled ref="stockTask" method="execute" cron="0 0/30 * * * * "/>
+
+        <!-- 刷新apptoken,5分钟执行一次  -->
+        <task:scheduled ref="appTokenTask" method="execute" cron="0 0/5 * * * * "/>
 
     </task:scheduled-tasks>
 
