@@ -16,6 +16,7 @@ public class AppTokenTask {
     private AppTokenService appTokenService;
 
     public void execute(){
+        log.info("刷新token开始");
         appTokenService.updateAllTokens();
     }
 }
