@@ -1,6 +1,7 @@
 package com.gongsi.mini.dtos;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 /**
  * Created by wuyu on 2019/4/11.
@@ -41,5 +42,9 @@ public class StockDTO {
 
     public void setCurrentPrice(BigDecimal currentPrice) {
         this.currentPrice = currentPrice;
+    }
+
+    public BigDecimal getChange(){
+        return currentPrice.subtract(yestodayPrice).multiply(new BigDecimal(100)).divide(yestodayPrice,2, RoundingMode.HALF_UP);
     }
 }

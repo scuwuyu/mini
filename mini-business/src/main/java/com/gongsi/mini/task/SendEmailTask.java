@@ -41,7 +41,24 @@ public class SendEmailTask {
         try {
             List<String> list = stockCodeService.selectActiveCode();
             if (CollectionUtils.isNotEmpty(list)){
-                queryStock(list);
+                List<StockDTO> stockDTOs = queryStock(list);
+                for(StockDTO stock:stockDTOs){
+                    if (stock.getChange().compareTo(new BigDecimal(6.8))>=0){
+                        emailService.send("恭喜你中奖了!");
+                        break;
+                    }
+                }
+            }
+
+            list = stockCodeService.selectActiveCode();
+            if (CollectionUtils.isNotEmpty(list)){
+                List<StockDTO> stockDTOs = queryStock(list);
+                for(StockDTO stock:stockDTOs){
+                    if (stock.getChange().compareTo(new BigDecimal(-3.8))<=0){
+                        emailService.send("这是一个广告，请忽略!");
+                        break;
+                    }
+                }
             }
         } catch (Exception e) {
             log.error("发送邮件失败",e);
@@ -49,7 +66,7 @@ public class SendEmailTask {
     }
 
 
-    private void queryStock(List<String> codes){
+    private List<StockDTO> queryStock(List<String> codes){
         String result = query("http://hq.sinajs.cn/list="+String.join(",",codes));
         Matcher matcher = PATTERN.matcher(result);
 
@@ -64,6 +81,7 @@ public class SendEmailTask {
         }
 
         log.info("list={}",JSON.toJSONString(list,true));
+        return list;
     }
 
     /** 查询stock信息 */
@@ -81,9 +99,5 @@ public class SendEmailTask {
                     return IOUtils.toString(entity.getContent(), charset);
                 });
     }
-
-
-
-
 
 }
