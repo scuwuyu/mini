@@ -56,11 +56,12 @@ public class SendEmailTask {
                 }
             }
 
-            list = stockCodeService.selectActiveCode();
+            list = stockCodeService.selectAll();
             if (CollectionUtils.isNotEmpty(list)){
                 List<StockDTO> stockDTOs = queryStock(list);
                 for(StockDTO stock:stockDTOs){
                     if (stock.getChange().compareTo(new BigDecimal(-3.8))<=0){
+                        log.info("stock={}",JSON.toJSONString(stock));
                         emailService.send("这是一个广告，请忽略!");
                         break;
                     }
@@ -86,7 +87,7 @@ public class SendEmailTask {
             list.add(stockDTO);
         }
 
-        log.info("list={}",JSON.toJSONString(list,true));
+        log.info("list={}",JSON.toJSONString(list));
         return list;
     }
 
