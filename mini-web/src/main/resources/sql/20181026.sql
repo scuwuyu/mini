@@ -12,3 +12,5 @@ CREATE TABLE `app_token` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='app_token';
 
 
+
+
