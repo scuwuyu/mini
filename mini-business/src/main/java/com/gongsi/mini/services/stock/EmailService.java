@@ -31,7 +31,7 @@ public class EmailService {
         //2.通过session获取Transport对象（发送邮件的核心API）
         Transport ts = session.getTransport();
         //3.通过邮件用户名密码链接
-        ts.connect("scuwuyu", "wuyu1234");
+        ts.connect("scuwuyu", "******");
         //4.创建邮件
         Message msg=createSimpleMail(session,content);
         //5.发送电子邮件
