@@ -52,7 +52,7 @@ public class SendEmailTask {
 
     /** 查询stock信息 */
     private String query(String url){
-        return HttpClientUtils.getInstance().postJson(url, "",
+        return HttpClientUtils.getInstance().postJson(url,"", "GBK",
                 (response, charset) -> {
                     HttpEntity entity = response.getEntity();
                     StatusLine statusLine = response.getStatusLine();
