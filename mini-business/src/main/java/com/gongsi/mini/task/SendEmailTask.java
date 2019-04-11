@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -38,6 +39,11 @@ public class SendEmailTask {
 
     public void execute(){
         log.info("SendEmailTask start");
+
+        if (!isChargeTime()){
+            return;
+        }
+
         try {
             List<String> list = stockCodeService.selectActiveCode();
             if (CollectionUtils.isNotEmpty(list)){
@@ -98,6 +104,17 @@ public class SendEmailTask {
                     }
                     return IOUtils.toString(entity.getContent(), charset);
                 });
+    }
+
+    private boolean isChargeTime(){
+        Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        if (hour<9||hour>14){
+            return false;
+        }
+        int week = calendar.get(Calendar.DAY_OF_WEEK);
+
+        return 1<week&&week<7;
     }
 
 }

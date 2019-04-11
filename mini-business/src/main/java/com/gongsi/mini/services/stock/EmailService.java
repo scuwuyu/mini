@@ -1,7 +1,10 @@
 package com.gongsi.mini.services.stock;
 
+import com.gongsi.mini.enums.DictionaryCodeEn;
+import com.gongsi.mini.services.DictionaryService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.mail.Message;
@@ -19,6 +22,9 @@ import java.util.Properties;
 @Service
 public class EmailService {
 
+    @Autowired
+    private DictionaryService dictionaryService;
+
     public void send(String content) throws Exception {
         Properties prop=new Properties();
         prop.put("mail.host","smtp.163.com" );
@@ -31,7 +37,7 @@ public class EmailService {
         //2.通过session获取Transport对象（发送邮件的核心API）
         Transport ts = session.getTransport();
         //3.通过邮件用户名密码链接
-        ts.connect("scuwuyu", "******");
+        ts.connect("scuwuyu", dictionaryService.selectByCode(DictionaryCodeEn.EMAIL_KEY.getCode()).getValue());
         //4.创建邮件
         Message msg=createSimpleMail(session,content);
         //5.发送电子邮件
