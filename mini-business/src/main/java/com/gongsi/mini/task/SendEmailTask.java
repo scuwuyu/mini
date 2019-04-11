@@ -1,9 +1,8 @@
 package com.gongsi.mini.task;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.gongsi.mini.core.exception.BusinessException;
-import com.gongsi.mini.entities.StockShangHai;
+import com.gongsi.mini.dtos.StockDTO;
 import com.gongsi.mini.services.StockCodeService;
 import com.gongsi.mini.services.http.base.HttpClientUtils;
 import com.gongsi.mini.services.stock.EmailService;
@@ -15,9 +14,12 @@ import org.apache.http.StatusLine;
 import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StopWatch;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by wuyu on 2019/4/11.
@@ -25,6 +27,8 @@ import java.util.List;
 @Slf4j
 @Service
 public class SendEmailTask {
+
+    private static Pattern PATTERN = Pattern.compile("\"(.*?)\"");
 
     @Autowired
     private EmailService emailService;
@@ -47,7 +51,19 @@ public class SendEmailTask {
 
     private void queryStock(List<String> codes){
         String result = query("http://hq.sinajs.cn/list="+String.join(",",codes));
-        log.info("result={}",result);
+        Matcher matcher = PATTERN.matcher(result);
+
+        List<StockDTO> list = new ArrayList<>();
+
+        while (matcher.find()){
+            String group = matcher.group();
+            String[] strings = group.split(",");
+
+            StockDTO stockDTO = new StockDTO(strings[0], new BigDecimal(strings[2]),new BigDecimal(strings[3]));
+            list.add(stockDTO);
+        }
+
+        log.info("list={}",JSON.toJSONString(list,true));
     }
 
     /** 查询stock信息 */
