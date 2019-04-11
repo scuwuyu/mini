@@ -22,6 +22,18 @@ CREATE TABLE `stock_code` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='stock_code';
 
+--  dictionary
+CREATE TABLE `dictionary` (
+  `id` BIGINT(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `code` varchar(32) NOT NULL COMMENT 'code',
+  `value` varchar(64) NOT NULL COMMENT 'code',
+  `active` tinyint(1) NOT NULL DEFAULT 1 COMMENT '是否有效',
+
+  `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `modify_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='dictionary';
+
 
 
 
