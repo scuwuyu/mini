@@ -1,6 +1,5 @@
 package com.gongsi.mini.task;
 
-import com.alibaba.fastjson.JSON;
 import com.gongsi.mini.core.exception.BusinessException;
 import com.gongsi.mini.dtos.StockDTO;
 import com.gongsi.mini.services.StockCodeService;
@@ -23,6 +22,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * Created by wuyu on 2019/4/11.
@@ -45,7 +45,7 @@ public class SendEmailTask {
         if (!isChargeTime()){
             return;
         }
-
+        log.info("===");
         try {
             List<String> list = stockCodeService.selectActiveCode();
             if (CollectionUtils.isNotEmpty(list)){
@@ -93,7 +93,7 @@ public class SendEmailTask {
             StockDTO stockDTO = new StockDTO(strings[0], new BigDecimal(strings[2]),new BigDecimal(strings[3]));
             list.add(stockDTO);
         }
-
+        log.info("list={}",list.stream().map(StockDTO::getChange).collect(Collectors.toList()));
         return list;
     }
 
