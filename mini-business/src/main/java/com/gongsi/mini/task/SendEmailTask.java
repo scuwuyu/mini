@@ -6,6 +6,7 @@ import com.gongsi.mini.dtos.StockDTO;
 import com.gongsi.mini.services.StockCodeService;
 import com.gongsi.mini.services.http.base.HttpClientUtils;
 import com.gongsi.mini.services.stock.EmailService;
+import com.gongsi.mini.utils.CacheUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.IOUtils;
@@ -19,6 +20,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -50,8 +52,11 @@ public class SendEmailTask {
                 List<StockDTO> stockDTOs = queryStock(list);
                 for(StockDTO stock:stockDTOs){
                     if (stock.getChange().compareTo(new BigDecimal(6.8))>=0){
-                        emailService.send("恭喜你中奖了!");
-                        break;
+                        if (Objects.isNull(CacheUtils.get(stock.getName()))){
+                            emailService.send("恭喜你中奖了!");
+                            CacheUtils.put(stock.getName(),"ok",5*60*60);
+                            break;
+                        }
                     }
                 }
             }
@@ -61,9 +66,11 @@ public class SendEmailTask {
                 List<StockDTO> stockDTOs = queryStock(list);
                 for(StockDTO stock:stockDTOs){
                     if (stock.getChange().compareTo(new BigDecimal(-3.8))<=0){
-                        log.info("stock={}",JSON.toJSONString(stock));
-                        emailService.send("这是一个广告，请忽略!");
-                        break;
+                        if (Objects.isNull(CacheUtils.get(stock.getName()))){
+                            emailService.send("这是一个广告，请忽略!");
+                            CacheUtils.put(stock.getName(),"ok",5*60*60);
+                            break;
+                        }
                     }
                 }
             }

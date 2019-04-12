@@ -1,7 +1,9 @@
 package com.gongsi.mini.utils;
 
 import com.gongsi.mini.core.ensure.Ensure;
-
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -17,38 +19,58 @@ public class CacheUtils {
      * @param value
      * @param expired  单位秒
      */
-    public static void put(String key,String value,int expired){
-        MAP.put(key,new ValueObj(value,expired));
+    public static synchronized void put(String key,Object value,int expired){
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.SECOND,expired);
+
+        MAP.put(key,new ValueObj(value,calendar.getTime()));
     }
 
-    public static String get(String key){
+    public static synchronized Object get(String key){
+        ValueObj valueObj = MAP.get(key);
+        if (Objects.isNull(valueObj)){
+            return null;
+        }
+        if (valueObj.getExpiredDate().before(new Date())){
+            clearAllExpired();
+            return null;
+        }
+        return valueObj.getValue();
+    }
 
+    private static void clearAllExpired(){
+        Date date = new Date();
+        MAP.forEach((key,value)->{
+            if (value.getExpiredDate().before(date)){
+                MAP.remove(key);
+            }
+        });
     }
 
     private static class ValueObj{
-        private String value;
-        private int expired;
+        private Object value;
+        private Date expiredDate;
 
-        public ValueObj(String value, int expired) {
-            Ensure.that(expired).isGt(0,"过期时间必须大于0");
+        public ValueObj(Object value, Date expiredDate) {
+            Ensure.that(expiredDate).isNotNull("过期时间不能为空");
             this.value = value;
-            this.expired = expired;
+            this.expiredDate = expiredDate;
         }
 
-        public String getValue() {
+        public Object getValue() {
             return value;
         }
 
-        public void setValue(String value) {
+        public void setValue(Object value) {
             this.value = value;
         }
 
-        public int getExpired() {
-            return expired;
+        public Date getExpiredDate() {
+            return expiredDate;
         }
 
-        public void setExpired(int expired) {
-            this.expired = expired;
+        public void setExpiredDate(Date expiredDate) {
+            this.expiredDate = expiredDate;
         }
     }
 }
