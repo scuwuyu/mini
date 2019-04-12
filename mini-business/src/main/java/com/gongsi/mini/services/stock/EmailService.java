@@ -30,6 +30,11 @@ public class EmailService {
         prop.put("mail.host","smtp.163.com" );
         prop.put("mail.transport.protocol", "smtp");
         prop.put("mail.smtp.auth", true);
+        /** 465加密端口需要 */
+        prop.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        prop.put("mail.smtp.port", "465");
+        prop.put("mail.smtp.socketFactory.port", "465");
+        prop.put("mail.smtp.socketFactory.fallback", "false");
         //1.创建sesssion
         Session session=Session.getInstance(prop);
         //开启session的调试模式，可以查看当前邮件发送状态
