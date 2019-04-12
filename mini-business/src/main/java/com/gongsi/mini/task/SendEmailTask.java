@@ -94,7 +94,6 @@ public class SendEmailTask {
             list.add(stockDTO);
         }
 
-        log.info("list={}",JSON.toJSONString(list));
         return list;
     }
 
