@@ -23,7 +23,7 @@
         <task:scheduled ref="appTokenTask" method="execute" cron="0 0/5 * * * * "/>
 
         <!-- 发送邮件,2分钟执行一次  -->
-        <task:scheduled ref="sendEmailTask" method="execute" cron="0 0/2 * * * * "/>
+        <!--<task:scheduled ref="sendEmailTask" method="execute" cron="0 0/2 * * * * "/>-->
 
     </task:scheduled-tasks>
 
