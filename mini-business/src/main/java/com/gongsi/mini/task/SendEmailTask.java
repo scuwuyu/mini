@@ -1,5 +1,6 @@
 package com.gongsi.mini.task;
 
+import com.alibaba.fastjson.JSON;
 import com.gongsi.mini.core.exception.BusinessException;
 import com.gongsi.mini.dtos.StockDTO;
 import com.gongsi.mini.services.StockCodeService;
@@ -68,6 +69,7 @@ public class SendEmailTask {
                     if (stock.getChange().compareTo(new BigDecimal(-3.8))<=0){
                         if (Objects.isNull(CacheUtils.get(stock.getName()))){
                             emailService.send("这是一个广告，请忽略!");
+                            log.info("stock={}", JSON.toJSONString(stock));
                             CacheUtils.put(stock.getName(),"ok",5*60*60);
                             break;
                         }
