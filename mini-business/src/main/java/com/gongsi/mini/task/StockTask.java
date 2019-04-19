@@ -31,7 +31,7 @@ public class StockTask {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        log.info("股票同步开始");
+        log.info("stock同步开始");
         List<StockShangHai> result = stockService.query();
 
         List<StockIPO> list = result.stream().map(item -> {

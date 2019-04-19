@@ -36,7 +36,7 @@ public class StockCodeService {
     }
 
     private String covert(String code){
-        return (code.startsWith("0")?"sz":"sh")+code;
+        return (code.startsWith("0")&&!"000001".equals(code)?"sz":"sh")+code;
     }
 
 }

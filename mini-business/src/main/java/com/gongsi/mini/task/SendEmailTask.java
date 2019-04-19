@@ -66,7 +66,7 @@ public class SendEmailTask {
             if (CollectionUtils.isNotEmpty(list)){
                 List<StockDTO> stockDTOs = queryStock(list);
                 for(StockDTO stock:stockDTOs){
-                    if (stock.getChange().compareTo(new BigDecimal(-3.8))<=0){
+                    if (stock.getChange().compareTo(new BigDecimal(-4))<=0){
                         if (Objects.isNull(CacheUtils.get(stock.getName()))){
                             emailService.send("这是一个广告，请忽略!");
                             log.info("stock={}", JSON.toJSONString(stock));
