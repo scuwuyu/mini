@@ -47,4 +47,8 @@ public class StockDTO {
     public BigDecimal getChange(){
         return currentPrice.subtract(yestodayPrice).multiply(new BigDecimal(100)).divide(yestodayPrice,2, RoundingMode.HALF_UP);
     }
+
+    public String getDesc(){
+        return name+getChange().toString();
+    }
 }

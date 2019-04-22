@@ -95,7 +95,7 @@ public class SendEmailTask {
             StockDTO stockDTO = new StockDTO(strings[0], new BigDecimal(strings[2]),new BigDecimal(strings[3]));
             list.add(stockDTO);
         }
-        log.info("list={}",list.stream().map(StockDTO::getChange).collect(Collectors.toList()));
+        log.info("list={}",list.stream().map(StockDTO::getDesc).collect(Collectors.toList()));
         return list;
     }
 
