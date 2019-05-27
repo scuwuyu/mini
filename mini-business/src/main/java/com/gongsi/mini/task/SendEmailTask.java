@@ -17,10 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -48,34 +45,25 @@ public class SendEmailTask {
         }
         log.info("===");
         try {
+
             List<String> list = stockCodeService.selectActiveCode();
             if (CollectionUtils.isNotEmpty(list)){
                 List<StockDTO> stockDTOs = queryStock(list);
-                for(StockDTO stock:stockDTOs){
-                    if (stock.getChange().compareTo(new BigDecimal(6.8))>=0){
-                        if (Objects.isNull(CacheUtils.get(stock.getName()))){
+                if (CollectionUtils.isNotEmpty(stockDTOs)){
+                    StockDTO activeOne = stockDTOs.get(0);
+
+                    stockDTOs = queryStock(stockCodeService.selectAll());
+
+                    Optional<BigDecimal> min = stockDTOs.stream().map(StockDTO::getChange).min(BigDecimal::compareTo);
+                    if (min.isPresent()){
+                        BigDecimal change = activeOne.getChange().subtract(min.get());
+                        if (change.compareTo(new BigDecimal(2))>=0){
                             emailService.send("恭喜你中奖了!");
-                            CacheUtils.put(stock.getName(),"ok",5*60*60);
-                            break;
                         }
                     }
                 }
             }
 
-            list = stockCodeService.selectAll();
-            if (CollectionUtils.isNotEmpty(list)){
-                List<StockDTO> stockDTOs = queryStock(list);
-                for(StockDTO stock:stockDTOs){
-                    if (stock.getChange().compareTo(new BigDecimal(-4))<=0){
-                        if (Objects.isNull(CacheUtils.get(stock.getName()))){
-                            emailService.send("这是一个广告，请忽略!");
-                            log.info("stock={}", JSON.toJSONString(stock));
-                            CacheUtils.put(stock.getName(),"ok",5*60*60);
-                            break;
-                        }
-                    }
-                }
-            }
         } catch (Exception e) {
             log.error("发送邮件失败",e);
         }

@@ -26,12 +26,7 @@ public class MiniContext {
     private boolean isInited = false;
     protected HttpServletRequest request;
 
-    private static final ThreadLocal<MiniContext> THREAD_LOCAL = new ThreadLocal<MiniContext>() {
-        @Override
-        protected MiniContext initialValue() {
-            return new MiniContext();
-        }
-    };
+    private static final ThreadLocal<MiniContext> THREAD_LOCAL = ThreadLocal.withInitial(MiniContext::new);
 
     /** 获取当前请求的上下文 */
     public static MiniContext getContext() {

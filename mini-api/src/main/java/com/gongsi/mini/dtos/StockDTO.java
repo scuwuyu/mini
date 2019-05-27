@@ -49,6 +49,9 @@ public class StockDTO {
     }
 
     public String getDesc(){
-        return name+getChange().toString();
+        if (name.startsWith("\"上")){
+            return "XX"+getChange().toString();
+        }
+        return name.substring(1,3)+getChange().toString();
     }
 }
